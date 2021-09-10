@@ -48,7 +48,7 @@ public class Movement : MonoBehaviour
             {
                 newPosition = transform.position;
             }
-            Debug.Log(newPosition);
+            // Debug.Log(newPosition);
             transform.position = new Vector3(
                 Mathf.LerpUnclamped(transform.position.x, newPosition.x, smoothingValue),
                 transform.position.y,
