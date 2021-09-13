@@ -14,6 +14,12 @@ public class Movement : MonoBehaviour
     [SerializeField]
     private float distanceClamp = 4f;
     private Vector3 newPosition;
+    private bool isDead = false;
+
+    private void Awake()
+    {
+        isDead = false;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -24,40 +30,49 @@ public class Movement : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetButtonDown("Fire1"))
+        if(!isDead)
         {
-            initialPosition = Input.mousePosition;
-            currentPlayerPosition = transform.position;
-        }
-        if(Input.GetButton("Fire1"))
-        {
-            travelDistance = (initialPosition.x - Input.mousePosition.x)/100;
-            //Debug.Log("The current travel distance is: " + travelDistance);
-            
-            if(travelDistance != 0)
+            if(Input.GetButtonDown("Fire1"))
             {
-                float newXPosition = Mathf.Clamp(currentPlayerPosition.x - travelDistance, -distanceClamp, distanceClamp);
-                newPosition = new Vector3(
-                    newXPosition, 
+                initialPosition = Input.mousePosition;
+                currentPlayerPosition = transform.position;
+            }
+            if(Input.GetButton("Fire1"))
+            {
+                travelDistance = (initialPosition.x - Input.mousePosition.x)/100;
+                //Debug.Log("The current travel distance is: " + travelDistance);
+            
+                transform.Translate(transform.forward * speedFactor * Time.deltaTime, Space.World);
+                if(travelDistance != 0)
+                {
+                    float newXPosition = Mathf.Clamp(currentPlayerPosition.x - travelDistance, -distanceClamp, distanceClamp);
+                    newPosition = new Vector3(
+                        newXPosition, 
+                        transform.position.y,
+                        transform.position.z);
+                    travelDistance = 0;
+                }
+                else
+                {
+                    newPosition = transform.position;
+                }
+                // Debug.Log(newPosition);
+                transform.position = new Vector3(
+                    Mathf.LerpUnclamped(transform.position.x, newPosition.x, smoothingValue),
                     transform.position.y,
                     transform.position.z);
-                transform.Translate(transform.forward * speedFactor * Time.deltaTime, Space.World);
-                travelDistance = 0;
             }
-            else
+            if(Input.GetButtonUp("Fire1"))
             {
-                newPosition = transform.position;
+                initialPosition = Vector3.zero;
+                // travelDistance = 0f;
             }
-            // Debug.Log(newPosition);
-            transform.position = new Vector3(
-                Mathf.LerpUnclamped(transform.position.x, newPosition.x, smoothingValue),
-                transform.position.y,
-                transform.position.z);
         }
-        if(Input.GetButtonUp("Fire1"))
-        {
-            initialPosition = Vector3.zero;
-            // travelDistance = 0f;
-        }
+    }
+
+    public void Kill()
+    {
+        isDead = true;
+        Destroy(GetComponentInChildren<ConfigurableJoint>());
     }
 }

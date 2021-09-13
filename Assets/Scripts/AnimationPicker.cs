@@ -8,27 +8,38 @@ public class AnimationPicker : MonoBehaviour
     private float airSpeedThreshold;
 
     private Animator animator;
+    private bool isDead = false;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        isDead = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(rb)
+        if(!isDead)
         {
-            animator.SetFloat("AirSpeed", rb.velocity.y);
-            if (rb.velocity.y < -airSpeedThreshold)
+            if(rb)
             {
-                animator.SetBool("HasLanded", false);
-                animator.SetTrigger("Falling");
-            }
-            else
-            {
-                animator.SetBool("HasLanded", true);
+                animator.SetFloat("AirSpeed", rb.velocity.y);
+                if (rb.velocity.y < -airSpeedThreshold)
+                {
+                    animator.SetBool("HasLanded", false);
+                    animator.SetTrigger("Falling");
+                }
+                else
+                {
+                    animator.SetBool("HasLanded", true);
+                }
             }
         }
+    }
+
+    public void Kill()
+    {
+        isDead = true;
+        animator.SetTrigger("Death");
     }
 }
