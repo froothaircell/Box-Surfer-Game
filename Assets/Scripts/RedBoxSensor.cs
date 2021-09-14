@@ -1,22 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
+// Checks for player and removes a yellow box accordingly or,
+// if no boxes are present, kill the character via event 
 public class RedBoxSensor : MonoBehaviour
 {
     [SerializeField]
     UnityEvent DeathEvent = new UnityEvent();
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -24,9 +14,9 @@ public class RedBoxSensor : MonoBehaviour
         {
             collision.collider.transform.parent = null;
         }
-        else if(collision.collider.CompareTag("Player Base") || collision.collider.CompareTag("Character"))
+        else if(collision.collider.CompareTag("Player Base") 
+            || collision.collider.CompareTag("Character"))
         {
-            Debug.Log("OnCollisionEnter ran here");
             DeathEvent.Invoke();
         }    
 

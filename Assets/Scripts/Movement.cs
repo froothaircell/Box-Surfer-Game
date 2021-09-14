@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
+using System.Collections;
 
+// Controls the movement of the player
 public class Movement : MonoBehaviour
 {
-    private Vector3 initialPosition;
-    private Vector3 currentPlayerPosition;
-    private float travelDistance;
-    //private Rigidbody rb;
+    public Transform localPlayerPosition;
 
     [SerializeField]
     private float smoothingValue = 1.8f;
@@ -13,66 +12,141 @@ public class Movement : MonoBehaviour
     private float speedFactor = 0.5f;
     [SerializeField]
     private float distanceClamp = 4f;
-    private Vector3 newPosition;
+    [SerializeField]
+    private float rotationSpeed = 3f;
+    [SerializeField]
+    private bool isLeft = true;
+
+    private float travelDistance;
+    private bool isRotating = false;
     private bool isDead = false;
+    private Vector3 initialMousePosition;
+    private IEnumerator coroutine;
 
     private void Awake()
     {
+        isRotating = false;
         isDead = false;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        initialPosition = Vector3.zero;
+        initialMousePosition = Vector3.zero;
         travelDistance = 0f;
+        coroutine = Turn90Degrees();
     }
 
     private void Update()
     {
+        // Check if character isn't already dead
         if(!isDead)
         {
+            // If the mouse button just got pressed down
             if(Input.GetButtonDown("Fire1"))
             {
-                initialPosition = Input.mousePosition;
-                currentPlayerPosition = transform.position;
+                initialMousePosition = Input.mousePosition;
             }
+
+            // If the mouse button is being pressed persistently
             if(Input.GetButton("Fire1"))
             {
-                travelDistance = (initialPosition.x - Input.mousePosition.x)/100;
-                //Debug.Log("The current travel distance is: " + travelDistance);
-            
-                transform.Translate(transform.forward * speedFactor * Time.deltaTime, Space.World);
-                if(travelDistance != 0)
-                {
-                    float newXPosition = Mathf.Clamp(currentPlayerPosition.x - travelDistance, -distanceClamp, distanceClamp);
-                    newPosition = new Vector3(
-                        newXPosition, 
-                        transform.position.y,
-                        transform.position.z);
-                    travelDistance = 0;
-                }
-                else
-                {
-                    newPosition = transform.position;
-                }
-                // Debug.Log(newPosition);
-                transform.position = new Vector3(
-                    Mathf.LerpUnclamped(transform.position.x, newPosition.x, smoothingValue),
-                    transform.position.y,
-                    transform.position.z);
+                // Calculate distance of mouse cursor from original
+                // point in the last frame to determine movement
+                // NOTE: The forward movement will not be in the
+                // control of the player in the final build. Be
+                // sure to change that
+                travelDistance = (initialMousePosition.x - Input.mousePosition.x)/100;
+                initialMousePosition = Input.mousePosition;
+
+                // Move character forwards
+                transform.Translate(
+                    speedFactor * Time.deltaTime * transform.forward,
+                    Space.World);
+
+                // If the mouse moved from the initial recorded position
+                TurnCharacter(
+                    ref travelDistance,
+                    ref localPlayerPosition,
+                    distanceClamp);
             }
+
+            // If the mouse button stopped being pressed
             if(Input.GetButtonUp("Fire1"))
             {
-                initialPosition = Vector3.zero;
-                // travelDistance = 0f;
+                initialMousePosition = Vector3.zero;
             }
+        }
+
+    }
+
+    // Turn the character by manipulating the local transform in the child object (Player Direction Modifier)
+    private void TurnCharacter(
+        ref float travelDistance,
+        ref Transform localPlayerPosition,
+        float distanceClamp)
+    {
+        if (travelDistance != 0)
+        {
+            float newXPosition = Mathf.Clamp(
+                localPlayerPosition.localPosition.x - travelDistance,
+                -distanceClamp,
+                distanceClamp);
+
+            travelDistance = 0f;
+            localPlayerPosition.localPosition = new Vector3(
+                Mathf.LerpUnclamped(
+                    localPlayerPosition.localPosition.x,
+                    newXPosition,
+                    smoothingValue),
+                localPlayerPosition.localPosition.y,
+                localPlayerPosition.localPosition.z);
         }
     }
 
+    // Use the base cube's OnTriggerEnter to activate this function 
+    public void OnTriggerEnterChild(Collider other)
+    {
+        if(other.CompareTag("Path Interactables"))
+        {
+            isRotating = true;
+            StartCoroutine(coroutine);
+        }
+    }
+
+    // Kill the character using the set unity event
     public void Kill()
     {
         isDead = true;
         Destroy(GetComponentInChildren<ConfigurableJoint>());
+    }
+
+    // Turn the character 90 degrees
+    private IEnumerator Turn90Degrees()
+    {
+        float i = 0;
+        while(i < 90 && isRotating)
+        {
+            if(isLeft)
+            {
+                i += Mathf.Abs(-rotationSpeed * Time.deltaTime);
+                transform.Rotate(
+                    0.0f,
+                    -rotationSpeed * Time.deltaTime,
+                    0.0f,
+                    Space.Self);
+            }
+            else
+            {
+                i += Mathf.Abs(rotationSpeed * Time.deltaTime);
+                transform.Rotate(
+                    0.0f,
+                    rotationSpeed * Time.deltaTime,
+                    0.0f, 
+                    Space.Self);
+            }
+            yield return new WaitForEndOfFrame();
+        }
+        isRotating = false;
     }
 }

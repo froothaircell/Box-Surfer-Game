@@ -1,22 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
+// Checks for player and adds a yellow box accordingly via event
 public class YellowBoxSensor : MonoBehaviour
 {
     [SerializeField]
     private UnityEvent yellowEvent = new UnityEvent();
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
+        // Only used for debugging purposes
         if(Input.GetButtonDown("Jump"))
         {
             yellowEvent.Invoke();
@@ -25,9 +19,8 @@ public class YellowBoxSensor : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.tag == "Player")
+        if (collision.collider.CompareTag("Player"))
         {
-            //Destroy(other);
             yellowEvent.Invoke();
             Destroy(gameObject);
         }

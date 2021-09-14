@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+// Adds animation according to trigger calls and variable changes
 public class AnimationPicker : MonoBehaviour
 {
     [SerializeField]
@@ -19,10 +20,14 @@ public class AnimationPicker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Check for death before carrying out animations
         if(!isDead)
         {
             if(rb)
             {
+                // Attaches the AirSpeed float to the downwards velocity
+                // of the object. A threshold is applied to remove undue
+                // rigidity
                 animator.SetFloat("AirSpeed", rb.velocity.y);
                 if (rb.velocity.y < -airSpeedThreshold)
                 {
@@ -37,6 +42,7 @@ public class AnimationPicker : MonoBehaviour
         }
     }
 
+    // Function that is called via event to activate death animation
     public void Kill()
     {
         isDead = true;
