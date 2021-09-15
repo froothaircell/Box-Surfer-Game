@@ -11,8 +11,16 @@ public class BoxManagement : MonoBehaviour
     private Transform character;
     [SerializeField]
     private Transform charCube;
+    [SerializeField]
+    private Transform trailPosition;
 
     private int newBoxSize;
+
+    public int BoxSize
+    {
+        get { return boxSize; }
+        set { boxSize = value; }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -64,8 +72,13 @@ public class BoxManagement : MonoBehaviour
                 newBoxProperties.tag = "Player";
                 boxSize++;
                 iter++;
+
+                // Adjust the trail position according to the bottom box 
+                trailPosition.position = new Vector3(trailPosition.position.x, transform.GetChild(0).position.y - 0.48f, trailPosition.position.z);
             }
         }
+        boxSize = transform.childCount;
+        newBoxSize = boxSize;
     }
 
     // This function is run by a yellow box whenever it collides with the player
@@ -79,6 +92,15 @@ public class BoxManagement : MonoBehaviour
         if(transform.childCount > 0)
         {
             Destroy(transform.GetChild(0).gameObject);
+        }
+    }
+
+    public void RepositionTrail()
+    {
+        trailPosition.position = new Vector3(trailPosition.position.x, transform.GetChild(0).position.y - 0.20f, trailPosition.position.z);
+        if (transform.childCount == 0)
+        {
+            trailPosition.position = new Vector3(trailPosition.position.x, charCube.position.y - 0.48f, trailPosition.position.z);
         }
     }
 }

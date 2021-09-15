@@ -21,7 +21,7 @@ public class Movement : MonoBehaviour
     private bool isRotating = false;
     private bool hasWon = false;
     private bool isDeadOrHasStopped = false;
-    private Vector3 initialMousePosition;
+    // private Vector3 initialTouchPosition;
     private IEnumerator coroutine;
 
     private void Awake()
@@ -34,7 +34,8 @@ public class Movement : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        initialMousePosition = Vector3.zero;
+        Input.multiTouchEnabled = false;
+        // initialTouchPosition = Vector3.zero;
         travelDistance = 0f;
         coroutine = Turn90Degrees();
     }
@@ -42,24 +43,28 @@ public class Movement : MonoBehaviour
     private void Update()
     {
         // Check if character isn't already dead
-        if(!isDeadOrHasStopped)
+        if(!isDeadOrHasStopped && Input.touchSupported && Input.touchCount > 0)
         {
+            Touch touch = Input.GetTouch(0);
             // If the mouse button just got pressed down
-            if(Input.GetButtonDown("Fire1"))
+            if(/*Input.GetButtonDown("Fire1")*/ touch.phase == TouchPhase.Began)
             {
-                initialMousePosition = Input.mousePosition;
+                // initialTouchPosition = touch.position;
             }
 
             // If the mouse button is being pressed persistently
-            if(Input.GetButton("Fire1"))
+            if(/*Input.GetButton("Fire1")*/ touch.phase == TouchPhase.Moved || Input.GetTouch(0).phase == TouchPhase.Stationary)
             {
                 // Calculate distance of mouse cursor from original
                 // point in the last frame to determine movement
                 // NOTE: The forward movement will not be in the
                 // control of the player in the final build. Be
                 // sure to change that
-                travelDistance = (initialMousePosition.x - Input.mousePosition.x)/100;
-                initialMousePosition = Input.mousePosition;
+                /*travelDistance = (initialTouchPosition.x - Input.mousePosition.x)/100;
+                initialTouchPosition = Input.mousePosition;*/
+
+                // Touch iteration
+                travelDistance =  - touch.deltaPosition.x / 100;
 
                 // Move character forwards
                 transform.Translate(
@@ -74,9 +79,9 @@ public class Movement : MonoBehaviour
             }
 
             // If the mouse button stopped being pressed
-            if(Input.GetButtonUp("Fire1"))
+            if(/*Input.GetButtonUp("Fire1")*/ touch.phase == TouchPhase.Ended)
             {
-                initialMousePosition = Vector3.zero;
+                // initialTouchPosition = Vector3.zero;
             }
         }
 
