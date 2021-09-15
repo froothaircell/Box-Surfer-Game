@@ -19,18 +19,20 @@ public class Movement : MonoBehaviour
 
     private float travelDistance;
     private bool isRotating = false;
-    private bool isDead = false;
+    private bool hasWon = false;
+    private bool isDeadOrHasStopped = false;
     private Vector3 initialMousePosition;
     private IEnumerator coroutine;
 
     private void Awake()
     {
         isRotating = false;
-        isDead = false;
+        hasWon = false;
+        isDeadOrHasStopped = false;
     }
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         initialMousePosition = Vector3.zero;
         travelDistance = 0f;
@@ -40,7 +42,7 @@ public class Movement : MonoBehaviour
     private void Update()
     {
         // Check if character isn't already dead
-        if(!isDead)
+        if(!isDeadOrHasStopped)
         {
             // If the mouse button just got pressed down
             if(Input.GetButtonDown("Fire1"))
@@ -114,11 +116,20 @@ public class Movement : MonoBehaviour
         }
     }
 
-    // Kill the character using the set unity event
-    public void Kill()
+    // Set the win flag using the set unity event
+    public void Win()
     {
-        isDead = true;
-        Destroy(GetComponentInChildren<ConfigurableJoint>());
+        hasWon = true;
+    }
+
+    // Kill the character using the set unity event
+    public void KillOrCelebrate()
+    {
+        isDeadOrHasStopped = true;
+        if(!hasWon)
+        {
+            Destroy(GetComponentInChildren<ConfigurableJoint>());
+        }
     }
 
     // Turn the character 90 degrees

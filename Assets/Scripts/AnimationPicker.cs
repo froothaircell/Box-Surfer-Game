@@ -9,19 +9,21 @@ public class AnimationPicker : MonoBehaviour
     private float airSpeedThreshold;
 
     private Animator animator;
-    private bool isDead = false;
+    private bool hasWon = false;
+    private bool isDeadOrHasStopped = false;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
-        isDead = false;
+        hasWon = false;
+        isDeadOrHasStopped = false;
     }
 
     // Update is called once per frame
     void Update()
     {
         // Check for death before carrying out animations
-        if(!isDead)
+        if(!isDeadOrHasStopped)
         {
             if(rb)
             {
@@ -42,10 +44,23 @@ public class AnimationPicker : MonoBehaviour
         }
     }
 
-    // Function that is called via event to activate death animation
-    public void Kill()
+    // Function that is called via event to set the win flag
+    public void Win()
     {
-        isDead = true;
-        animator.SetTrigger("Death");
+        hasWon = true; 
+    }
+
+    // Function that is called via event to activate death animation
+    public void KillOrCelebrate()
+    {
+        isDeadOrHasStopped = true;
+        if(!hasWon)
+        {
+            animator.SetTrigger("Death");
+        }
+        else
+        {
+            animator.SetTrigger("Chicken");
+        }
     }
 }

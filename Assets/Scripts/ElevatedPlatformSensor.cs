@@ -3,23 +3,24 @@ using UnityEngine.Events;
 
 // Removes a yellow box upon collision with the front
 // face or, if no yellow boxes exist, kills the player
-// via event 
-public class RedBoxSensor : MonoBehaviour
+// via event
+public class ElevatedPlatformSensor : MonoBehaviour
 {
     [SerializeField]
-    UnityEvent RedDeathEvent = new UnityEvent();
+    UnityEvent PlatformDeathEvent = new UnityEvent();
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.collider.CompareTag("Player"))
+        Debug.Log("We got collision");
+        if (collision.collider.CompareTag("Player"))
         {
             collision.collider.transform.parent = null;
         }
-        else if(collision.collider.CompareTag("Player Base") 
+        else if (collision.collider.CompareTag("Player Base")
             || collision.collider.CompareTag("Character"))
         {
-            RedDeathEvent.Invoke();
-        }    
+            PlatformDeathEvent.Invoke();
+        }
 
     }
 }

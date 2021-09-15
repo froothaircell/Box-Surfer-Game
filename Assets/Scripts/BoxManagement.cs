@@ -40,11 +40,11 @@ public class BoxManagement : MonoBehaviour
                 // box height
                 character.position = new Vector3(
                     character.position.x, 
-                    boxHeight + 4.0f, 
+                    boxHeight + 1.0f, 
                     character.position.z);
                 charCube.position = new Vector3(
                     charCube.position.x, 
-                    boxHeight + 2.0f, 
+                    boxHeight + 0.5f, 
                     charCube.position.z);
 
                 // Instantiate the new box with the requisite properties and
@@ -58,7 +58,8 @@ public class BoxManagement : MonoBehaviour
                     Quaternion.identity,
                     transform);
                 
-                Destroy(newBoxProperties.GetComponent<YellowBoxSensor>());
+                //Destroy(newBoxProperties.GetComponent<YellowBoxSensor>());
+                Destroy(newBoxProperties.transform.GetChild(0).gameObject);
                 newBoxProperties.GetComponent<Rigidbody>().isKinematic = false;
                 newBoxProperties.tag = "Player";
                 boxSize++;
@@ -71,5 +72,13 @@ public class BoxManagement : MonoBehaviour
     public void AddBoxes()
     {
         newBoxSize++;
+    }
+
+    public void RemoveBoxes()
+    {
+        if(transform.childCount > 0)
+        {
+            Destroy(transform.GetChild(0).gameObject);
+        }
     }
 }
