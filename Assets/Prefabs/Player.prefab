@@ -44,8 +44,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseLocation: {fileID: 1923850859}
+  boxManager: {fileID: 5500906254356476003}
   smoothingFactor: 0.125
+  zoomSmoothingFactor: 0.125
   yOffset: 8.54
+  zoomOffset: 0.1
 --- !u!1 &1487785252
 GameObject:
   m_ObjectHideFlags: 0
@@ -510,9 +513,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8010dfce231a2544a4874d1f3cece65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDistance: 10
+  maxDistance: 100
   distanceThreshold: 0.5
-  trailOffset: 0.09
+  trailOffset: 0.1
   trailSmoothing: 0.1
   minTrailThreshold: 35.5
   maxTrailThreshold: 100
@@ -586,7 +589,7 @@ MonoBehaviour:
   distanceClamp: 1.6
   rotationSpeed: 40.789
   isLeft: 1
-  touchControls: 1
+  touchControls: 0
 --- !u!114 &1585796053
 MonoBehaviour:
   m_ObjectHideFlags: 0

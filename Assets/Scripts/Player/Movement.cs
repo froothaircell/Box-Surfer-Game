@@ -7,17 +7,15 @@ public class Movement : MonoBehaviour
     public Transform localPlayerPosition;
 
     [SerializeField]
-    private float smoothingValue = 1.8f;
+    private float 
+        smoothingValue = 1.8f, 
+        speedFactor = 0.5f,
+        distanceClamp = 4f, 
+        rotationSpeed = 3f;
     [SerializeField]
-    private float speedFactor = 0.5f;
-    [SerializeField]
-    private float distanceClamp = 4f;
-    [SerializeField]
-    private float rotationSpeed = 3f;
-    [SerializeField]
-    private bool isLeft = true;
-    [SerializeField]
-    private bool touchControls;
+    private bool 
+        isLeft = true, 
+        touchControls;
 
     Vector3 InitPos; // For debugging pusposes
     private float travelDistance;

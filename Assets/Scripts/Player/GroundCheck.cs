@@ -39,8 +39,6 @@ public class GroundCheck : MonoBehaviour
     // and set it as active only if the player is grounded 
     private void FixedUpdate()
     {
-        // bool rando = IsGrounded();
-        // Debug.Log("The status of grounding is: " + rando);
         RepositionTrail();
         if(IsGrounded())
         {

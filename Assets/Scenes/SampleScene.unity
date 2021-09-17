@@ -2327,8 +2327,8 @@ MonoBehaviour:
   followSmoothingValue: 5
   lookSmoothingValue: 5
   distanceSmoothingValue: 0.125
-  rotationSpeed: 40.789
   rotationSmoothingValue: 0.125
+  rotationSpeed: 40.789
   followPosition: 1
   lookAtPosition: 1
   isLeft: 0

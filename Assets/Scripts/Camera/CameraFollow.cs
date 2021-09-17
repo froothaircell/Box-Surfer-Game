@@ -1,10 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    private Camera mainCam;
     [SerializeField]
     private Transform camTarget;
     [SerializeField]
@@ -14,28 +11,18 @@ public class CameraFollow : MonoBehaviour
         followSmoothingValue = 0.125f,
         lookSmoothingValue = 0.125f,
         distanceSmoothingValue = 0.125f,
-        rotationSpeed = 3.0f,
-        rotationSmoothingValue = 0.125f;
+        rotationSmoothingValue = 0.125f,
+        rotationSpeed = 3.0f;
     [SerializeField]
     private bool 
         followPosition, 
         lookAtPosition,
         isLeft;
 
-    private bool isRotating = false;
-    private IEnumerator coroutine;
-
-    private void Awake()
-    {
-        mainCam = transform.GetComponent<Camera>();
-        isRotating = false;
-    }
-
     // Start is called before the first frame update
     private void Start()
     {
         transform.position = camTarget.position;
-        //coroutine = Rotate90Degrees();
     }
 
     private void Update()

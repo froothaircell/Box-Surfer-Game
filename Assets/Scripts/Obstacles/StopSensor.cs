@@ -12,7 +12,6 @@ public class StopSensor : MonoBehaviour
             || collision.collider.CompareTag("Player Base")
             || collision.collider.CompareTag("Character"))
         {
-            Debug.Log("we got here");
             stopEvent.Invoke();
             Destroy(gameObject);
         }
