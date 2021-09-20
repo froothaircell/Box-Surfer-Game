@@ -43,7 +43,7 @@ public class Movement : MonoBehaviour
     }
 
     
-    private void LateUpdate()
+    private void FixedUpdate()
     {
         // Use toggle in the inspector to use touch controls or mouse controls;
         if(touchControls)
@@ -76,6 +76,16 @@ public class Movement : MonoBehaviour
         {
             if(!isDeadOrHasStopped)
             {
+                // Rotate for debugging purposes
+                if(Input.GetButton("Fire2"))
+                {
+                    transform.Rotate(
+                    0.0f,
+                    -rotationSpeed * Time.deltaTime,
+                    0.0f,
+                    Space.Self);
+                }
+
                 // If the mouse button was just pressed down
                 if(Input.GetButtonDown("Fire1"))
                 {
@@ -198,7 +208,7 @@ public class Movement : MonoBehaviour
                 transform.rotation = Quaternion.Euler(0, -90, 0);
                 isRotating = false;
             }
-            yield return new WaitForEndOfFrame();
+            yield return new WaitForFixedUpdate();
         }
     }
 }

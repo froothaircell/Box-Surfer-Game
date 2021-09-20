@@ -24,7 +24,7 @@ public class CameraFollow : MonoBehaviour
         transform.position = camTarget.position;
     }
 
-    private void LateUpdate()
+    private void FixedUpdate()
     {
         if(followPosition)
         {
@@ -44,7 +44,6 @@ public class CameraFollow : MonoBehaviour
                     desiredRotation.eulerAngles.y, 
                     transform.rotation.eulerAngles.z), 
                 lookSmoothingValue * Time.deltaTime);
-            // Debug.Log(transform.rotation.eulerAngles);
         }
     }
 }

@@ -2507,8 +2507,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camTarget: {fileID: 398493726}
   lookTarget: {fileID: 1487785253}
-  followSmoothingValue: 10
-  lookSmoothingValue: 10
+  followSmoothingValue: 40
+  lookSmoothingValue: 40
   followPosition: 1
   lookAtPosition: 1
 --- !u!4 &1259850792
@@ -4747,26 +4747,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 571319912, guid: 6782434905e031d47b42139b31c78f6f, type: 3}
-      propertyPath: smoothingFactor
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1923850860, guid: 6782434905e031d47b42139b31c78f6f, type: 3}
-      propertyPath: m_Time
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1923850860, guid: 6782434905e031d47b42139b31c78f6f, type: 3}
-      propertyPath: m_MinVertexDistance
-      value: 0.001
-      objectReference: {fileID: 0}
-    - target: {fileID: 1923850860, guid: 6782434905e031d47b42139b31c78f6f, type: 3}
-      propertyPath: m_Parameters.numCapVertices
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1923850860, guid: 6782434905e031d47b42139b31c78f6f, type: 3}
-      propertyPath: m_Parameters.numCornerVertices
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 5500906252891925420, guid: 6782434905e031d47b42139b31c78f6f,
         type: 3}
       propertyPath: m_Name
@@ -4826,26 +4806,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5500906252891925423, guid: 6782434905e031d47b42139b31c78f6f,
-        type: 3}
-      propertyPath: speedFactor
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 5500906252891925423, guid: 6782434905e031d47b42139b31c78f6f,
-        type: 3}
-      propertyPath: distanceClamp
-      value: 1.55
-      objectReference: {fileID: 0}
-    - target: {fileID: 5500906252891925423, guid: 6782434905e031d47b42139b31c78f6f,
-        type: 3}
-      propertyPath: rotationSpeed
-      value: 128
-      objectReference: {fileID: 0}
-    - target: {fileID: 5500906252891925423, guid: 6782434905e031d47b42139b31c78f6f,
-        type: 3}
-      propertyPath: smoothingValue
-      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 7575849136450797321, guid: 6782434905e031d47b42139b31c78f6f,
         type: 3}
