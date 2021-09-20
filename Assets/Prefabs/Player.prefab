@@ -636,7 +636,7 @@ MonoBehaviour:
   distanceClamp: 1.55
   rotationSpeed: 128
   isLeft: 1
-  touchControls: 0
+  touchControls: 1
 --- !u!114 &1585796053
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -11,7 +11,7 @@ public class BaseUpdate : MonoBehaviour
         yOffset = 0f,
         zOffset = 0f;
 
-    private void Start()
+    private void Awake()
     {
         transform.localPosition = new Vector3(
             transform.localPosition.x,

@@ -61,10 +61,10 @@ public class CamPositionModifier : MonoBehaviour
         // Change position according to calculated
         // position for the camera according to
         // the zoomed out position
-        /*smoothedPosition = Vector3.Lerp(
+        smoothedPosition = Vector3.Lerp(
             smoothedPosition, 
             newCalculatedPosition, 
             zoomSmoothingFactor);
-        transform.position = smoothedPosition;*/
+        transform.position = smoothedPosition;  
     }
 }
