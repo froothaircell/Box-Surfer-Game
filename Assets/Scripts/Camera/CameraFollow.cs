@@ -9,15 +9,14 @@ public class CameraFollow : MonoBehaviour
     [SerializeField]
     private float
         followSmoothingValue = 0.125f,
-        lookSmoothingValue = 0.125f,
-        distanceSmoothingValue = 0.125f,
-        rotationSmoothingValue = 0.125f,
-        rotationSpeed = 3.0f;
+        lookSmoothingValue = 0.125f;
+    // distanceSmoothingValue = 0.125f,
+    // rotationSmoothingValue = 0.125f,
+    // rotationSpeed = 3.0f;
     [SerializeField]
-    private bool 
-        followPosition, 
-        lookAtPosition,
-        isLeft;
+    private bool
+        followPosition,
+        lookAtPosition;
 
     // Start is called before the first frame update
     private void Start()
@@ -25,7 +24,7 @@ public class CameraFollow : MonoBehaviour
         transform.position = camTarget.position;
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         if(followPosition)
         {
@@ -43,8 +42,9 @@ public class CameraFollow : MonoBehaviour
                 Quaternion.Euler(
                     transform.rotation.eulerAngles.x, 
                     desiredRotation.eulerAngles.y, 
-                    transform.eulerAngles.z), 
+                    transform.rotation.eulerAngles.z), 
                 lookSmoothingValue * Time.deltaTime);
+            // Debug.Log(transform.rotation.eulerAngles);
         }
     }
 }

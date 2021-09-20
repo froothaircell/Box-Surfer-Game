@@ -10,10 +10,10 @@ public class CamPositionModifier : MonoBehaviour
     private BoxManagement boxManager;
     [SerializeField]
     private float
-        smoothingFactor = 0.125f,
+        verticalSmoothingFactor = 0.125f,
         zoomSmoothingFactor = 0.125f,
         yOffset = 2.5f,
-        zoomOffset = 0.1f;
+        zoomOffsetFactor = 0.1f;
 
     private float baseDistance = 0f;
     
@@ -30,27 +30,36 @@ public class CamPositionModifier : MonoBehaviour
     }
 
     // Update is called once per frame
-    private void Update()
+    private void LateUpdate()
     {
-        zoomOffsetTotal = boxManager.BoxSize * zoomOffset;
+        // Calculate the new zoom distance from the
+        // player according to the number of boxes
+        zoomOffsetTotal = boxManager.BoxSize * zoomOffsetFactor;
         float newDistance = baseDistance + zoomOffsetTotal;
-        Debug.Log("The new distance is: " + newDistance);
+        
+        // Change position according to the y
+        // position of the base of the player
         Vector3 smoothedPosition = Vector3.Lerp(
             transform.position, 
             new Vector3(
                 transform.position.x, 
                 baseLocation.position.y + yOffset, 
                 transform.position.z), 
-            smoothingFactor);
-        Debug.Log("The first smoothed position is: " + smoothedPosition);
+            verticalSmoothingFactor);
+        
+        // Calculate the normalized vector from the
+        // base towards the player and use that to
+        // calculate the new position of the camera
         Vector3 normalizedVector = Vector3.Normalize(smoothedPosition - baseLocation.position);
         Vector3 newCalculatedPosition = baseLocation.position + (normalizedVector * newDistance);
-        Debug.Log("The calculated position is: " + newCalculatedPosition);
+        
+        // Change position according to calculated
+        // position for the camera according to
+        // the zoomed out position
         smoothedPosition = Vector3.Lerp(
             smoothedPosition, 
             newCalculatedPosition, 
             zoomSmoothingFactor);
-        Debug.Log("The second smoothed position is: " + smoothedPosition);
         transform.position = smoothedPosition;
     }
 }

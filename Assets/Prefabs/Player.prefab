@@ -45,10 +45,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseLocation: {fileID: 1923850859}
   boxManager: {fileID: 5500906254356476003}
-  smoothingFactor: 0.125
+  verticalSmoothingFactor: 0.125
   zoomSmoothingFactor: 0.125
   yOffset: 8.54
-  zoomOffset: 0.1
+  zoomOffsetFactor: 0.3
 --- !u!1 &1487785252
 GameObject:
   m_ObjectHideFlags: 0
@@ -93,7 +93,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseLocation: {fileID: 1923850859}
-  smoothingFactor: 0.125
+  smoothingFactor: 1
   yOffset: 3.14
 --- !u!1 &1923850858
 GameObject:
@@ -166,7 +166,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 5
+  m_Time: 1
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -223,8 +223,8 @@ TrailRenderer:
       m_Mode: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
-    numCornerVertices: 20
-    numCapVertices: 20
+    numCornerVertices: 5
+    numCapVertices: 5
     alignment: 1
     textureMode: 0
     shadowBias: 0.5
@@ -584,10 +584,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   localPlayerPosition: {fileID: 4796815149300684340}
-  smoothingValue: 0.3
+  smoothingValue: 0.8
   speedFactor: 10
-  distanceClamp: 1.6
-  rotationSpeed: 40.789
+  distanceClamp: 1.55
+  rotationSpeed: 128
   isLeft: 1
   touchControls: 0
 --- !u!114 &1585796053

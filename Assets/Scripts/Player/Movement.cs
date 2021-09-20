@@ -42,7 +42,8 @@ public class Movement : MonoBehaviour
         coroutine = Turn90Degrees();
     }
 
-    private void Update()
+    
+    private void LateUpdate()
     {
         // Use toggle in the inspector to use touch controls or mouse controls;
         if(touchControls)
@@ -192,8 +193,12 @@ public class Movement : MonoBehaviour
                     0.0f, 
                     Space.Self);
             }
+            if(i > 90)
+            {
+                transform.rotation = Quaternion.Euler(0, -90, 0);
+                isRotating = false;
+            }
             yield return new WaitForEndOfFrame();
         }
-        isRotating = false;
     }
 }
