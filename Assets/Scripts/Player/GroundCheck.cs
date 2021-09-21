@@ -12,7 +12,7 @@ public class GroundCheck : MonoBehaviour
         distanceThreshold, 
         trailOffset, 
         trailSmoothing, 
-        minTrailThreshold = 35.5f, 
+        minTrailThreshold = 35.5f, // For clamping the vertical position of the trail
         maxTrailThreshold = 100f;
     [SerializeField]
     private LayerMask layerMask;
@@ -21,6 +21,7 @@ public class GroundCheck : MonoBehaviour
     [SerializeField]
     private Transform trailPosition;
 
+    private Transform boxCastPosition;
     private TrailRenderer trailRenderer;
     private RaycastHit hit;
     private bool hitDetected;
@@ -33,6 +34,7 @@ public class GroundCheck : MonoBehaviour
         hitDetected = false;
         baseOnGround = false;
         trailRenderer = trailPosition.GetComponent<TrailRenderer>();
+        boxCastPosition = transform.GetChild(0);
     }
 
     // Keep repositioning the y-value of the trail
@@ -53,16 +55,19 @@ public class GroundCheck : MonoBehaviour
     // Provides ease of debugging
     private void OnDrawGizmos()
     {
-        if(hitDetected)
+        if(boxCastPosition)
         {
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawRay(transform.position, -transform.up * hit.distance);
-            Gizmos.DrawWireCube(transform.position - (transform.up * correctedValue), transform.lossyScale);
-        }
-        else
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawRay(transform.position, -transform.up * maxDistance);
+            if(hitDetected)
+            {
+                Gizmos.color = Color.cyan;
+                Gizmos.DrawRay(boxCastPosition.position, -transform.up * hit.distance);
+                Gizmos.DrawWireCube(boxCastPosition.position - (transform.up * correctedValue), transform.lossyScale/3);
+            }
+            else
+            {
+                Gizmos.color = Color.red;
+                Gizmos.DrawRay(boxCastPosition.position, -transform.up * maxDistance);
+            }
         }
     }
 
@@ -74,6 +79,7 @@ public class GroundCheck : MonoBehaviour
     {
         if(collision.collider.gameObject.layer == 8)
         {
+            //Debug.Log("Collision Started");
             baseOnGround = true;
         }
     }
@@ -82,6 +88,7 @@ public class GroundCheck : MonoBehaviour
     {
         if (collision.collider.gameObject.layer == 8)
         {
+            //Debug.Log("Collision sustained");
             result = collision.GetContact(0).point.y + trailOffset;
         }
     }
@@ -90,34 +97,47 @@ public class GroundCheck : MonoBehaviour
     {
         if (collision.collider.gameObject.layer == 8)
         {
+            //Debug.Log("Exiting collision");
             baseOnGround = false;
         }
     }
 
-    // Check if the player is grounded
+    // Check if the player is grounded. If the base
+    // cube is in a collision but the boxcast has a
+    // longer distance then that is taken as a false
+    // result
     private bool IsGrounded()
     {
+        hitDetected = Physics.BoxCast(
+            boxCastPosition.position,
+            transform.lossyScale/3,
+            -transform.up,
+            out hit,
+            transform.rotation,
+            maxDistance,
+            layerMask);
+        if (hitDetected)
+        {
+            correctedValue = hit.distance + 0.13f;
+        }
+        actualDistanceFromGround = correctedValue - (0.8f * boxManager.BoxSize);
         if(baseOnGround)
         {
-            return true;
+            if(actualDistanceFromGround > distanceThreshold)
+            {
+                //Debug.Log("base is getting off ground");
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
         else
         {
-            hitDetected = Physics.BoxCast(
-                transform.position,
-                transform.lossyScale,
-                -transform.up,
-                out hit,
-                transform.rotation,
-                maxDistance,
-                layerMask);
-            if (hitDetected)
-            {
-                correctedValue = hit.distance + 0.4f;
-            }
-            actualDistanceFromGround = correctedValue - (0.8f * boxManager.BoxSize);
             if(actualDistanceFromGround > distanceThreshold)
             {
+                //Debug.Log("Entire body off ground");
                 return false;
             }
             else

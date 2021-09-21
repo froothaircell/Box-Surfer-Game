@@ -36,7 +36,7 @@ public class CamPositionModifier : MonoBehaviour
         // player according to the number of boxes
         zoomOffsetTotal = boxManager.BoxSize * zoomOffsetFactor;
         float newDistance = baseDistance + zoomOffsetTotal;
-        Debug.Log("Base distance: " + baseDistance + "\n");
+        // Debug.Log("Base distance: " + baseDistance + "\n");
         
         // Change position according to the y
         // position of the base of the player
@@ -52,11 +52,11 @@ public class CamPositionModifier : MonoBehaviour
         // base towards the player and use that to
         // calculate the new position of the camera
         Vector3 normalizedVector = Vector3.Normalize(smoothedPosition - baseLocation.position);
-        Debug.Log("Normalized vector" + normalizedVector + "\n");
+        // Debug.Log("Normalized vector" + normalizedVector + "\n");
         Vector3 newCalculatedPosition = baseLocation.position + (normalizedVector * newDistance);
-        Debug.Log("Base location position" + baseLocation.position + "\n");
-        Debug.Log((normalizedVector * newDistance) + "\n");
-        Debug.Log("The normalized vector is " + normalizedVector + " and the new calculated position is " + newCalculatedPosition);
+        // Debug.Log("Base location position" + baseLocation.position + "\n");
+        // Debug.Log((normalizedVector * newDistance) + "\n");
+        // Debug.Log("The normalized vector is " + normalizedVector + " and the new calculated position is " + newCalculatedPosition);
         
         // Change position according to calculated
         // position for the camera according to
