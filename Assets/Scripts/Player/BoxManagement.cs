@@ -11,6 +11,8 @@ public class BoxManagement : MonoBehaviour
     private Transform character;
     [SerializeField]
     private Transform charCube;
+    [SerializeField]
+    private GroundCheck groundChecker;
 
     private int newBoxSize;
     // private float boxHeight;
@@ -42,16 +44,24 @@ public class BoxManagement : MonoBehaviour
                 // NOTE: This is using a fixed height from the ground. It may
                 // need to be changed once we introduce ramps
                 float boxHeight = 36f + boxSize * (0.8f);
-
+                /*float boxHeight = 
+                    ((boxSize * 0.8f) + 0.3f - groundChecker.DistanceFromGround) > 0.5f ? 
+                        35.5f + boxSize * (0.8f) : (boxSize * 0.8f) + 0.3f < groundChecker.DistanceFromGround ? 
+                            35.5f + boxSize * (0.8f) : 35.5f + groundChecker.DistanceFromGround;
+                */
+                // Debug.Log("Box Height: " + boxHeight);
+                // Debug.Log("Actual Distance from Ground: " + groundChecker.DistanceFromGround);
+                // Debug.Log("Calculated Box Height from Ground + Half Base Box: " + ((boxSize * 0.8f) + 0.3f));
+                
                 // Set positions of character and base cube according to the
                 // box height
                 character.position = new Vector3(
                     character.position.x, 
-                    boxHeight + 1.0f, 
+                    boxHeight + 0.85f + 0.25f, 
                     character.position.z);
                 charCube.position = new Vector3(
                     charCube.position.x, 
-                    boxHeight + 0.5f, 
+                    boxHeight + 0.42f + 0.25f, 
                     charCube.position.z);
 
                 // Instantiate the new box with the requisite properties and
@@ -60,15 +70,15 @@ public class BoxManagement : MonoBehaviour
                     boxPrefab,
                     new Vector3(
                         transform.position.x,
-                        boxHeight,
+                        boxHeight - 0.15f,
                         transform.position.z),
                     Quaternion.identity,
                     transform);
                 
-                //Destroy(newBoxProperties.GetComponent<YellowBoxSensor>());
-                Destroy(newBoxProperties.transform.GetChild(0).gameObject);
-                newBoxProperties.GetComponent<Rigidbody>().isKinematic = false;
-                newBoxProperties.tag = "Player";
+                // Destroy(newBoxProperties.GetComponent<YellowBoxSensor>());
+                // Destroy(newBoxProperties.transform.GetChild(0).gameObject);
+                // newBoxProperties.GetComponent<Rigidbody>().isKinematic = false;
+                // newBoxProperties.tag = "Player";
                 boxSize++;
                 iter++;
 

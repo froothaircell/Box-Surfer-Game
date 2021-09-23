@@ -38,6 +38,7 @@ public class Movement : MonoBehaviour
         InitPos = transform.position;
         Input.multiTouchEnabled = false;
         // initialTouchPosition = Vector3.zero;
+        // initialMousePosition = Input.mousePosition;
         travelDistance = 0f;
         coroutine = Turn90Degrees();
     }
@@ -77,25 +78,30 @@ public class Movement : MonoBehaviour
             if(!isDeadOrHasStopped)
             {
                 // Rotate for debugging purposes
-                if(Input.GetButton("Fire2"))
+                /*if(Input.GetButton("Fire2"))
                 {
                     transform.Rotate(
                     0.0f,
                     -rotationSpeed * Time.deltaTime,
                     0.0f,
                     Space.Self);
-                }
+                }*/
 
-                // If the mouse button was just pressed down
-                if(Input.GetButtonDown("Fire1"))
-                {
-                    initialMousePosition = Input.mousePosition;
-                }
+                // Move character forwards
+                /* transform.Translate(
+                    speedFactor * Time.deltaTime * transform.forward,
+                    Space.World); */
 
                 // Reverse direction of movement
                 if(Input.GetButtonDown("Jump"))
                 {
                     transform.position = InitPos;
+                }
+
+                // If the mouse button was just pressed down
+                if (Input.GetButtonDown("Fire1"))
+                {
+                    initialMousePosition = Input.mousePosition;
                 }
 
                 // If the mouse button is being pressed persistently
@@ -121,7 +127,7 @@ public class Movement : MonoBehaviour
                 // If the mouse button stopped being pressed
                 if (Input.GetButtonUp("Fire1"))
                 {
-                    initialMousePosition = Vector3.zero;
+                    initialMousePosition = Input.mousePosition;
                 }
             }
         }

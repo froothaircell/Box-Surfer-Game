@@ -28,6 +28,10 @@ public class GroundCheck : MonoBehaviour
     private bool baseOnGround;
     private float correctedValue, actualDistanceFromGround, result;
 
+    public float DistanceFromGround
+    {
+        get { return correctedValue; }
+    }
 
     private void Awake()
     {
@@ -123,26 +127,40 @@ public class GroundCheck : MonoBehaviour
         actualDistanceFromGround = correctedValue - (0.8f * boxManager.BoxSize);
         if(baseOnGround)
         {
-            if(actualDistanceFromGround > distanceThreshold)
+            if(actualDistanceFromGround > distanceThreshold || !hitDetected)
             {
                 //Debug.Log("base is getting off ground");
                 return false;
             }
             else
             {
-                return true;
+                if(hit.collider.gameObject.layer == 9)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
             }
         }
         else
         {
-            if(actualDistanceFromGround > distanceThreshold)
+            if(actualDistanceFromGround > distanceThreshold || !hitDetected)
             {
                 //Debug.Log("Entire body off ground");
                 return false;
             }
             else
             {
-                return true;
+                if (hit.collider.gameObject.layer == 9)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
             }
         }
     }

@@ -7,22 +7,32 @@ public class YellowBoxSensor : MonoBehaviour
     [SerializeField]
     private UnityEvent yellowEvent = new UnityEvent();
 
-    private GameObject myParent;
+    private bool addBox = false;
 
-    private void Start()
+    private void Awake()
     {
-        myParent = transform.parent.gameObject;
+        addBox = false;
+    }
+
+    private void Update()
+    {
+        if(addBox)
+        {
+            yellowEvent.Invoke();
+            Destroy(gameObject);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
+        gameObject.GetComponent<BoxCollider>().isTrigger = true;
         // if the player is detected, add a box
-        if (collision.collider.CompareTag("Player") 
-            || collision.collider.CompareTag("Player Base") 
+        if (collision.collider.CompareTag("Player")
+            || collision.collider.CompareTag("Player Base")
             || collision.collider.CompareTag("Character"))
         {
-            yellowEvent.Invoke();
-            Destroy(myParent);
+            addBox = true;
         }
+
     }
 }
