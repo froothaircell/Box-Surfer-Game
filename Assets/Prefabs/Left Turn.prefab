@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9147100150321519422}
   - component: {fileID: 9147100150321519424}
   - component: {fileID: 9147100150321519425}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Left Turn Curve
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,9 +48,12 @@ MonoBehaviour:
     _bezierPath:
       points:
       - {x: -2.0329728, y: 0, z: 1.9899445}
-      - {x: 0.35969305, y: 0, z: 1.9628448}
-      - {x: 2.0170548, y: 0, z: 0.35925293}
-      - {x: 2.0329726, y: 0, z: -1.989975}
+      - {x: -0.6602218, y: 0, z: 2.0183258}
+      - {x: 0.40064156, y: 0, z: 1.526535}
+      - {x: 1.2221123, y: 0, z: 0.61831665}
+      - {x: 1.8940094, y: 0, z: -0.12453294}
+      - {x: 2.0358312, y: 0, z: -1.2224654}
+      - {x: 2.0389109, y: 0.0034561157, z: -2.0635834}
       isClosed: 0
       space: 0
       controlMode: 0
@@ -60,6 +63,7 @@ MonoBehaviour:
         m_Center: {x: -0.21211839, y: -0.04534022, z: -1.6758499}
         m_Extent: {x: 2.3911068, y: 0.15317662, z: 2.1080704}
       perAnchorNormalsAngle:
+      - 0
       - 0
       - 0
       globalNormalsAngle: 0
@@ -115,7 +119,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9147100150947134350}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Left Turn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -150,8 +154,8 @@ GameObject:
   - component: {fileID: 9147100151337185413}
   - component: {fileID: 9147100151337185415}
   - component: {fileID: 9147100151337185412}
-  - component: {fileID: 9147100151337185414}
-  m_Layer: 0
+  - component: {fileID: 1957291719}
+  m_Layer: 8
   m_Name: Road Mesh Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -221,7 +225,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &9147100151337185414
+--- !u!64 &1957291719
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

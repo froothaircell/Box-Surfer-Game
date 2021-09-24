@@ -1,7 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+/// <summary>
+/// This function updates the base position 
+/// of the player
+/// </summary>
 public class BaseUpdate : MonoBehaviour
 {
     [SerializeField]

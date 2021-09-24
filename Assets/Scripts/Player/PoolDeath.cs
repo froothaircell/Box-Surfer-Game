@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 public class PoolDeath : MonoBehaviour
 {
+    [SerializeField]
+    private UnityEvent poolDeath = new UnityEvent();
     [SerializeField]
     private Movement movementScript;
     [SerializeField]
@@ -20,6 +23,7 @@ public class PoolDeath : MonoBehaviour
             {
                 movementScript.KillOrCelebrate();
                 animationPickerScript.KillOrCelebrate();
+                poolDeath.Invoke();
             }
         }
     }

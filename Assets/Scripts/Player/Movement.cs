@@ -7,9 +7,10 @@ public class Movement : MonoBehaviour
     public Transform localPlayerPosition;
 
     [SerializeField]
-    private float 
-        smoothingValue = 1.8f, 
-        speedFactor = 0.5f,
+    private float
+        smoothingValue = 1.8f,
+        speedFactor = 10f,
+        turnSpeed = 10f,
         distanceClamp = 4f, 
         rotationSpeed = 3f;
     [SerializeField]
@@ -19,14 +20,17 @@ public class Movement : MonoBehaviour
 
     Vector3 InitPos; // For debugging pusposes
     private float travelDistance;
-    private bool isRotating = false;
-    private bool hasWon = false;
-    private bool isDeadOrHasStopped = false;
+    private bool
+        firstClick = false,
+        isRotating = false, 
+        hasWon = false, 
+        isDeadOrHasStopped = false;
     private Vector3 initialMousePosition;
     private IEnumerator coroutine;
 
     private void Awake()
     {
+        firstClick = false;
         isRotating = false;
         hasWon = false;
         isDeadOrHasStopped = false;
@@ -37,8 +41,7 @@ public class Movement : MonoBehaviour
     {
         InitPos = transform.position;
         Input.multiTouchEnabled = false;
-        // initialTouchPosition = Vector3.zero;
-        // initialMousePosition = Input.mousePosition;
+
         travelDistance = 0f;
         coroutine = Turn90Degrees();
     }
@@ -50,26 +53,49 @@ public class Movement : MonoBehaviour
         if(touchControls)
         {
             // Check if character isn't already dead and touch is supported
-            if(!isDeadOrHasStopped && Input.touchSupported && Input.touchCount > 0)
+            if(!isDeadOrHasStopped) 
             {
-                Touch touch = Input.GetTouch(0);
-
-                // If the screen is being pressed persistently or swiped
-                if(touch.phase == TouchPhase.Moved || Input.GetTouch(0).phase == TouchPhase.Stationary)
+                if(!firstClick && Input.touchCount > 0)
                 {
-                    // Check the travel distance of the touch between frames
-                    travelDistance =  - touch.deltaPosition.x / 100;
+                    firstClick = true;
+                }
 
-                    // Move character forwards
-                    transform.Translate(
-                        speedFactor * Time.deltaTime * transform.forward,
-                        Space.World);
+                if(firstClick)
+                {
+                    if(isRotating)
+                    {
+                        // Move character forwards
+                        transform.Translate(
+                            turnSpeed * Time.deltaTime * transform.forward,
+                            Space.World);
+                    }
+                    else
+                    {
+                        // Move character forwards
+                        transform.Translate(
+                            speedFactor * Time.deltaTime * transform.forward,
+                            Space.World);
+                    }
+                }
 
-                    // If the mouse moved from the initial recorded position
-                    TurnCharacter(
-                        ref travelDistance,
-                        ref localPlayerPosition,
-                        distanceClamp);
+                if (Input.touchSupported && Input.touchCount > 0)
+                {
+                    Touch touch = Input.GetTouch(0);
+
+
+                    // If the screen is being pressed persistently or swiped
+                    if(touch.phase == TouchPhase.Moved || Input.GetTouch(0).phase == TouchPhase.Stationary)
+                    {
+                        // Check the travel distance of the touch between frames
+                        travelDistance =  - touch.deltaPosition.x / 100;
+
+
+                        // If the mouse moved from the initial recorded position
+                        TurnCharacter(
+                            ref travelDistance,
+                            ref localPlayerPosition,
+                            distanceClamp);
+                    }
                 }
             }
         }
@@ -112,10 +138,20 @@ public class Movement : MonoBehaviour
                     travelDistance = (initialMousePosition.x - Input.mousePosition.x)/100;
                     initialMousePosition = Input.mousePosition;
 
-                    // Move character forwards
-                    transform.Translate(
-                        speedFactor * Time.deltaTime * transform.forward,
-                        Space.World);
+                    if (isRotating)
+                    {
+                        // Move character forwards
+                        transform.Translate(
+                            turnSpeed * Time.deltaTime * transform.forward,
+                            Space.World);
+                    }
+                    else
+                    {
+                        // Move character forwards
+                        transform.Translate(
+                            speedFactor * Time.deltaTime * transform.forward,
+                            Space.World);
+                    }
 
                     // If the mouse moved from the initial recorded position
                     TurnCharacter(

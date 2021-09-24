@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/// <summary>
+/// This function modifies the y-component of the position
+/// of the camera by tracking the base of the player. It 
+/// also zooms out according to the number of boxes in the 
+/// stack
+/// </summary>
 public class CamPositionModifier : MonoBehaviour
 {
     [SerializeField]
