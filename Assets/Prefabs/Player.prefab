@@ -257,22 +257,22 @@ TrailRenderer:
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.33333334
+        outWeight: 0.12546282
       - serializedVersion: 3
         time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
+        value: 1
+        inSlope: -0
+        outSlope: -0
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0
+        inWeight: 0.111052416
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.8, g: 0.07058824, b: 0.07058824, a: 1}
+      key0: {r: 1, g: 0.8707609, b: 0.3820755, a: 1}
       key1: {r: 0.8784314, g: 0.78039217, b: 0.07058824, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -299,13 +299,13 @@ TrailRenderer:
       m_Mode: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
-    numCornerVertices: 20
-    numCapVertices: 20
+    numCornerVertices: 90
+    numCapVertices: 90
     alignment: 1
     textureMode: 0
     shadowBias: 0.5
     generateLightingData: 0
-  m_MinVertexDistance: 0.001
+  m_MinVertexDistance: 0.0000001
   m_Autodestruct: 0
   m_Emitting: 1
 --- !u!1 &1845169807130777505
@@ -593,14 +593,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxDistance: 100
-  distanceThreshold: 0.5
-  trailOffset: 0.05
+  distanceThreshold: 1.5
+  trailOffset: 0.01
   trailSmoothing: 0.1
   minTrailThreshold: 35.5
   maxTrailThreshold: 100
   layerMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 768
   boxManager: {fileID: 5500906254356476003}
   trailPosition: {fileID: 1923850859}
 --- !u!114 &13602425
@@ -615,21 +615,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 656d6a6970b187d469973d4c08ea9c5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  poolDeath:
+    m_PersistentCalls:
+      m_Calls: []
   movementScript: {fileID: 5500906252891925423}
   animationPickerScript: {fileID: 1585796053}
---- !u!65 &5500906253619429843
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3156862825717598704}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.75, y: 1.75, z: 0.6}
-  m_Center: {x: 0, y: 0.05, z: 0}
 --- !u!1 &5500906252891925420
 GameObject:
   m_ObjectHideFlags: 0
@@ -680,8 +670,9 @@ MonoBehaviour:
   localPlayerPosition: {fileID: 4796815149300684340}
   smoothingValue: 0.8
   speedFactor: 10
+  turnSpeed: 15.5
   distanceClamp: 1.55
-  rotationSpeed: 128
+  rotationSpeed: 180
   isLeft: 1
   touchControls: 0
 --- !u!114 &1585796053
@@ -714,6 +705,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 122
   m_CollisionDetection: 3
+--- !u!65 &999729603
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7498637246788802096}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.75, y: 1.75, z: 0.6}
+  m_Center: {x: 0, y: 0.875, z: 0}
 --- !u!1 &7506354783481928862
 GameObject:
   m_ObjectHideFlags: 0
@@ -952,12 +956,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 14470fd151bcc4742b90348391998ddb, type: 3}
---- !u!1 &3156862825717598704 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7464798933339330805, guid: 14470fd151bcc4742b90348391998ddb,
-    type: 3}
-  m_PrefabInstance: {fileID: 5500906253908398341}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7264846098375894421 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2920248040524395664, guid: 14470fd151bcc4742b90348391998ddb,

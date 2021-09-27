@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 
-// Manage boxes under the player and add according to requirement
+/// <summary>
+/// Manage boxes under the player and add according to requirement
+/// </summary>
 public class BoxManagement : MonoBehaviour
 {
     [SerializeField]
@@ -44,14 +46,6 @@ public class BoxManagement : MonoBehaviour
                 // NOTE: This is using a fixed height from the ground. It may
                 // need to be changed once we introduce ramps
                 float boxHeight = 36f + boxSize * (0.8f);
-                /*float boxHeight = 
-                    ((boxSize * 0.8f) + 0.3f - groundChecker.DistanceFromGround) > 0.5f ? 
-                        35.5f + boxSize * (0.8f) : (boxSize * 0.8f) + 0.3f < groundChecker.DistanceFromGround ? 
-                            35.5f + boxSize * (0.8f) : 35.5f + groundChecker.DistanceFromGround;
-                */
-                // Debug.Log("Box Height: " + boxHeight);
-                // Debug.Log("Actual Distance from Ground: " + groundChecker.DistanceFromGround);
-                // Debug.Log("Calculated Box Height from Ground + Half Base Box: " + ((boxSize * 0.8f) + 0.3f));
                 
                 // Set positions of character and base cube according to the
                 // box height
@@ -66,7 +60,7 @@ public class BoxManagement : MonoBehaviour
 
                 // Instantiate the new box with the requisite properties and
                 // increase iteration value and the box size
-                GameObject newBoxProperties = Instantiate(
+                Instantiate(
                     boxPrefab,
                     new Vector3(
                         transform.position.x,
@@ -75,10 +69,6 @@ public class BoxManagement : MonoBehaviour
                     Quaternion.identity,
                     transform);
                 
-                // Destroy(newBoxProperties.GetComponent<YellowBoxSensor>());
-                // Destroy(newBoxProperties.transform.GetChild(0).gameObject);
-                // newBoxProperties.GetComponent<Rigidbody>().isKinematic = false;
-                // newBoxProperties.tag = "Player";
                 boxSize++;
                 iter++;
 

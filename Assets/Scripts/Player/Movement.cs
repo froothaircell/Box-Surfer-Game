@@ -21,12 +21,18 @@ public class Movement : MonoBehaviour
     Vector3 InitPos; // For debugging pusposes
     private float travelDistance;
     private bool
-        firstClick = false,
-        isRotating = false, 
-        hasWon = false, 
-        isDeadOrHasStopped = false;
+        firstClick = false, // Depends on the game manager state
+        isRotating = false,
+        hasWon = false,
+        isDeadOrHasStopped = false,
+        settingsOpened = false;
     private Vector3 initialMousePosition;
     private IEnumerator coroutine;
+
+    public float SpeedFactor
+    {
+        get { return speedFactor; }
+    }
 
     private void Awake()
     {
@@ -53,13 +59,8 @@ public class Movement : MonoBehaviour
         if(touchControls)
         {
             // Check if character isn't already dead and touch is supported
-            if(!isDeadOrHasStopped) 
+            if(!isDeadOrHasStopped && !settingsOpened) 
             {
-                if(!firstClick && Input.touchCount > 0)
-                {
-                    firstClick = true;
-                }
-
                 if(firstClick)
                 {
                     if(isRotating)
@@ -101,7 +102,7 @@ public class Movement : MonoBehaviour
         }
         else
         {
-            if(!isDeadOrHasStopped)
+            if(!isDeadOrHasStopped && !settingsOpened)
             {
                 // Rotate for debugging purposes
                 /*if(Input.GetButton("Fire2"))
@@ -117,56 +118,112 @@ public class Movement : MonoBehaviour
                 /* transform.Translate(
                     speedFactor * Time.deltaTime * transform.forward,
                     Space.World); */
-
-                // Reverse direction of movement
-                if(Input.GetButtonDown("Jump"))
+                
+                if (firstClick)
                 {
-                    transform.position = InitPos;
-                }
-
-                // If the mouse button was just pressed down
-                if (Input.GetButtonDown("Fire1"))
-                {
-                    initialMousePosition = Input.mousePosition;
-                }
-
-                // If the mouse button is being pressed persistently
-                if(Input.GetButton("Fire1"))
-                {
-                    // Calculate distance of mouse cursor from original
-                    // point in the last frame to determine movement
-                    travelDistance = (initialMousePosition.x - Input.mousePosition.x)/100;
-                    initialMousePosition = Input.mousePosition;
-
-                    if (isRotating)
+                    // Reverse direction of movement
+                    if (Input.GetButtonDown("Jump"))
                     {
-                        // Move character forwards
-                        transform.Translate(
-                            turnSpeed * Time.deltaTime * transform.forward,
-                            Space.World);
-                    }
-                    else
-                    {
-                        // Move character forwards
-                        transform.Translate(
-                            speedFactor * Time.deltaTime * transform.forward,
-                            Space.World);
+                        transform.position = InitPos;
                     }
 
-                    // If the mouse moved from the initial recorded position
-                    TurnCharacter(
-                        ref travelDistance,
-                        ref localPlayerPosition,
-                        distanceClamp);
-                }
+                    // If the mouse button was just pressed down
+                    if (Input.GetButtonDown("Fire1"))
+                    {
+                        initialMousePosition = Input.mousePosition;
+                    }
 
-                // If the mouse button stopped being pressed
-                if (Input.GetButtonUp("Fire1"))
-                {
-                    initialMousePosition = Input.mousePosition;
+                    // If the mouse button is being pressed persistently
+                    if (Input.GetButton("Fire1"))
+                    {
+                        // Calculate distance of mouse cursor from original
+                        // point in the last frame to determine movement
+                        travelDistance = (initialMousePosition.x - Input.mousePosition.x) / 100;
+                        initialMousePosition = Input.mousePosition;
+
+                        if (isRotating)
+                        {
+                            // Move character forwards
+                            transform.Translate(
+                                turnSpeed * Time.deltaTime * transform.forward,
+                                Space.World);
+                        }
+                        else
+                        {
+                            // Move character forwards
+                            transform.Translate(
+                                speedFactor * Time.deltaTime * transform.forward,
+                                Space.World);
+                        }
+
+                        // If the mouse moved from the initial recorded position
+                        TurnCharacter(
+                            ref travelDistance,
+                            ref localPlayerPosition,
+                            distanceClamp);
+                    }
+
+                    // If the mouse button stopped being pressed
+                    if (Input.GetButtonUp("Fire1"))
+                    {
+                        initialMousePosition = Input.mousePosition;
+                    }
                 }
             }
         }
+    }
+
+    // To be referenced from the scroll bar in the config menu
+    public void UpdateSpeedFactor(float value)
+    {
+        speedFactor = value;
+    }
+
+    // Use the base cube's OnTriggerEnter to activate this function 
+    public void OnTriggerEnterChild(Collider other, bool isLeft)
+    {
+        if(other.CompareTag("Path Interactables"))
+        {
+            this.isLeft = isLeft;
+            isRotating = true;
+            StopCoroutine(coroutine);
+            StartCoroutine(coroutine);
+        }
+    }
+
+    public void StartMoving()
+    {
+        firstClick = true;
+    }
+
+    // Set the win flag using the set unity event
+    public void Win()
+    {
+        hasWon = true;
+    }
+
+    // Kill the character using the set unity event
+    public void KillOrCelebrate()
+    {
+        isDeadOrHasStopped = true;
+        if(!hasWon)
+        {
+            Destroy(GetComponentInChildren<ConfigurableJoint>());
+        }
+    }
+
+    // Kill movement in the case that settings are opened
+    // NOTE: These functions are kept seperate instead of
+    // flipping the boolean in case there might be more
+    // use cases for these
+    public void PauseForSettings() 
+    {
+        settingsOpened = true;
+    }
+
+    public void PlayOnSettingsClosed()
+    {
+        settingsOpened = false;
     }
 
     // Turn the character by manipulating the local transform in the child object (Player Direction Modifier)
@@ -190,34 +247,6 @@ public class Movement : MonoBehaviour
                     smoothingValue),
                 localPlayerPosition.localPosition.y,
                 localPlayerPosition.localPosition.z);
-        }
-    }
-
-    // Use the base cube's OnTriggerEnter to activate this function 
-    public void OnTriggerEnterChild(Collider other, bool isLeft)
-    {
-        if(other.CompareTag("Path Interactables"))
-        {
-            this.isLeft = isLeft;
-            isRotating = true;
-            StopCoroutine(coroutine);
-            StartCoroutine(coroutine);
-        }
-    }
-
-    // Set the win flag using the set unity event
-    public void Win()
-    {
-        hasWon = true;
-    }
-
-    // Kill the character using the set unity event
-    public void KillOrCelebrate()
-    {
-        isDeadOrHasStopped = true;
-        if(!hasWon)
-        {
-            Destroy(GetComponentInChildren<ConfigurableJoint>());
         }
     }
 

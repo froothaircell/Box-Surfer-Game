@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
+/// <summary>
+/// Check if player enters range and trigger win event
+/// </summary>
 public class WinSensor : MonoBehaviour
 {
     [SerializeField]
-    private UnityEvent winEvent = new UnityEvent();
-    [SerializeField]
     private float maxDistance = 2f;
+    [SerializeField]
+    private UnityEvent winEvent = new UnityEvent();
 
     private RaycastHit hit;
     private bool hitDetected;
@@ -14,18 +17,6 @@ public class WinSensor : MonoBehaviour
     private void LateUpdate()
     {
         CheckForPlayer();
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.collider.CompareTag("Player")
-            || collision.collider.CompareTag("Player Base")
-            || collision.collider.CompareTag("Character"))
-        {
-            winEvent.Invoke();
-            Destroy(gameObject);
-        }
-        Destroy(gameObject);
     }
 
     // Provides ease of debugging
@@ -43,7 +34,7 @@ public class WinSensor : MonoBehaviour
             Gizmos.DrawRay(transform.position, -transform.forward * maxDistance);
         }
     }
-
+    
     private void CheckForPlayer()
     {
         hitDetected = Physics.BoxCast(

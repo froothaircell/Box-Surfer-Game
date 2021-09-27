@@ -5,10 +5,6 @@ public class PoolDeath : MonoBehaviour
 {
     [SerializeField]
     private UnityEvent poolDeath = new UnityEvent();
-    [SerializeField]
-    private Movement movementScript;
-    [SerializeField]
-    private AnimationPicker animationPickerScript;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -18,13 +14,7 @@ public class PoolDeath : MonoBehaviour
         {
             // Activate pool collider
             other.transform.GetChild(0).GetComponent<MeshCollider>().enabled = true;
-
-            if(movementScript && animationPickerScript)
-            {
-                movementScript.KillOrCelebrate();
-                animationPickerScript.KillOrCelebrate();
-                poolDeath.Invoke();
-            }
+            poolDeath.Invoke();
         }
     }
 }

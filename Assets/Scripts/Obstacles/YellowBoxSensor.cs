@@ -9,7 +9,7 @@ public class YellowBoxSensor : MonoBehaviour
 
     private bool addBox = false;
 
-    private void Awake()
+    private void Start()
     {
         addBox = false;
     }
