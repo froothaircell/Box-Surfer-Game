@@ -19,26 +19,38 @@ public class GroundCheck : MonoBehaviour
     [SerializeField]
     private BoxManagement boxManager;
     [SerializeField]
-    private Transform trailPosition;
+    private Transform
+        trailPosition,
+        frontBoxCastPosition,
+        leftBoxCastPosition,
+        rightBoxCastPosition;
 
-    private Transform boxCastPosition;
     private TrailRenderer trailRenderer;
-    private RaycastHit hit;
-    private bool hitDetected;
+    private RaycastHit frontHit;
+    private RaycastHit leftHit;
+    private RaycastHit rightHit;
+    private bool frontHitDetected;
+    private bool leftHitDetected;
+    private bool rightHitDetected;
     private bool baseOnGround;
-    private float correctedValue, actualDistanceFromGround, result;
+    private float 
+        frontCorrectedValue,
+        leftCorrectedValue,
+        rightCorrectedValue,
+        actualDistanceFromGround,
+        result;
 
     public float DistanceFromGround
     {
-        get { return correctedValue; }
+        get { return frontCorrectedValue; }
     }
 
     private void Awake()
     {
-        hitDetected = false;
+        frontHitDetected = false;
         baseOnGround = false;
         trailRenderer = trailPosition.GetComponent<TrailRenderer>();
-        boxCastPosition = transform.GetChild(0);
+        // boxCastPosition = transform.GetChild(0);
     }
 
     // Keep repositioning the y-value of the trail
@@ -59,18 +71,40 @@ public class GroundCheck : MonoBehaviour
     // Provides ease of debugging
     private void OnDrawGizmos()
     {
-        if(boxCastPosition)
+        if(frontBoxCastPosition)
         {
-            if(hitDetected)
+            if(frontHitDetected)
             {
                 Gizmos.color = Color.cyan;
-                Gizmos.DrawRay(boxCastPosition.position, -transform.up * hit.distance);
-                Gizmos.DrawWireCube(boxCastPosition.position - (transform.up * correctedValue), transform.lossyScale/3);
+                Gizmos.DrawRay(frontBoxCastPosition.position, -transform.up * frontHit.distance);
+                Gizmos.DrawWireCube(frontBoxCastPosition.position - (transform.up * frontCorrectedValue), transform.lossyScale/3);
             }
             else
             {
                 Gizmos.color = Color.red;
-                Gizmos.DrawRay(boxCastPosition.position, -transform.up * maxDistance);
+                Gizmos.DrawRay(frontBoxCastPosition.position, -transform.up * maxDistance);
+            }
+            if (leftHitDetected)
+            {
+                Gizmos.color = Color.cyan;
+                Gizmos.DrawRay(leftBoxCastPosition.position, -transform.up * leftHit.distance);
+                Gizmos.DrawWireCube(leftBoxCastPosition.position - (transform.up * frontCorrectedValue), transform.lossyScale / 3);
+            }
+            else
+            {
+                Gizmos.color = Color.red;
+                Gizmos.DrawRay(leftBoxCastPosition.position, -transform.up * maxDistance);
+            }
+            if (rightHitDetected)
+            {
+                Gizmos.color = Color.cyan;
+                Gizmos.DrawRay(rightBoxCastPosition.position, -transform.up * rightHit.distance);
+                Gizmos.DrawWireCube(rightBoxCastPosition.position - (transform.up * frontCorrectedValue), transform.lossyScale / 3);
+            }
+            else
+            {
+                Gizmos.color = Color.red;
+                Gizmos.DrawRay(rightBoxCastPosition.position, -transform.up * maxDistance);
             }
         }
     }
@@ -112,56 +146,95 @@ public class GroundCheck : MonoBehaviour
     // result
     private bool IsGrounded()
     {
-        hitDetected = Physics.BoxCast(
-            boxCastPosition.position,
+        frontHitDetected = Physics.BoxCast(
+            frontBoxCastPosition.position,
             transform.lossyScale/3,
             -transform.up,
-            out hit,
+            out frontHit,
             transform.rotation,
             maxDistance,
             layerMask);
-        if (hitDetected)
+
+        leftHitDetected = Physics.BoxCast(
+            leftBoxCastPosition.position,
+            transform.lossyScale / 3,
+            -transform.up,
+            out leftHit,
+            transform.rotation,
+            maxDistance,
+            layerMask);
+
+        rightHitDetected = Physics.BoxCast(
+            rightBoxCastPosition.position,
+            transform.lossyScale / 3,
+            -transform.up,
+            out rightHit,
+            transform.rotation,
+            maxDistance,
+            layerMask);
+
+        // Check hits on front, left and right
+        if (frontHitDetected)
         {
-            correctedValue = hit.distance + 0.13f;
+            frontCorrectedValue = frontHit.distance + 0.13f;
         }
-        actualDistanceFromGround = correctedValue - (0.8f * boxManager.BoxSize);
-        if(baseOnGround)
+        if (leftHitDetected)
         {
-            if(actualDistanceFromGround > distanceThreshold || !hitDetected)
+            leftCorrectedValue = leftHit.distance + 0.13f;
+        }
+        if (rightHitDetected)
+        {
+            rightCorrectedValue = rightHit.distance + 0.13f;
+        }
+        actualDistanceFromGround = frontCorrectedValue - (0.8f * boxManager.BoxSize);
+
+        // Check if the difference between any of the box casts exceeds a certain threshold
+        if(frontHitDetected && leftHitDetected && rightHitDetected &&
+            Mathf.Abs(frontCorrectedValue - rightCorrectedValue) < 0.5f && 
+            Mathf.Abs(frontCorrectedValue - rightCorrectedValue) < 0.5f)
+        {
+            if(baseOnGround)
             {
-                //Debug.Log("base is getting off ground");
-                return false;
-            }
-            else
-            {
-                if(hit.collider.gameObject.layer == 9)
+                if(actualDistanceFromGround > distanceThreshold || !frontHitDetected)
                 {
+                    //Debug.Log("base is getting off ground");
                     return false;
                 }
                 else
                 {
-                    return true;
+                    if(frontHit.collider.gameObject.layer == 9)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+            }
+            else
+            {
+                if(actualDistanceFromGround > distanceThreshold || !frontHitDetected)
+                {
+                    //Debug.Log("Entire body off ground");
+                    return false;
+                }
+                else
+                {
+                    if (frontHit.collider.gameObject.layer == 9)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
                 }
             }
         }
         else
         {
-            if(actualDistanceFromGround > distanceThreshold || !hitDetected)
-            {
-                //Debug.Log("Entire body off ground");
-                return false;
-            }
-            else
-            {
-                if (hit.collider.gameObject.layer == 9)
-                {
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
-            }
+            return false;
         }
     }
 
@@ -170,7 +243,7 @@ public class GroundCheck : MonoBehaviour
     {
         if(!baseOnGround)
         {
-            result = hit.point.y + trailOffset;
+            result = frontHit.point.y + trailOffset;
         }
         result = Mathf.Clamp(result, minTrailThreshold, maxTrailThreshold);
         trailPosition.position = Vector3.Lerp(

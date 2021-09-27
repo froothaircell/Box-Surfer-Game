@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4030671003329428591}
   - component: {fileID: 4030671003329428562}
   - component: {fileID: 4030671003329428563}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Hidden Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4030671003329428589}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.07, z: -0.065}
+  m_LocalPosition: {x: 0, y: 0.015, z: -0.09}
   m_LocalScale: {x: 0.85, y: 0.89, z: 0.85}
   m_Children: []
   m_Father: {fileID: 4030671003580558689}
@@ -161,7 +161,7 @@ GameObject:
   - component: {fileID: 4030671003580558719}
   - component: {fileID: 4030671003580558718}
   - component: {fileID: 4030671003580558690}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Elevated Platform (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -272,7 +272,7 @@ GameObject:
   - component: {fileID: 4030671003624630856}
   - component: {fileID: 4030671003624630857}
   - component: {fileID: 4030671003624630869}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Elevated Platform (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -383,7 +383,7 @@ GameObject:
   - component: {fileID: 4030671003659092246}
   - component: {fileID: 4030671003659092247}
   - component: {fileID: 4030671003659092235}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Elevated Platform (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -494,7 +494,7 @@ GameObject:
   - component: {fileID: 4030671003750700773}
   - component: {fileID: 4030671003750700772}
   - component: {fileID: 4030671003750700792}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Elevated Platform (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -606,7 +606,7 @@ GameObject:
   - component: {fileID: 4030671003876817752}
   - component: {fileID: 4030671003876817765}
   - component: {fileID: 4030671003876817764}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Hidden Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -621,7 +621,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4030671003876817754}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.07, z: -0.065}
+  m_LocalPosition: {x: 0, y: 0.025, z: -0.09}
   m_LocalScale: {x: 0.85, y: 0.75, z: 0.85}
   m_Children: []
   m_Father: {fileID: 4030671003624630870}
@@ -754,7 +754,7 @@ GameObject:
   - component: {fileID: 4030671003911278598}
   - component: {fileID: 4030671003911278651}
   - component: {fileID: 4030671003911278650}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Hidden Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -769,7 +769,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4030671003911278596}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.07, z: -0.065}
+  m_LocalPosition: {x: 0, y: 0, z: -0.09}
   m_LocalScale: {x: 0.85, y: 0.86, z: 0.85}
   m_Children: []
   m_Father: {fileID: 4030671003659092232}
@@ -902,7 +902,7 @@ GameObject:
   - component: {fileID: 4030671004002879477}
   - component: {fileID: 4030671004002879432}
   - component: {fileID: 4030671004002879433}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Hidden Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -917,7 +917,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4030671004002879479}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.07, z: -0.065}
+  m_LocalPosition: {x: 0, y: 0.02, z: -0.09}
   m_LocalScale: {x: 0.85, y: 0.8, z: 0.85}
   m_Children: []
   m_Father: {fileID: 4030671003750700795}
@@ -1049,7 +1049,7 @@ GameObject:
   - component: {fileID: 4030671004289598698}
   - component: {fileID: 4030671004289598699}
   - component: {fileID: 4030671004289598711}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Elevated Platform (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1160,7 +1160,7 @@ GameObject:
   - component: {fileID: 4030671004311039873}
   - component: {fileID: 4030671004311039872}
   - component: {fileID: 4030671004311039900}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Elevated Platform (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1272,7 +1272,7 @@ GameObject:
   - component: {fileID: 4030671004339896435}
   - component: {fileID: 4030671004339896398}
   - component: {fileID: 4030671004339896399}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Hidden Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1287,7 +1287,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4030671004339896433}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.07, z: -0.065}
+  m_LocalPosition: {x: 0, y: 0.01, z: -0.09}
   m_LocalScale: {x: 0.85, y: 0.89, z: 0.85}
   m_Children: []
   m_Father: {fileID: 4030671004625637757}
@@ -1419,7 +1419,7 @@ GameObject:
   - component: {fileID: 4030671004388272303}
   - component: {fileID: 4030671004388272302}
   - component: {fileID: 4030671004388272306}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Elevated Platform (13)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1531,7 +1531,7 @@ GameObject:
   - component: {fileID: 4030671004541785594}
   - component: {fileID: 4030671004541785543}
   - component: {fileID: 4030671004541785542}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Hidden Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1546,7 +1546,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4030671004541785592}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.07, z: -0.065}
+  m_LocalPosition: {x: 0, y: 0, z: -0.09}
   m_LocalScale: {x: 0.85, y: 0.7, z: 0.85}
   m_Children: []
   m_Father: {fileID: 4030671004289598708}
@@ -1679,7 +1679,7 @@ GameObject:
   - component: {fileID: 4030671004595732113}
   - component: {fileID: 4030671004595732140}
   - component: {fileID: 4030671004595732141}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Hidden Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1694,7 +1694,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4030671004595732115}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.07, z: -0.065}
+  m_LocalPosition: {x: 0, y: 0, z: -0.09}
   m_LocalScale: {x: 0.85, y: 0.6, z: 0.85}
   m_Children: []
   m_Father: {fileID: 4030671004311039903}
@@ -1826,7 +1826,7 @@ GameObject:
   - component: {fileID: 4030671004625637731}
   - component: {fileID: 4030671004625637730}
   - component: {fileID: 4030671004625637758}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Elevated Platform (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1938,7 +1938,7 @@ GameObject:
   - component: {fileID: 4030671004640459199}
   - component: {fileID: 4030671004640459138}
   - component: {fileID: 4030671004640459139}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Hidden Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1953,7 +1953,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4030671004640459197}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.07, z: -0.065}
+  m_LocalPosition: {x: 0, y: 0.015, z: -0.09}
   m_LocalScale: {x: 0.85, y: 0.92, z: 0.85}
   m_Children: []
   m_Father: {fileID: 4030671004388272305}
@@ -2085,7 +2085,7 @@ GameObject:
   - component: {fileID: 4030671004837873055}
   - component: {fileID: 4030671004837873054}
   - component: {fileID: 4030671004837873026}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Elevated Platform (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2196,7 +2196,7 @@ GameObject:
   - component: {fileID: 4030671004839483402}
   - component: {fileID: 4030671004839483403}
   - component: {fileID: 4030671004839483415}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Elevated Platform (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2307,7 +2307,7 @@ GameObject:
   - component: {fileID: 4030671004852549143}
   - component: {fileID: 4030671004852549142}
   - component: {fileID: 4030671004852549130}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Elevated Platform (12)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2418,7 +2418,7 @@ GameObject:
   - component: {fileID: 4030671004889449472}
   - component: {fileID: 4030671004889449473}
   - component: {fileID: 4030671004889449501}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Elevated Platform (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2530,7 +2530,7 @@ GameObject:
   - component: {fileID: 4030671004919795703}
   - component: {fileID: 4030671004919795658}
   - component: {fileID: 4030671004919795659}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Hidden Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2545,7 +2545,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4030671004919795701}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.07, z: -0.065}
+  m_LocalPosition: {x: -0, y: -0.07, z: -0.09}
   m_LocalScale: {x: 0.85, y: 0.6, z: 0.85}
   m_Children: []
   m_Father: {fileID: 4030671005205536505}
@@ -2678,7 +2678,7 @@ GameObject:
   - component: {fileID: 4030671005090059407}
   - component: {fileID: 4030671005090059442}
   - component: {fileID: 4030671005090059443}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Hidden Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2693,7 +2693,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4030671005090059405}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.07, z: -0.065}
+  m_LocalPosition: {x: 0, y: 0, z: -0.09}
   m_LocalScale: {x: 0.85, y: 0.85, z: 0.85}
   m_Children: []
   m_Father: {fileID: 4030671004837873025}
@@ -2826,7 +2826,7 @@ GameObject:
   - component: {fileID: 4030671005090613530}
   - component: {fileID: 4030671005090613543}
   - component: {fileID: 4030671005090613542}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Hidden Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2841,7 +2841,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4030671005090613528}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.07, z: -0.065}
+  m_LocalPosition: {x: 0, y: 0, z: -0.09}
   m_LocalScale: {x: 0.85, y: 0.88, z: 0.85}
   m_Children: []
   m_Father: {fileID: 4030671004839483412}
@@ -2974,7 +2974,7 @@ GameObject:
   - component: {fileID: 4030671005138282247}
   - component: {fileID: 4030671005138282298}
   - component: {fileID: 4030671005138282299}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Hidden Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2989,7 +2989,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4030671005138282245}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.07, z: -0.065}
+  m_LocalPosition: {x: 0, y: 0.015, z: -0.09}
   m_LocalScale: {x: 0.85, y: 0.9, z: 0.85}
   m_Children: []
   m_Father: {fileID: 4030671004852549129}
@@ -3122,7 +3122,7 @@ GameObject:
   - component: {fileID: 4030671005175190800}
   - component: {fileID: 4030671005175190829}
   - component: {fileID: 4030671005175190828}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Hidden Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3137,7 +3137,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4030671005175190802}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.07, z: -0.065}
+  m_LocalPosition: {x: 0, y: 0, z: -0.09}
   m_LocalScale: {x: 0.85, y: 0.87, z: 0.85}
   m_Children: []
   m_Father: {fileID: 4030671004889449502}
@@ -3269,7 +3269,7 @@ GameObject:
   - component: {fileID: 4030671005205536487}
   - component: {fileID: 4030671005205536486}
   - component: {fileID: 4030671005205536506}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Elevated Platform (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3380,7 +3380,7 @@ GameObject:
   - component: {fileID: 5944593633747874281}
   - component: {fileID: 5944593633747874280}
   - component: {fileID: 1581275424}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Bonus Crystal Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3474,7 +3474,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 3
@@ -3487,7 +3487,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5944593634153310643}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Final Stretch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3525,7 +3525,7 @@ GameObject:
   - component: {fileID: 5944593635067475963}
   - component: {fileID: 5944593635067475959}
   - component: {fileID: 5944593635067475958}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Final Win Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3638,18 +3638,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_MethodName: KillOrCelebrate
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: KillOrCelebrate
+        m_MethodName: StoppageOrDeath
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3673,7 +3662,7 @@ GameObject:
   - component: {fileID: 5944593635244244825}
   - component: {fileID: 5944593635244244824}
   - component: {fileID: 5944593635244244821}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Win Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3782,6 +3771,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0861d0db674b90344be3655dd3478bfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxDistance: 2
   winEvent:
     m_PersistentCalls:
       m_Calls:
@@ -3796,18 +3786,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: Win
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  maxDistance: 2
 --- !u!1 &8953420746570176886
 GameObject:
   m_ObjectHideFlags: 0
@@ -3817,7 +3795,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8336275429149598475}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Staircase
   m_TagString: Untagged
   m_Icon: {fileID: 0}

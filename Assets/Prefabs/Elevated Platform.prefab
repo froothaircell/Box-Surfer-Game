@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7318526992467148715}
   - component: {fileID: 7318526992467148714}
   - component: {fileID: 7318526992467148726}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Elevated Platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 7318526992718278331}
   - component: {fileID: 7318526992718278278}
   - component: {fileID: 7318526992718278279}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Hidden Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
