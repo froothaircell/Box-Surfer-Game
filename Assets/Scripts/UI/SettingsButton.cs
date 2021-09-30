@@ -14,7 +14,6 @@ public class SettingsButton : MonoBehaviour
     void Start()
     {
         showSettings = false;
-        settingsPanel.SetActive(false);
     }
 
     // Update is called once per frame

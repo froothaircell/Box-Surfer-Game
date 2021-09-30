@@ -3,20 +3,19 @@
 public class CameraFollow : MonoBehaviour
 {
     [SerializeField]
-    private Transform camTarget;
-    [SerializeField]
-    private Transform lookTarget;
+    private Transform
+        camTarget,
+        camRotationTarget,
+        staticBase;
     [SerializeField]
     private float
-        followSmoothingValue = 0.125f,
-        lookSmoothingValue = 0.125f;
-    // distanceSmoothingValue = 0.125f,
-    // rotationSmoothingValue = 0.125f,
-    // rotationSpeed = 3.0f;
+        yOffset = 3f,
+        followSmoothingValue = 0.125f;
     [SerializeField]
     private bool
         followPosition,
         lookAtPosition;
+
 
     // Start is called before the first frame update
     private void Start()
@@ -26,24 +25,27 @@ public class CameraFollow : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(followPosition)
+        FollowPlayer();
+    }
+
+    private void FollowPlayer()
+    {
+        // If true, camera takes the position and rotation specified
+        if (followPosition)
         {
             Vector3 smoothedPosition = Vector3.Lerp(
-                transform.position,
-                camTarget.position, 
+                    transform.position,
+                    new Vector3(
+                        camTarget.position.x, 
+                        staticBase.position.y + yOffset, 
+                        camTarget.position.z),
+                    followSmoothingValue * Time.deltaTime);
+            Quaternion smoothedRotation = Quaternion.Slerp(
+                transform.rotation,
+                camRotationTarget.rotation,
                 followSmoothingValue * Time.deltaTime);
             transform.position = smoothedPosition;
-        }
-        if(lookAtPosition)
-        {
-            Quaternion desiredRotation = Quaternion.LookRotation(lookTarget.position - transform.position);
-            transform.rotation = Quaternion.Slerp(
-                transform.rotation, 
-                Quaternion.Euler(
-                    transform.rotation.eulerAngles.x, 
-                    desiredRotation.eulerAngles.y, 
-                    transform.rotation.eulerAngles.z), 
-                lookSmoothingValue * Time.deltaTime);
+            transform.rotation = smoothedRotation;
         }
     }
 }

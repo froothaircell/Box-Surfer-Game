@@ -11,7 +11,7 @@ public class GroundCheck : MonoBehaviour
     private float maxDistance, 
         distanceThreshold, 
         trailOffset, 
-        trailSmoothing, 
+        trailAndPivotSmoothing, 
         minTrailThreshold = 35.5f, // For clamping the vertical position of the trail
         maxTrailThreshold = 100f;
     [SerializeField]
@@ -32,6 +32,7 @@ public class GroundCheck : MonoBehaviour
     private bool frontHitDetected;
     private bool leftHitDetected;
     private bool rightHitDetected;
+
     private bool baseOnGround;
     private float 
         frontCorrectedValue,
@@ -50,14 +51,18 @@ public class GroundCheck : MonoBehaviour
         frontHitDetected = false;
         baseOnGround = false;
         trailRenderer = trailPosition.GetComponent<TrailRenderer>();
-        // boxCastPosition = transform.GetChild(0);
+    }
+
+    private void Start()
+    {
+        trailRenderer.emitting = false;
     }
 
     // Keep repositioning the y-value of the trail
     // and set it as active only if the player is grounded 
     private void FixedUpdate()
     {
-        RepositionTrail();
+        RepositionTrailAndPivot();
         if(IsGrounded())
         {
             trailRenderer.emitting = true;
@@ -76,35 +81,53 @@ public class GroundCheck : MonoBehaviour
             if(frontHitDetected)
             {
                 Gizmos.color = Color.cyan;
-                Gizmos.DrawRay(frontBoxCastPosition.position, -transform.up * frontHit.distance);
-                Gizmos.DrawWireCube(frontBoxCastPosition.position - (transform.up * frontCorrectedValue), transform.lossyScale/3);
+                Gizmos.DrawRay(
+                    frontBoxCastPosition.position,
+                    -transform.up * frontHit.distance);
+                Gizmos.DrawWireCube(
+                    frontBoxCastPosition.position - (transform.up * frontCorrectedValue),
+                    transform.lossyScale/3);
             }
             else
             {
                 Gizmos.color = Color.red;
-                Gizmos.DrawRay(frontBoxCastPosition.position, -transform.up * maxDistance);
+                Gizmos.DrawRay(
+                    frontBoxCastPosition.position,
+                    -transform.up * maxDistance);
             }
             if (leftHitDetected)
             {
                 Gizmos.color = Color.cyan;
-                Gizmos.DrawRay(leftBoxCastPosition.position, -transform.up * leftHit.distance);
-                Gizmos.DrawWireCube(leftBoxCastPosition.position - (transform.up * frontCorrectedValue), transform.lossyScale / 3);
+                Gizmos.DrawRay(
+                    leftBoxCastPosition.position,
+                    -transform.up * leftHit.distance);
+                Gizmos.DrawWireCube(
+                    leftBoxCastPosition.position - (transform.up * frontCorrectedValue), 
+                    transform.lossyScale / 3);
             }
             else
             {
                 Gizmos.color = Color.red;
-                Gizmos.DrawRay(leftBoxCastPosition.position, -transform.up * maxDistance);
+                Gizmos.DrawRay(
+                    leftBoxCastPosition.position,
+                    -transform.up * maxDistance);
             }
             if (rightHitDetected)
             {
                 Gizmos.color = Color.cyan;
-                Gizmos.DrawRay(rightBoxCastPosition.position, -transform.up * rightHit.distance);
-                Gizmos.DrawWireCube(rightBoxCastPosition.position - (transform.up * frontCorrectedValue), transform.lossyScale / 3);
+                Gizmos.DrawRay(
+                    rightBoxCastPosition.position,
+                    -transform.up * rightHit.distance);
+                Gizmos.DrawWireCube(
+                    rightBoxCastPosition.position - (transform.up * frontCorrectedValue),
+                    transform.lossyScale / 3);
             }
             else
             {
                 Gizmos.color = Color.red;
-                Gizmos.DrawRay(rightBoxCastPosition.position, -transform.up * maxDistance);
+                Gizmos.DrawRay(
+                    rightBoxCastPosition.position,
+                    -transform.up * maxDistance);
             }
         }
     }
@@ -115,7 +138,7 @@ public class GroundCheck : MonoBehaviour
     // function
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.collider.gameObject.layer == 8)
+        if(collision.collider.gameObject.layer == 8 || collision.collider.gameObject.layer == 9)
         {
             //Debug.Log("Collision Started");
             baseOnGround = true;
@@ -124,7 +147,7 @@ public class GroundCheck : MonoBehaviour
 
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.collider.gameObject.layer == 8)
+        if (collision.collider.gameObject.layer == 8 || collision.collider.gameObject.layer == 9)
         {
             //Debug.Log("Collision sustained");
             result = collision.GetContact(0).point.y + trailOffset;
@@ -133,7 +156,7 @@ public class GroundCheck : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.collider.gameObject.layer == 8)
+        if (collision.collider.gameObject.layer == 8 || collision.collider.gameObject.layer == 9)
         {
             //Debug.Log("Exiting collision");
             baseOnGround = false;
@@ -190,7 +213,7 @@ public class GroundCheck : MonoBehaviour
 
         // Check if the difference between any of the box casts exceeds a certain threshold
         if(frontHitDetected && leftHitDetected && rightHitDetected &&
-            Mathf.Abs(frontCorrectedValue - rightCorrectedValue) < 0.5f && 
+            Mathf.Abs(frontCorrectedValue - leftCorrectedValue) < 0.5f && 
             Mathf.Abs(frontCorrectedValue - rightCorrectedValue) < 0.5f)
         {
             if(baseOnGround)
@@ -238,8 +261,8 @@ public class GroundCheck : MonoBehaviour
         }
     }
 
-    // Set position of the trail renderer according to the
-    private void RepositionTrail()
+    // Set position of the trail renderer and camera pivot according to the ground distance
+    private void RepositionTrailAndPivot()
     {
         if(!baseOnGround)
         {
@@ -252,6 +275,6 @@ public class GroundCheck : MonoBehaviour
             trailPosition.position.x,
             result,
             trailPosition.position.z),
-            trailSmoothing);
+            trailAndPivotSmoothing);
     }
 }

@@ -7,7 +7,7 @@
 public class BaseUpdate : MonoBehaviour
 {
     [SerializeField]
-    private Transform BaseCube;
+    private Transform BasePosition;
     [SerializeField]
     private float 
         yOffset = 0f,
@@ -17,8 +17,8 @@ public class BaseUpdate : MonoBehaviour
     {
         transform.localPosition = new Vector3(
             transform.localPosition.x,
-            BaseCube.localPosition.y + yOffset,
-            BaseCube.localPosition.z + zOffset);
+            BasePosition.localPosition.y + yOffset,
+            BasePosition.localPosition.z + zOffset);
     }
 
     // Update is called once per frame
@@ -26,7 +26,7 @@ public class BaseUpdate : MonoBehaviour
     {
         transform.localPosition = new Vector3(
             transform.localPosition.x,
-            BaseCube.localPosition.y + yOffset, 
-            BaseCube.localPosition.z + zOffset);
+            BasePosition.localPosition.y + yOffset, 
+            BasePosition.localPosition.z + zOffset);
     }
 }

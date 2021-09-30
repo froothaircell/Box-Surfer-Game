@@ -6,9 +6,10 @@ public class SpeedScroller : MonoBehaviour
 {
     [SerializeField]
     private Movement movementScript;
+    [SerializeField]
+    private TMP_InputField speedInput;
 
     private Scrollbar scrollbar;
-    private TMP_InputField speedInput;
     private float referenceSpeed;
     
     public float ReferenceSpeed
@@ -19,7 +20,6 @@ public class SpeedScroller : MonoBehaviour
     private void Start()
     {
         scrollbar = GetComponent<Scrollbar>();
-        speedInput = GetComponentInChildren<TMP_InputField>();
         referenceSpeed = movementScript.SpeedFactor;
         speedInput.text = referenceSpeed.ToString();
         scrollbar.value = movementScript.SpeedFactor/(2*referenceSpeed);
@@ -36,19 +36,38 @@ public class SpeedScroller : MonoBehaviour
     // Use the input to change the speed value
     public void UpdateSpeedThroughInput(string value)
     {
-        float result = float.Parse(value) / (2 * referenceSpeed);
-        Debug.Log("The returned value is: " + float.Parse(value) + " and the result is: " + result);
-        if (result <= 1f && result >= 0f)
+        if(IsDigitsOnly(value))
         {
-            scrollbar.value = result;
+            float result = float.Parse(value) / (2 * referenceSpeed);
+            Debug.Log("The returned value is: " + float.Parse(value) + " and the result is: " + result);
+            if (result <= 1f && result >= 0f)
+            {
+                scrollbar.value = result;
+            }
+            else if (result > 1f)
+            {
+                scrollbar.value = 1f;
+            }
+            else if (result < 0f)
+            {
+                scrollbar.value = 0f;
+            }
         }
-        else if (result > 1f)
+        else
         {
-            scrollbar.value = 1f;
+            Debug.LogWarning("Characters entered. Please enter numbers only");
         }
-        else if (result < 0f)
+    }
+
+    private bool IsDigitsOnly(string entry)
+    {
+        foreach(char c in entry)
         {
-            scrollbar.value = 0f;
+            if(c < '0' || c > '9')
+            {
+                return false;
+            }
         }
+        return true;
     }
 }

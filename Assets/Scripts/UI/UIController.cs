@@ -3,11 +3,16 @@
 public class UIController : MonoBehaviour
 {
     [SerializeField]
-    private GameObject restartButton;
+    private GameObject
+        restartButton,
+        settingsButton,
+        settingsPanel;
 
     private void Awake()
     {
         restartButton.SetActive(false);
+        settingsButton.SetActive(true);
+        settingsPanel.SetActive(false);
     }
 
     public void EnableRestartButton()

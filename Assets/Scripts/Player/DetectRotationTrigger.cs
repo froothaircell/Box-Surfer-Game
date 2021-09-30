@@ -5,10 +5,14 @@
 // the same function to the camera rotation
 public class DetectRotationTrigger : MonoBehaviour
 {
-    [SerializeField]
-    CameraFollow cameraRotation;
-    Movement parentMovement;
-    bool isLeft = true;
+    private Movement parentMovement;
+    private bool isLeft = true;
+
+    public bool IsLeft 
+    { 
+        get { return isLeft; }  
+        set { isLeft = value; } 
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +22,6 @@ public class DetectRotationTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        parentMovement.OnTriggerEnterChild(other, isLeft);
-        //cameraRotation.OnTriggerEnterChild(other, isLeft);
+        parentMovement.OnTriggerEnterChild(other, IsLeft);
     }
 }
