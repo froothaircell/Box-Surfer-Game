@@ -21,6 +21,15 @@ public class CameraUIController : MonoBehaviour
     [SerializeField]
     private CameraZoom cameraZoom;
 
+    // Default values for the sliders
+    private float
+        camH,
+        camV,
+        lookX,
+        lookY,
+        lookZ,
+        distance;
+
     // Allowed ranges of each of the movements
     private float camRotationHRange = 90f + 90f;
     private float camRotationVRange = 90f + 90f;
@@ -37,13 +46,28 @@ public class CameraUIController : MonoBehaviour
     {
         // Set the value of the sliders according
         // to the state of each of the camera positions
-        camRotationHSlider.value = (cameraRotationHV.CameraPivotRotation.eulerAngles.y + 90f) / camRotationHRange;
-        camRotationVSlider.value = (cameraRotationHV.CameraPivotRotation.eulerAngles.x + 90f) / camRotationVRange;
-        lookRotationXSlider.value = (cameraOffsets.ChildCameraRotation.eulerAngles.x + 90f) / lookRotationXRange;
-        lookRotationYSlider.value = (cameraOffsets.ChildCameraRotation.eulerAngles.y + 90f) / lookRotationYRange;
-        lookRotationZSlider.value = (cameraOffsets.ChildCameraRotation.eulerAngles.z + 90f) / lookRotationZRange;
-        distanceSlider.value = (cameraZoom.CurrentZoomValue - 0.01f) / zoomRange;
-        
+        camH = camRotationHSlider.value = 
+            ((cameraRotationHV.CameraPivotRotation.eulerAngles.y > 180 ? 
+            cameraRotationHV.CameraPivotRotation.eulerAngles.y - 360f : 
+            cameraRotationHV.CameraPivotRotation.eulerAngles.y) + 90f) / camRotationHRange;
+        camV = camRotationVSlider.value = 
+            ((cameraRotationHV.CameraPivotRotation.eulerAngles.x > 180 ?
+            cameraRotationHV.CameraPivotRotation.eulerAngles.x - 360f :
+            cameraRotationHV.CameraPivotRotation.eulerAngles.x) + 90f) / camRotationVRange;
+        lookX = lookRotationXSlider.value = 
+            ((cameraOffsets.ChildCameraRotation.eulerAngles.x > 180 ?
+            cameraOffsets.ChildCameraRotation.eulerAngles.x - 360f :
+            cameraOffsets.ChildCameraRotation.eulerAngles.x) + 90f) / lookRotationXRange;
+        lookY = lookRotationYSlider.value =
+            ((cameraOffsets.ChildCameraRotation.eulerAngles.y > 180 ?
+            cameraOffsets.ChildCameraRotation.eulerAngles.y - 360f :
+            cameraOffsets.ChildCameraRotation.eulerAngles.y) + 90f) / lookRotationYRange;
+        lookZ = lookRotationZSlider.value =
+            ((cameraOffsets.ChildCameraRotation.eulerAngles.z > 180 ?
+            cameraOffsets.ChildCameraRotation.eulerAngles.z - 360f :
+            cameraOffsets.ChildCameraRotation.eulerAngles.z) + 90f) / lookRotationZRange;
+        distance = distanceSlider.value = 
+            (cameraZoom.CurrentZoomValue - 0.01f) / zoomRange;
     }
 
     // Update is called once per frame
@@ -57,6 +81,7 @@ public class CameraUIController : MonoBehaviour
     // Horizontal Camera Pivot Rotation
     public void HCamRotation(float value)
     {
+        Debug.Log("Horizontal rotation begun with value: " + value);
         // Activate horizontal camera rotation
         float realValue = (value * camRotationHRange) - 90f;
         cameraRotationHV.RotateCameraH(realValue);
@@ -160,5 +185,15 @@ public class CameraUIController : MonoBehaviour
     public void ZoomDecrease()
     {
         distanceSlider.value -= 0.0015f;
+    }
+
+    public void ResetDefaults()
+    {
+        camRotationHSlider.value = camH;
+        camRotationVSlider.value = camV;
+        lookRotationXSlider.value = lookX;
+        lookRotationYSlider.value = lookY;
+        lookRotationZSlider.value = lookZ;
+        distanceSlider.value = distance;
     }
 }

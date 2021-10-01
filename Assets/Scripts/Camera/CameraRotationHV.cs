@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class CameraRotationHV : MonoBehaviour
 {
     [SerializeField]
     private float
-        camAngleInputX = 0f,
-        camAngleInputY = 0f,
+        rotationSpeed,
         rotationSmoothingFactor = 0.125f;
+
+    private IEnumerator coroutine;
 
     private Transform cameraPivotPosition;
 
@@ -23,8 +25,7 @@ public class CameraRotationHV : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        camAngleInputX = 0f;
-        camAngleInputY = 0f;
+        coroutine = WinRotation();
     }
 
     // Update is called once per frame
@@ -43,11 +44,29 @@ public class CameraRotationHV : MonoBehaviour
         RotateCameraPivot(angleX, cameraPivotPosition.localRotation.eulerAngles.y);
     }
 
+    public void RotateOnWin(bool win)
+    {
+        if(win)
+        {
+            StopCoroutine(coroutine);
+            StartCoroutine(coroutine);
+        }
+    }
+
     private void RotateCameraPivot(float angleX, float angleY)
     {
         cameraPivotPosition.localRotation = Quaternion.Euler(
             angleX,
             angleY,
             cameraPivotPosition.localRotation.eulerAngles.z);
+    }
+
+    private IEnumerator WinRotation()
+    {
+        while(true)
+        {
+            cameraPivotPosition.Rotate(Vector3.up * rotationSpeed, Space.World);
+            yield return new WaitForEndOfFrame();
+        }
     }
 }

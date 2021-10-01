@@ -561,7 +561,7 @@ MonoBehaviour:
   maxDistance: 100
   distanceThreshold: 1.5
   trailOffset: 0.01
-  trailAndPivotSmoothing: 0.125
+  trailAndPivotSmoothing: 0.075
   minTrailThreshold: 35.5
   maxTrailThreshold: 100
   layerMask:
@@ -650,7 +650,7 @@ MonoBehaviour:
   distanceClamp: 1.55
   rotationSpeed: 180
   isLeft: 1
-  touchControls: 0
+  touchControls: 1
 --- !u!114 &1585796053
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -2,14 +2,15 @@
 using UnityEngine.UI;
 using TMPro;
 
-public class SpeedScroller : MonoBehaviour
+public class SpeedUIController : MonoBehaviour
 {
     [SerializeField]
     private Movement movementScript;
     [SerializeField]
     private TMP_InputField speedInput;
-
+    [SerializeField]
     private Scrollbar scrollbar;
+
     private float referenceSpeed;
     
     public float ReferenceSpeed
@@ -19,10 +20,10 @@ public class SpeedScroller : MonoBehaviour
 
     private void Start()
     {
-        scrollbar = GetComponent<Scrollbar>();
+        // scrollbar = GetComponent<Scrollbar>();
         referenceSpeed = movementScript.SpeedFactor;
         speedInput.text = referenceSpeed.ToString();
-        scrollbar.value = movementScript.SpeedFactor/(2*referenceSpeed);
+        scrollbar.value = movementScript.SpeedFactor/(2*referenceSpeed); // Set reference speed in the middle to cycle between 0 to 2 times the reference speed
     }
 
     // The speed scroller can cycle between 0 to 2 times the reference speed
@@ -69,5 +70,11 @@ public class SpeedScroller : MonoBehaviour
             }
         }
         return true;
+    }
+
+    public void ResetDefaults()
+    {
+        speedInput.text = referenceSpeed.ToString();
+        scrollbar.value = 0.5f;
     }
 }

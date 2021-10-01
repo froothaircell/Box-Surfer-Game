@@ -25,7 +25,7 @@ public class CameraOffsets : MonoBehaviour
 
     private void Awake()
     {
-        childCamera = transform.GetChild(0);
+        childCamera = transform.GetChild(0).GetChild(0);
     }
 
     // Start is called before the first frame update

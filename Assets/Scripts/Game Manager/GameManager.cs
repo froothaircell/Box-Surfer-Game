@@ -1,17 +1,23 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
+[System.Serializable]
+public class boolEvent : UnityEvent<bool>
+{
+
+}
+
 public class GameManager : MonoBehaviour
 {
     [SerializeField]
     private UnityEvent
         RunEvent = new UnityEvent(),
         WinEvent = new UnityEvent(),
-        StoppageOrDeathEvent = new UnityEvent(),
         RestartEvent = new UnityEvent(),
         SettingsEnabled = new UnityEvent(),
         SettingsDisabled = new UnityEvent();
-    
+    [SerializeField]
+    private boolEvent StoppageOrDeathEvent = new boolEvent();
 
     private int state = 0;
     private int prevState; // only used for settings state. Can be used for any event that needs to remember the previous state
@@ -69,8 +75,14 @@ public class GameManager : MonoBehaviour
     {
         if(state == 1 || state == 2)
         {
+            bool win = false; 
+
+            if(state == 2)
+            {
+                win = true;
+            }
             state = 3;
-            StoppageOrDeathEvent.Invoke();
+            StoppageOrDeathEvent.Invoke(win);
         }
     }
 

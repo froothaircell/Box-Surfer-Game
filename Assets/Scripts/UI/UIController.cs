@@ -24,4 +24,13 @@ public class UIController : MonoBehaviour
     {
         restartButton.SetActive(false);
     }
+
+    public void DisableSettingsButton(bool win)
+    {
+        if(win)
+        {
+            settingsButton.SetActive(false);
+            settingsPanel.SetActive(false);
+        }
+    }
 }

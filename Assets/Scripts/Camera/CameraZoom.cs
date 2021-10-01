@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class CameraZoom : MonoBehaviour
 {
@@ -28,7 +27,7 @@ public class CameraZoom : MonoBehaviour
         childTransform = transform.GetChild(0);
         baseCameraTransform = transform.GetChild(0).GetChild(0);
         zoomLevel = 0f;
-        currentZoomValue = 0f;
+        currentZoomValue = Vector3.Distance(transform.position, childTransform.position);
     }
 
     // Start is called before the first frame update
