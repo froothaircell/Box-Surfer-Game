@@ -9,6 +9,7 @@ TagManager:
   - Character
   - Path Interactables
   - Left Turn
+  - Diamond
   layers:
   - Default
   - TransparentFX

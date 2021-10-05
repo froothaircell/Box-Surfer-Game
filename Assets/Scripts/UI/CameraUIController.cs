@@ -46,6 +46,8 @@ public class CameraUIController : MonoBehaviour
     {
         // Set the value of the sliders according
         // to the state of each of the camera positions
+        // NOTE: Ternary operators are necessary to
+        // cater to euler angle issues
         camH = camRotationHSlider.value = 
             ((cameraRotationHV.CameraPivotRotation.eulerAngles.y > 180 ? 
             cameraRotationHV.CameraPivotRotation.eulerAngles.y - 360f : 

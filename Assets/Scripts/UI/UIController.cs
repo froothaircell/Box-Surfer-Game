@@ -4,12 +4,14 @@ public class UIController : MonoBehaviour
 {
     [SerializeField]
     private GameObject
+        scorePanel,
         restartButton,
         settingsButton,
         settingsPanel;
 
     private void Awake()
     {
+        scorePanel.SetActive(true);
         restartButton.SetActive(false);
         settingsButton.SetActive(true);
         settingsPanel.SetActive(false);

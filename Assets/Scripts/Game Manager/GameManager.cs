@@ -7,8 +7,16 @@ public class boolEvent : UnityEvent<bool>
 
 }
 
+[System.Serializable]
+public class intEvent : UnityEvent<int>
+{
+
+}
+
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance;
+
     [SerializeField]
     private UnityEvent
         RunEvent = new UnityEvent(),
@@ -18,14 +26,31 @@ public class GameManager : MonoBehaviour
         SettingsDisabled = new UnityEvent();
     [SerializeField]
     private boolEvent StoppageOrDeathEvent = new boolEvent();
+    [SerializeField]
+    private intEvent UpdateScoreEvent = new intEvent();
 
     private int state = 0;
     private int prevState; // only used for settings state. Can be used for any event that needs to remember the previous state
-    
+    private int diamondScore;
+    private bool scoreIncrease;
+
+    private void Awake()
+    {
+        if(instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            instance = this;
+        }
+    }
 
     // Start is called before the first frame update
     private void Start()
     {
+        diamondScore = 0;
+        scoreIncrease = false;
         state = 0;
     }
 
@@ -41,6 +66,10 @@ public class GameManager : MonoBehaviour
                 }
                 break;
             case 1: // Player running
+                if(scoreIncrease)
+                {
+                    UpdateScore(diamondScore);
+                }
                 break;
             case 2: // Player won
                 break;
@@ -108,5 +137,21 @@ public class GameManager : MonoBehaviour
             state = prevState;
             SettingsDisabled.Invoke();
         }
-    }    
+    }
+
+    // Score increments called by diamonds upon collision with player
+    public void ScoreIncrement()
+    {
+        diamondScore++;
+        scoreIncrease = true;
+        Debug.Log("Diamond score = " + diamondScore);
+    }
+    
+    // Update score in the UI side
+    private void UpdateScore(int score)
+    {
+        UpdateScoreEvent.Invoke(score);
+        scoreIncrease = false;
+        Debug.Log("Score updated on UI side");
+    }
 }
