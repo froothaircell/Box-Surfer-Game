@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Events;
 
 /// <summary>
 /// Check if player enters range and trigger win event
@@ -8,8 +7,6 @@ public class WinSensor : MonoBehaviour
 {
     [SerializeField]
     private float maxDistance = 2f;
-    [SerializeField]
-    private UnityEvent winEvent = new UnityEvent();
 
     private RaycastHit hit;
     private bool hitDetected;
@@ -49,7 +46,7 @@ public class WinSensor : MonoBehaviour
             || hit.collider.CompareTag("Player Base")
             || hit.collider.CompareTag("Character")))
         {
-            winEvent.Invoke();
+            GameManager.instance.Win();
             Destroy(gameObject);
         }
     }

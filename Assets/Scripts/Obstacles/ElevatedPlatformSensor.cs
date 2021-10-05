@@ -6,9 +6,6 @@ using UnityEngine.Events;
 // via event
 public class ElevatedPlatformSensor : MonoBehaviour
 {
-    [SerializeField]
-    UnityEvent PlatformDeathEvent = new UnityEvent();
-
     private void OnCollisionEnter(Collision collision)
     {
         // Debug.Log("We got collision");
@@ -19,7 +16,7 @@ public class ElevatedPlatformSensor : MonoBehaviour
         else if (collision.collider.CompareTag("Player Base")
             || collision.collider.CompareTag("Character"))
         {
-            PlatformDeathEvent.Invoke();
+            GameManager.instance.StoppageOrDeath();
         }
 
     }

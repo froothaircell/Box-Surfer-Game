@@ -3,9 +3,6 @@ using UnityEngine.Events;
 
 public class PoolDeath : MonoBehaviour
 {
-    [SerializeField]
-    private UnityEvent poolDeath = new UnityEvent();
-
     private void OnTriggerEnter(Collider other)
     {
         // Check if water then kill movement and animation.
@@ -14,7 +11,7 @@ public class PoolDeath : MonoBehaviour
         {
             // Activate pool collider
             other.transform.GetChild(0).GetComponent<MeshCollider>().enabled = true;
-            poolDeath.Invoke();
+            GameManager.instance.StoppageOrDeath();
         }
     }
 }

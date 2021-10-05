@@ -38,9 +38,6 @@ public class CameraUIController : MonoBehaviour
     private float lookRotationZRange = 90f + 90f;
     private float zoomRange = 15f - 0.01f; // Don't make the range exceed 0 into negative values. It creates errors
 
-    private Quaternion currentPivotRotation;
-    private Quaternion currentCameraRotation;
-
 
     private void Start()
     {
