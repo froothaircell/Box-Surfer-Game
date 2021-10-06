@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 958329999}
   m_Layer: 0
   m_Name: Static Base Position
-  m_TagString: Untagged
+  m_TagString: Player Base
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 1923850860}
   m_Layer: 0
   m_Name: Trail Position
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -584,20 +584,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 656d6a6970b187d469973d4c08ea9c5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolDeath:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: StoppageOrDeath
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &5500906252891925420
 GameObject:
   m_ObjectHideFlags: 0
@@ -646,11 +632,11 @@ MonoBehaviour:
   localPlayerPosition: {fileID: 4796815149300684340}
   smoothingValue: 0.8
   speedFactor: 10
-  turnSpeed: 15.5
+  turnSpeed: 16
   distanceClamp: 1.55
   rotationSpeed: 180
   isLeft: 1
-  touchControls: 1
+  touchControls: 0
 --- !u!114 &1585796053
 MonoBehaviour:
   m_ObjectHideFlags: 0
