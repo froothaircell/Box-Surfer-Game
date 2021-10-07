@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class DiamondLogic : MonoBehaviour
 {
@@ -20,7 +20,7 @@ public class DiamondLogic : MonoBehaviour
             {
                 isDestroyed = true;
                 Debug.Log("collision with player detected");
-                GameManager.instance.ScoreIncrement();
+                GameManager.instance.DiamondCollected(transform.position);
                 Destroy(transform.parent.gameObject);
             }
         }

@@ -13,6 +13,12 @@ public class intEvent : UnityEvent<int>
 
 }
 
+[System.Serializable]
+public class vector3Event : UnityEvent<Vector3>
+{
+
+}
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
@@ -28,14 +34,17 @@ public class GameManager : MonoBehaviour
     private boolEvent StoppageOrDeathEvent = new boolEvent();
     [SerializeField]
     private intEvent UpdateScoreEvent = new intEvent();
+    [SerializeField]
+    private vector3Event PositionBasedAnimation = new vector3Event();
 
     private int state = 0;
     private int prevState; // only used for settings state. Can be used for any event that needs to remember the previous state
     private int diamondScore;
-    private bool scoreIncrease;
+    private Camera mainCam;
 
     private void Awake()
     {
+        mainCam = Camera.main;
         if(instance != null)
         {
             Destroy(gameObject);
@@ -50,7 +59,6 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         diamondScore = 0;
-        scoreIncrease = false;
         state = 0;
     }
 
@@ -66,10 +74,6 @@ public class GameManager : MonoBehaviour
                 }
                 break;
             case 1: // Player running
-                if(scoreIncrease)
-                {
-                    UpdateScore(diamondScore);
-                }
                 break;
             case 2: // Player won
                 break;
@@ -140,18 +144,19 @@ public class GameManager : MonoBehaviour
     }
 
     // Score increments called by diamonds upon collision with player
-    public void ScoreIncrement()
+    public void DiamondCollected(Vector3 position)
     {
         diamondScore++;
-        scoreIncrease = true;
         Debug.Log("Diamond score = " + diamondScore);
+        UpdateScoreEvent.Invoke(diamondScore);
+        Vector3 screenPosition = mainCam.WorldToScreenPoint(position);
+        PositionBasedAnimation.Invoke(screenPosition);
     }
     
     // Update score in the UI side
-    private void UpdateScore(int score)
+    /*private void UpdateScore(int score)
     {
         UpdateScoreEvent.Invoke(score);
-        scoreIncrease = false;
         Debug.Log("Score updated on UI side");
-    }
+    }*/
 }
