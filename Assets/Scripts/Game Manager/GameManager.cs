@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     {
         get
         {
-            Debug.Log("Getter called");
+            Debug.Log("Getter called with application quit status: " + applicationIsQuitting);
             if(applicationIsQuitting)
             {
                 return null;
@@ -56,12 +56,6 @@ public class GameManager : MonoBehaviour
     }
 
     [SerializeField]
-    private UnityEvent
-        SettingsEnabled = new UnityEvent(),
-        SettingsDisabled = new UnityEvent();
-    [SerializeField]
-    private boolEvent StoppageOrDeathEvent = new boolEvent();
-    [SerializeField]
     private intEvent UpdateScoreEvent = new intEvent();
     [SerializeField]
     private vector3Event PositionBasedAnimation = new vector3Event();
@@ -72,6 +66,7 @@ public class GameManager : MonoBehaviour
     public event UnityAction OnRestart;
     public event UnityAction OnSettingsOpened;
     public event UnityAction OnSettingsClosed;
+    public event UnityAction<bool> OnStopOrDeath;
 
     private int state = 0;
     private int prevState; // only used for settings state. Can be used for any event that needs to remember the previous state
@@ -127,7 +122,10 @@ public class GameManager : MonoBehaviour
     private void OnDestroy()
     {
         Debug.Log("Game Manager destroyed with ID: " + gameObject.GetInstanceID());
-        applicationIsQuitting = true;
+        if(gameObject.GetComponent<GameManager>().GetInstanceID() == Instance.GetInstanceID())
+        {
+            applicationIsQuitting = true;
+        }
     }
 
     public void Run()
@@ -150,6 +148,7 @@ public class GameManager : MonoBehaviour
 
     public void StoppageOrDeath()
     {
+        Debug.Log("We got this far");
         if(state == 1 || state == 2)
         {
             bool win = false; 
@@ -159,7 +158,7 @@ public class GameManager : MonoBehaviour
                 win = true;
             }
             state = 3;
-            StoppageOrDeathEvent.Invoke(win);
+            OnStopOrDeath?.Invoke(win);
         }
     }
 
@@ -169,6 +168,7 @@ public class GameManager : MonoBehaviour
         {
             state = 0;
             OnRestart?.Invoke();
+            applicationIsQuitting = false;
         }
     }
 
@@ -178,14 +178,14 @@ public class GameManager : MonoBehaviour
         {
             prevState = state;
             // SettingsEnabled.Invoke();
-            OnSettingsOpened();
+            OnSettingsOpened?.Invoke();
             state = 4;
         }
         else if(state == 4)
         {
             state = prevState;
             // SettingsDisabled.Invoke();
-            OnSettingsClosed();
+            OnSettingsClosed?.Invoke();
         }
     }
 

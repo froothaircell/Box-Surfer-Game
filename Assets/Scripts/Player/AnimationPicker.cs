@@ -18,7 +18,13 @@ public class AnimationPicker : MonoBehaviour
         hasWon = false;
         isDeadOrHasStopped = false;
 
+    }
+
+    private void Start()
+    {
+        // Add listeners to events
         GameManager.Instance.OnWin += Win;
+        GameManager.Instance.OnStopOrDeath += KillOrCelebrate;
     }
 
     // Update is called once per frame
@@ -51,6 +57,7 @@ public class AnimationPicker : MonoBehaviour
         if(GameManager.Instance != null)
         {
             GameManager.Instance.OnWin -= Win;
+            GameManager.Instance.OnStopOrDeath -= KillOrCelebrate;
         }
     }
 
@@ -61,10 +68,10 @@ public class AnimationPicker : MonoBehaviour
     }
 
     // Function that is called via event to activate death animation
-    public void KillOrCelebrate()
+    private void KillOrCelebrate(bool win)
     {
         isDeadOrHasStopped = true;
-        if(!hasWon)
+        if(!win)
         {
             animator.SetTrigger("Death");
         }

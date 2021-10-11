@@ -17,17 +17,37 @@ public class UIController : MonoBehaviour
         settingsPanel.SetActive(false);
     }
 
-    public void EnableRestartButton()
+    private void Start()
+    {
+        // Add listeners to events
+        GameManager.Instance.OnStopOrDeath += UpdateUIByState;
+    }
+
+    private void OnDestroy()
+    {
+        if(GameManager.Instance != null)
+        {
+            GameManager.Instance.OnStopOrDeath -= UpdateUIByState;
+        }
+    }
+
+    private void UpdateUIByState(bool win)
+    {
+        EnableRestartButton();
+        DisableSettingsButton(win);
+    }
+
+    private void EnableRestartButton()
     {
         restartButton.SetActive(true);
     }
 
-    public void DisableRestartButton()
+    private void DisableRestartButton()
     {
         restartButton.SetActive(false);
     }
 
-    public void DisableSettingsButton(bool win)
+    private void DisableSettingsButton(bool win)
     {
         if(win)
         {

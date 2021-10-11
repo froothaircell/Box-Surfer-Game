@@ -14,6 +14,7 @@ public class RedBoxSensor : MonoBehaviour
         else if(collision.collider.CompareTag("Player Base") 
             || collision.collider.CompareTag("Character"))
         {
+            Debug.Log("Heading into the game manager for death ");
             GameManager.Instance.StoppageOrDeath();
         }    
 

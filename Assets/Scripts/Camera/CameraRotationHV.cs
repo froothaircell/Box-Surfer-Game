@@ -26,6 +26,15 @@ public class CameraRotationHV : MonoBehaviour
     private void Start()
     {
         coroutine = WinRotation();
+        GameManager.Instance.OnStopOrDeath += RotateOnWin;
+    }
+
+    private void OnDestroy()
+    {
+        if(GameManager.Instance != null)
+        {
+            GameManager.Instance.OnStopOrDeath -= RotateOnWin;
+        }
     }
 
     public void RotateCameraH(float angleY)
@@ -38,7 +47,7 @@ public class CameraRotationHV : MonoBehaviour
         RotateCameraPivot(angleX, cameraPivotPosition.localRotation.eulerAngles.y);
     }
 
-    public void RotateOnWin(bool win)
+    private void RotateOnWin(bool win)
     {
         if(win)
         {

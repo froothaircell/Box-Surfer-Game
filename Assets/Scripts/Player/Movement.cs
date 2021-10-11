@@ -43,16 +43,18 @@ public class Movement : MonoBehaviour
         hasWon = false;
         isDeadOrHasStopped = false;
 
-        // Add listeners to events
-        GameManager.Instance.OnRun += StartMoving;
-        GameManager.Instance.OnWin += Win;
-        GameManager.Instance.OnSettingsOpened += PauseForSettings;
-        GameManager.Instance.OnSettingsClosed += PlayOnSettingsClosed;
     }
 
     // Start is called before the first frame update
     private void Start()
     {
+        // Add listeners to events
+        GameManager.Instance.OnRun += StartMoving;
+        GameManager.Instance.OnWin += Win;
+        GameManager.Instance.OnSettingsOpened += PauseForSettings;
+        GameManager.Instance.OnSettingsClosed += PlayOnSettingsClosed;
+        GameManager.Instance.OnStopOrDeath += KillOrCelebrate;
+
         InitPos = transform.position;
         Input.multiTouchEnabled = false;
 
@@ -175,6 +177,7 @@ public class Movement : MonoBehaviour
             GameManager.Instance.OnWin -= Win;
             GameManager.Instance.OnSettingsOpened -= PauseForSettings;
             GameManager.Instance.OnSettingsClosed -= PlayOnSettingsClosed;
+            GameManager.Instance.OnStopOrDeath -= KillOrCelebrate;
         }
     }
 
@@ -208,10 +211,10 @@ public class Movement : MonoBehaviour
     }
 
     // Kill the character using the set unity event
-    public void KillOrCelebrate()
+    private void KillOrCelebrate(bool win)
     {
         isDeadOrHasStopped = true;
-        if(!hasWon)
+        if(!win)
         {
             Destroy(GetComponentInChildren<ConfigurableJoint>());
         }
@@ -221,13 +224,13 @@ public class Movement : MonoBehaviour
     // NOTE: These functions are kept seperate instead of
     // flipping the boolean in case there might be more
     // use cases for these
-    public void PauseForSettings() 
+    private void PauseForSettings() 
     {
         Debug.Log("Settings opened, pausing");
         settingsOpened = true;
     }
 
-    public void PlayOnSettingsClosed()
+    private void PlayOnSettingsClosed()
     {
         settingsOpened = false;
     }
