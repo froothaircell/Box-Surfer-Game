@@ -17,6 +17,8 @@ public class AnimationPicker : MonoBehaviour
         animator = GetComponent<Animator>();
         hasWon = false;
         isDeadOrHasStopped = false;
+
+        GameManager.Instance.OnWin += Win;
     }
 
     // Update is called once per frame
@@ -44,8 +46,16 @@ public class AnimationPicker : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        if(GameManager.Instance != null)
+        {
+            GameManager.Instance.OnWin -= Win;
+        }
+    }
+
     // Function that is called via event to set the win flag
-    public void Win()
+    private void Win()
     {
         hasWon = true; 
     }

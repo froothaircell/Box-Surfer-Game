@@ -51,7 +51,6 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private UnityEvent
-        RunEvent = new UnityEvent(),
         WinEvent = new UnityEvent(),
         RestartEvent = new UnityEvent(),
         SettingsEnabled = new UnityEvent(),
@@ -65,17 +64,16 @@ public class GameManager : MonoBehaviour
 
     // Events
     public event UnityAction OnRun;
+    public event UnityAction OnWin;
 
     private int state = 0;
     private int prevState; // only used for settings state. Can be used for any event that needs to remember the previous state
     private int diamondScore;
     private static bool applicationIsQuitting = false;
-    private Camera mainCam;
 
     private void Awake()
     {
         Debug.Log("Game Manager awoken");
-        // mainCam = Camera.main;
         if(instance == null)
         {
             instance = this;
@@ -130,7 +128,6 @@ public class GameManager : MonoBehaviour
         {
             state = 1;
             OnRun();
-            // RunEvent.Invoke();
         }
     }
 
@@ -139,7 +136,8 @@ public class GameManager : MonoBehaviour
         if(state == 1)
         {
             state = 2;
-            WinEvent.Invoke();
+            OnWin();
+            // WinEvent.Invoke();
         }
     }
 
@@ -183,12 +181,12 @@ public class GameManager : MonoBehaviour
     }
 
     // Score increments called by diamonds upon collision with player
-    public void DiamondCollected(Vector3 position)
+    /*public void DiamondCollected(Vector3 position)
     {
         diamondScore++;
         Debug.Log("Diamond score = " + diamondScore);
         UpdateScoreEvent.Invoke(diamondScore);
         Vector3 screenPosition = mainCam.WorldToScreenPoint(position);
         PositionBasedAnimation.Invoke(screenPosition);
-    }
+    }*/
 }

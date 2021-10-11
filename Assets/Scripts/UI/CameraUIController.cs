@@ -80,7 +80,6 @@ public class CameraUIController : MonoBehaviour
     // Horizontal Camera Pivot Rotation
     public void HCamRotation(float value)
     {
-        Debug.Log("Horizontal rotation begun with value: " + value);
         // Activate horizontal camera rotation
         float realValue = (value * camRotationHRange) - 90f;
         cameraRotationHV.RotateCameraH(realValue);

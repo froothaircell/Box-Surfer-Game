@@ -42,6 +42,7 @@ public class Movement : MonoBehaviour
         isDeadOrHasStopped = false;
 
         GameManager.Instance.OnRun += StartMoving;
+        GameManager.Instance.OnWin += Win;
     }
 
     // Start is called before the first frame update
@@ -165,6 +166,7 @@ public class Movement : MonoBehaviour
         if(GameManager.Instance != null)
         {
             GameManager.Instance.OnRun -= StartMoving;
+            GameManager.Instance.OnWin -= Win;
         }
     }
 
@@ -186,13 +188,13 @@ public class Movement : MonoBehaviour
         }
     }
 
-    public void StartMoving()
+    private void StartMoving()
     {
         firstClick = true;
     }
 
     // Set the win flag using the set unity event
-    public void Win()
+    private void Win()
     {
         hasWon = true;
     }

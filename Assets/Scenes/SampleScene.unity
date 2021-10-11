@@ -1073,6 +1073,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Diamond (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 6469510797248672761, guid: 075816a48fb268248affc6ea16ef7d0c,
+        type: 3}
+      propertyPath: translationAmplitude
+      value: 0.005
+      objectReference: {fileID: 0}
+    - target: {fileID: 6469510797248672761, guid: 075816a48fb268248affc6ea16ef7d0c,
+        type: 3}
+      propertyPath: translationFrequency
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 075816a48fb268248affc6ea16ef7d0c, type: 3}
 --- !u!1001 &186816167
@@ -1501,7 +1511,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh16340
+  m_Name: pb_Mesh31248
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3256,6 +3266,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Diamond (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6469510797248672761, guid: 075816a48fb268248affc6ea16ef7d0c,
+        type: 3}
+      propertyPath: translationAmplitude
+      value: 0.005
+      objectReference: {fileID: 0}
+    - target: {fileID: 6469510797248672761, guid: 075816a48fb268248affc6ea16ef7d0c,
+        type: 3}
+      propertyPath: translationFrequency
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 075816a48fb268248affc6ea16ef7d0c, type: 3}
 --- !u!43 &613259347
@@ -3264,7 +3284,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1908
+  m_Name: pb_Mesh-37218
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3680,6 +3700,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Diamond (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6469510797248672761, guid: 075816a48fb268248affc6ea16ef7d0c,
+        type: 3}
+      propertyPath: translationAmplitude
+      value: 0.005
+      objectReference: {fileID: 0}
+    - target: {fileID: 6469510797248672761, guid: 075816a48fb268248affc6ea16ef7d0c,
+        type: 3}
+      propertyPath: translationFrequency
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 075816a48fb268248affc6ea16ef7d0c, type: 3}
@@ -4129,7 +4159,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh16502
+  m_Name: pb_Mesh31410
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4417,6 +4447,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Diamond (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 6469510797248672761, guid: 075816a48fb268248affc6ea16ef7d0c,
+        type: 3}
+      propertyPath: translationAmplitude
+      value: 0.005
+      objectReference: {fileID: 0}
+    - target: {fileID: 6469510797248672761, guid: 075816a48fb268248affc6ea16ef7d0c,
+        type: 3}
+      propertyPath: translationFrequency
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 075816a48fb268248affc6ea16ef7d0c, type: 3}
 --- !u!1001 &1020585819
@@ -4703,6 +4743,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Diamond (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6469510797248672761, guid: 075816a48fb268248affc6ea16ef7d0c,
+        type: 3}
+      propertyPath: translationAmplitude
+      value: 0.005
+      objectReference: {fileID: 0}
+    - target: {fileID: 6469510797248672761, guid: 075816a48fb268248affc6ea16ef7d0c,
+        type: 3}
+      propertyPath: translationFrequency
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 075816a48fb268248affc6ea16ef7d0c, type: 3}
@@ -5320,7 +5370,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1738
+  m_Name: pb_Mesh-37048
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -6044,7 +6094,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh16472
+  m_Name: pb_Mesh31380
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -6372,7 +6422,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1854
+  m_Name: pb_Mesh-37164
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -7008,7 +7058,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1782
+  m_Name: pb_Mesh-37092
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -8047,7 +8097,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-3940
+  m_Name: pb_Mesh-39250
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -8216,7 +8266,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1508
+  m_Name: pb_Mesh-36818
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -8519,7 +8569,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 427f16bf231156240b897d0009b52dcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 0.25
+  rotationSpeed: 0.125
   rotationSmoothingFactor: 0.125
 --- !u!114 &1750776506
 MonoBehaviour:
@@ -10855,6 +10905,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Diamond
+      objectReference: {fileID: 0}
+    - target: {fileID: 6469510797248672761, guid: 075816a48fb268248affc6ea16ef7d0c,
+        type: 3}
+      propertyPath: translationAmplitude
+      value: 0.005
+      objectReference: {fileID: 0}
+    - target: {fileID: 6469510797248672761, guid: 075816a48fb268248affc6ea16ef7d0c,
+        type: 3}
+      propertyPath: translationFrequency
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 075816a48fb268248affc6ea16ef7d0c, type: 3}
