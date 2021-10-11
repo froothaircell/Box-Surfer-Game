@@ -16,7 +16,7 @@ public class ElevatedPlatformSensor : MonoBehaviour
         else if (collision.collider.CompareTag("Player Base")
             || collision.collider.CompareTag("Character"))
         {
-            GameManager.instance.StoppageOrDeath();
+            GameManager.Instance.StoppageOrDeath();
         }
 
     }

@@ -403,3 +403,4 @@ MonoBehaviour:
   rotationSpeed: 0.8
   translationFrequency: 0.3
   translationAmplitude: 0.01
+  initialHeight: 36.5

@@ -40,6 +40,8 @@ public class Movement : MonoBehaviour
         isRotating = false;
         hasWon = false;
         isDeadOrHasStopped = false;
+
+        GameManager.Instance.OnRun += StartMoving;
     }
 
     // Start is called before the first frame update
@@ -104,21 +106,6 @@ public class Movement : MonoBehaviour
         {
             if(!isDeadOrHasStopped && !settingsOpened)
             {
-                // Rotate for debugging purposes
-                /*if(Input.GetButton("Fire2"))
-                {
-                    transform.Rotate(
-                    0.0f,
-                    -rotationSpeed * Time.deltaTime,
-                    0.0f,
-                    Space.Self);
-                }*/
-
-                // Move character forwards
-                /* transform.Translate(
-                    speedFactor * Time.deltaTime * transform.forward,
-                    Space.World); */
-                
                 if (firstClick)
                 {
                     // Reverse direction of movement
@@ -170,6 +157,14 @@ public class Movement : MonoBehaviour
                     }
                 }
             }
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if(GameManager.Instance != null)
+        {
+            GameManager.Instance.OnRun -= StartMoving;
         }
     }
 

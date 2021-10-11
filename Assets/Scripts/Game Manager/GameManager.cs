@@ -21,7 +21,33 @@ public class vector3Event : UnityEvent<Vector3>
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance;
+    private static GameManager instance;
+
+    public static GameManager Instance
+    {
+        get
+        {
+            Debug.Log("Getter called");
+            if(applicationIsQuitting)
+            {
+                return null;
+            }
+
+            if(instance == null)
+            {
+                instance = FindObjectOfType<GameManager>();
+
+                if(instance == null)
+                {
+                    Debug.Log("Creating a new Game Manager");
+                    GameObject gm = new GameObject();
+                    gm.name = typeof(GameManager).Name;
+                    instance = gm.AddComponent<GameManager>();
+                }
+            }
+            return instance;
+        }
+    }
 
     [SerializeField]
     private UnityEvent
@@ -37,21 +63,27 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private vector3Event PositionBasedAnimation = new vector3Event();
 
+    // Events
+    public event UnityAction OnRun;
+
     private int state = 0;
     private int prevState; // only used for settings state. Can be used for any event that needs to remember the previous state
     private int diamondScore;
+    private static bool applicationIsQuitting = false;
     private Camera mainCam;
 
     private void Awake()
     {
-        mainCam = Camera.main;
-        if(instance != null)
+        Debug.Log("Game Manager awoken");
+        // mainCam = Camera.main;
+        if(instance == null)
         {
-            Destroy(gameObject);
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
         }
         else
         {
-            instance = this;
+            Destroy(gameObject);
         }
     }
 
@@ -86,12 +118,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        Debug.Log("Game Manger destroyed");
+        applicationIsQuitting = true;
+    }
+
     public void Run()
     {
         if(state == 0)
         {
             state = 1;
-            RunEvent.Invoke();
+            OnRun();
+            // RunEvent.Invoke();
         }
     }
 
@@ -152,11 +191,4 @@ public class GameManager : MonoBehaviour
         Vector3 screenPosition = mainCam.WorldToScreenPoint(position);
         PositionBasedAnimation.Invoke(screenPosition);
     }
-    
-    // Update score in the UI side
-    /*private void UpdateScore(int score)
-    {
-        UpdateScoreEvent.Invoke(score);
-        Debug.Log("Score updated on UI side");
-    }*/
 }

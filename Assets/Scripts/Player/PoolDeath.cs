@@ -11,7 +11,7 @@ public class PoolDeath : MonoBehaviour
         {
             // Activate pool collider
             other.transform.GetChild(0).GetComponent<MeshCollider>().enabled = true;
-            GameManager.instance.StoppageOrDeath();
+            GameManager.Instance.StoppageOrDeath();
         }
     }
 }

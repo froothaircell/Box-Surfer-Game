@@ -20,7 +20,7 @@ public class DiamondLogic : MonoBehaviour
             {
                 isDestroyed = true;
                 Debug.Log("collision with player detected");
-                GameManager.instance.DiamondCollected(transform.position);
+                GameManager.Instance.DiamondCollected(transform.position);
                 Destroy(transform.parent.gameObject);
             }
         }
