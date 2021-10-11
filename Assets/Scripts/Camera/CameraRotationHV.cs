@@ -28,12 +28,6 @@ public class CameraRotationHV : MonoBehaviour
         coroutine = WinRotation();
     }
 
-    // Update is called once per frame
-    private void Update()
-    {
-
-    }
-
     public void RotateCameraH(float angleY)
     {
         RotateCameraPivot(cameraPivotPosition.localRotation.eulerAngles.x, angleY);

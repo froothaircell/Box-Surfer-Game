@@ -27,13 +27,15 @@ public class SettingsButton : MonoBehaviour
         if(!showSettings)
         {
             settingsPanel.SetActive(true);
-            settingsEvent.Invoke();
+            // settingsEvent.Invoke();
+            GameManager.Instance.SettingsToggled();
             showSettings = true;
         }
         else
         {
             settingsPanel.SetActive(false);
-            settingsEvent.Invoke();
+            // settingsEvent.Invoke();
+            GameManager.Instance.SettingsToggled();
             showSettings = false;
         }
     }

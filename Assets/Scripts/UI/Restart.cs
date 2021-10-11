@@ -11,6 +11,7 @@ public class Restart : MonoBehaviour
     public void RestartGame()
     {
         Debug.Log("Restarting Game");
+        GameManager.Instance.Restart();
         SceneManager.LoadScene("SampleScene");
     }
 }

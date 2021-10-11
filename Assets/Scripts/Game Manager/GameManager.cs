@@ -33,8 +33,14 @@ public class GameManager : MonoBehaviour
                 return null;
             }
 
+            if(instance)
+            {
+                Debug.Log(instance.GetInstanceID());
+            }
+
             if(instance == null)
             {
+                Debug.Log("This object does not have an instance");
                 instance = FindObjectOfType<GameManager>();
 
                 if(instance == null)
@@ -51,8 +57,6 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private UnityEvent
-        WinEvent = new UnityEvent(),
-        RestartEvent = new UnityEvent(),
         SettingsEnabled = new UnityEvent(),
         SettingsDisabled = new UnityEvent();
     [SerializeField]
@@ -65,6 +69,9 @@ public class GameManager : MonoBehaviour
     // Events
     public event UnityAction OnRun;
     public event UnityAction OnWin;
+    public event UnityAction OnRestart;
+    public event UnityAction OnSettingsOpened;
+    public event UnityAction OnSettingsClosed;
 
     private int state = 0;
     private int prevState; // only used for settings state. Can be used for any event that needs to remember the previous state
@@ -73,7 +80,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("Game Manager awoken");
+        Debug.Log("Game Manager awoken with ID: " + gameObject.GetInstanceID());
         if(instance == null)
         {
             instance = this;
@@ -81,6 +88,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            Debug.Log("Destroying object with ID: " + gameObject.GetInstanceID());
             Destroy(gameObject);
         }
     }
@@ -118,7 +126,7 @@ public class GameManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        Debug.Log("Game Manger destroyed");
+        Debug.Log("Game Manager destroyed with ID: " + gameObject.GetInstanceID());
         applicationIsQuitting = true;
     }
 
@@ -127,7 +135,7 @@ public class GameManager : MonoBehaviour
         if(state == 0)
         {
             state = 1;
-            OnRun();
+            OnRun?.Invoke();
         }
     }
 
@@ -136,8 +144,7 @@ public class GameManager : MonoBehaviour
         if(state == 1)
         {
             state = 2;
-            OnWin();
-            // WinEvent.Invoke();
+            OnWin?.Invoke();
         }
     }
 
@@ -161,22 +168,24 @@ public class GameManager : MonoBehaviour
         if(state == 3)
         {
             state = 0;
-            RestartEvent.Invoke();
+            OnRestart?.Invoke();
         }
     }
 
-    public void SettingsOpened()
+    public void SettingsToggled()
     {
         if(state >= 0 && state < 4)
         {
             prevState = state;
-            SettingsEnabled.Invoke();
+            // SettingsEnabled.Invoke();
+            OnSettingsOpened();
             state = 4;
         }
         else if(state == 4)
         {
             state = prevState;
-            SettingsDisabled.Invoke();
+            // SettingsDisabled.Invoke();
+            OnSettingsClosed();
         }
     }
 

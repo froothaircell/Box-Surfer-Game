@@ -20,7 +20,7 @@ public class DiamondMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.up * translationAmplitude * Mathf.Sin(2 * Mathf.PI * Time.fixedTime * translationFrequency));
+        transform.Translate(Vector3.up * translationAmplitude * Mathf.Sin(2 * Mathf.PI * Time.timeSinceLevelLoad * translationFrequency));
         transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime * 100);
     }
 }

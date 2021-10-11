@@ -36,13 +36,18 @@ public class Movement : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("Movement script awoken");
+        
         firstClick = false;
         isRotating = false;
         hasWon = false;
         isDeadOrHasStopped = false;
 
+        // Add listeners to events
         GameManager.Instance.OnRun += StartMoving;
         GameManager.Instance.OnWin += Win;
+        GameManager.Instance.OnSettingsOpened += PauseForSettings;
+        GameManager.Instance.OnSettingsClosed += PlayOnSettingsClosed;
     }
 
     // Start is called before the first frame update
@@ -163,10 +168,13 @@ public class Movement : MonoBehaviour
 
     private void OnDestroy()
     {
+        // Remove listeners if game manager hasn't been destroyed
         if(GameManager.Instance != null)
         {
             GameManager.Instance.OnRun -= StartMoving;
             GameManager.Instance.OnWin -= Win;
+            GameManager.Instance.OnSettingsOpened -= PauseForSettings;
+            GameManager.Instance.OnSettingsClosed -= PlayOnSettingsClosed;
         }
     }
 
@@ -215,6 +223,7 @@ public class Movement : MonoBehaviour
     // use cases for these
     public void PauseForSettings() 
     {
+        Debug.Log("Settings opened, pausing");
         settingsOpened = true;
     }
 
