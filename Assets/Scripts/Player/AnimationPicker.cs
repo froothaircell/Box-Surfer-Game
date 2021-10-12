@@ -6,6 +6,8 @@ public class AnimationPicker : MonoBehaviour
     [SerializeField]
     private Rigidbody rb;
     [SerializeField]
+    private GameObject confettiAnimations;
+    [SerializeField]
     private float airSpeedThreshold;
 
     private Animator animator;
@@ -77,6 +79,7 @@ public class AnimationPicker : MonoBehaviour
         }
         else
         {
+            confettiAnimations.SetActive(true);
             animator.SetTrigger("Chicken");
         }
     }
