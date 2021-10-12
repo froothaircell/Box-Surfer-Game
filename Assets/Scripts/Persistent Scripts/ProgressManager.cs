@@ -38,6 +38,7 @@ public class ProgressManager : MonoBehaviour
     }
 
     public event UnityAction<int> OnScoreUpdate;
+    public event UnityAction<int> OnLevelUpdate;
     public event UnityAction<Vector3> OnAnimationUpdate;
     public event UnityAction<bool> OnDeathAnimationUpdate;
 
@@ -77,7 +78,6 @@ public class ProgressManager : MonoBehaviour
         
     }
 
-
     private void OnDestroy()
     {
         Debug.Log("Progress Manager destroyed with ID: " + gameObject.GetInstanceID());
@@ -95,6 +95,11 @@ public class ProgressManager : MonoBehaviour
     {
         Debug.Log("We got into the progress manager death function");
         OnDeathAnimationUpdate.Invoke(win);
+    }
+
+    public void LevelUpdate()
+    {
+        OnLevelUpdate.Invoke(level);
     }
 
     public void DiamondCollected(Vector3 position)

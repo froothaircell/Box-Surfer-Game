@@ -11,7 +11,8 @@ public class FinalScreenController : MonoBehaviour
         finalScoreText,
         diamondSprite;
     [SerializeField]
-    private GameObject finalScore;
+    private GameObject finalScore,
+        nextLevelButton;
     [SerializeField]
     private Image background;
     [SerializeField]
@@ -33,9 +34,11 @@ public class FinalScreenController : MonoBehaviour
         
         // Initial UI configuration
         finalScore.SetActive(false);
+        nextLevelButton.SetActive(false);
         background.color = new Color(background.color.r, background.color.g, background.color.b, 0f);
         stateDependentText.localPosition = new Vector3(0f, 2100f, 0f);
         finalScore.transform.localScale = new Vector3(0f, 0f, 0f);
+        nextLevelButton.transform.localScale = new Vector3(0f, 0f, 0f);
     }
 
     // Update is called once per frame
@@ -72,6 +75,7 @@ public class FinalScreenController : MonoBehaviour
                 if(win)
                 {
                     finalScore.SetActive(true);
+                    nextLevelButton.SetActive(true);
                     stateDependentTextController.text = "Great Job!";
                     DOTween.To(
                         () => stateDependentText.localPosition,
@@ -85,6 +89,11 @@ public class FinalScreenController : MonoBehaviour
                                 () => finalScore.transform.localScale,
                                 x => finalScore.transform.localScale = x,
                                 new Vector3(1, 1, 1),
+                                scaleDuration);
+                            DOTween.To(
+                                () => nextLevelButton.transform.localScale,
+                                x => nextLevelButton.transform.localScale = x,
+                                new Vector3(1f, 1f, 1f),
                                 scaleDuration);
                         });
                 }
