@@ -10,7 +10,20 @@ public class ScorePanel : MonoBehaviour
         scoreText = transform.GetChild(0).GetComponent<Text>();
     }
 
-    public void UpdateScore(int score)
+    private void Start()
+    {
+        ProgressManager.Instance.OnScoreUpdate += UpdateScore;
+    }
+
+    private void OnDestroy()
+    {
+        if(ProgressManager.Instance != null)
+        {
+            ProgressManager.Instance.OnScoreUpdate -= UpdateScore;
+        }
+    }
+
+    private void UpdateScore(int score)
     {
         scoreText.text = score.ToString();
     }

@@ -7,7 +7,8 @@ public class UIController : MonoBehaviour
         scorePanel,
         restartButton,
         settingsButton,
-        settingsPanel;
+        settingsPanel,
+        finalPanel;
 
     private void Awake()
     {
@@ -15,6 +16,7 @@ public class UIController : MonoBehaviour
         restartButton.SetActive(false);
         settingsButton.SetActive(true);
         settingsPanel.SetActive(false);
+        finalPanel.SetActive(true);
     }
 
     private void Start()
@@ -35,6 +37,11 @@ public class UIController : MonoBehaviour
     {
         EnableRestartButton();
         DisableSettingsButton(win);
+    }
+
+    private void EnableFinalPanel()
+    {
+        finalPanel.SetActive(true);
     }
 
     private void EnableRestartButton()

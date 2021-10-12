@@ -2,12 +2,6 @@
 using UnityEngine.Events;
 
 [System.Serializable]
-public class boolEvent : UnityEvent<bool>
-{
-
-}
-
-[System.Serializable]
 public class intEvent : UnityEvent<int>
 {
 
@@ -27,7 +21,7 @@ public class GameManager : MonoBehaviour
     {
         get
         {
-            Debug.Log("Getter called with application quit status: " + applicationIsQuitting);
+            Debug.Log("Game Manager getter called with application quit status: " + applicationIsQuitting);
             if(applicationIsQuitting)
             {
                 return null;
@@ -70,7 +64,6 @@ public class GameManager : MonoBehaviour
 
     private int state = 0;
     private int prevState; // only used for settings state. Can be used for any event that needs to remember the previous state
-    private int diamondScore;
     private static bool applicationIsQuitting = false;
 
     private void Awake()
@@ -83,7 +76,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Destroying object with ID: " + gameObject.GetInstanceID());
+            Debug.Log("Destroying Game Manager object with ID: " + gameObject.GetInstanceID());
             Destroy(gameObject);
         }
     }
@@ -91,7 +84,6 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        diamondScore = 0;
         state = 0;
     }
 
@@ -148,7 +140,6 @@ public class GameManager : MonoBehaviour
 
     public void StoppageOrDeath()
     {
-        Debug.Log("We got this far");
         if(state == 1 || state == 2)
         {
             bool win = false; 
@@ -188,14 +179,4 @@ public class GameManager : MonoBehaviour
             OnSettingsClosed?.Invoke();
         }
     }
-
-    // Score increments called by diamonds upon collision with player
-    /*public void DiamondCollected(Vector3 position)
-    {
-        diamondScore++;
-        Debug.Log("Diamond score = " + diamondScore);
-        UpdateScoreEvent.Invoke(diamondScore);
-        Vector3 screenPosition = mainCam.WorldToScreenPoint(position);
-        PositionBasedAnimation.Invoke(screenPosition);
-    }*/
 }
