@@ -19,7 +19,6 @@ public class DiamondLogic : MonoBehaviour
             if(!isDestroyed)
             {
                 isDestroyed = true;
-                Debug.Log("collision with player detected");
                 ProgressManager.Instance.DiamondCollected(transform.position);
                 Destroy(transform.parent.gameObject);
             }

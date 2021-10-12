@@ -36,13 +36,10 @@ public class Movement : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("Movement script awoken");
-        
         firstClick = false;
         isRotating = false;
         hasWon = false;
         isDeadOrHasStopped = false;
-
     }
 
     // Start is called before the first frame update
@@ -226,7 +223,6 @@ public class Movement : MonoBehaviour
     // use cases for these
     private void PauseForSettings() 
     {
-        Debug.Log("Settings opened, pausing");
         settingsOpened = true;
     }
 

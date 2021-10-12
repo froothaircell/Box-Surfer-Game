@@ -1,18 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
-[System.Serializable]
-public class intEvent : UnityEvent<int>
-{
-
-}
-
-[System.Serializable]
-public class vector3Event : UnityEvent<Vector3>
-{
-
-}
-
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
@@ -21,7 +9,6 @@ public class GameManager : MonoBehaviour
     {
         get
         {
-            Debug.Log("Game Manager getter called with application quit status: " + applicationIsQuitting);
             if(applicationIsQuitting)
             {
                 return null;
@@ -29,17 +16,15 @@ public class GameManager : MonoBehaviour
 
             if(instance)
             {
-                Debug.Log(instance.GetInstanceID());
+
             }
 
             if(instance == null)
             {
-                Debug.Log("This object does not have an instance");
                 instance = FindObjectOfType<GameManager>();
 
                 if(instance == null)
                 {
-                    Debug.Log("Creating a new Game Manager");
                     GameObject gm = new GameObject();
                     gm.name = typeof(GameManager).Name;
                     instance = gm.AddComponent<GameManager>();
@@ -48,11 +33,6 @@ public class GameManager : MonoBehaviour
             return instance;
         }
     }
-
-    [SerializeField]
-    private intEvent UpdateScoreEvent = new intEvent();
-    [SerializeField]
-    private vector3Event PositionBasedAnimation = new vector3Event();
 
     // Events
     public event UnityAction OnRun;
@@ -68,7 +48,6 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("Game Manager awoken with ID: " + gameObject.GetInstanceID());
         if(instance == null)
         {
             instance = this;
@@ -76,7 +55,6 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Destroying Game Manager object with ID: " + gameObject.GetInstanceID());
             Destroy(gameObject);
         }
     }
@@ -113,7 +91,6 @@ public class GameManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        Debug.Log("Game Manager destroyed with ID: " + gameObject.GetInstanceID());
         if(gameObject.GetComponent<GameManager>().GetInstanceID() == Instance.GetInstanceID())
         {
             applicationIsQuitting = true;
@@ -168,14 +145,12 @@ public class GameManager : MonoBehaviour
         if(state >= 0 && state < 4)
         {
             prevState = state;
-            // SettingsEnabled.Invoke();
             OnSettingsOpened?.Invoke();
             state = 4;
         }
         else if(state == 4)
         {
             state = prevState;
-            // SettingsDisabled.Invoke();
             OnSettingsClosed?.Invoke();
         }
     }

@@ -140,7 +140,6 @@ public class GroundCheck : MonoBehaviour
     {
         if(collision.collider.gameObject.layer == 8 || collision.collider.gameObject.layer == 9)
         {
-            //Debug.Log("Collision Started");
             baseOnGround = true;
         }
     }
@@ -149,7 +148,6 @@ public class GroundCheck : MonoBehaviour
     {
         if (collision.collider.gameObject.layer == 8 || collision.collider.gameObject.layer == 9)
         {
-            //Debug.Log("Collision sustained");
             result = collision.GetContact(0).point.y + trailOffset;
         }
     }
@@ -158,7 +156,6 @@ public class GroundCheck : MonoBehaviour
     {
         if (collision.collider.gameObject.layer == 8 || collision.collider.gameObject.layer == 9)
         {
-            //Debug.Log("Exiting collision");
             baseOnGround = false;
         }
     }
@@ -220,7 +217,6 @@ public class GroundCheck : MonoBehaviour
             {
                 if(actualDistanceFromGround > distanceThreshold || !frontHitDetected)
                 {
-                    //Debug.Log("base is getting off ground");
                     return false;
                 }
                 else
@@ -239,7 +235,6 @@ public class GroundCheck : MonoBehaviour
             {
                 if(actualDistanceFromGround > distanceThreshold || !frontHitDetected)
                 {
-                    //Debug.Log("Entire body off ground");
                     return false;
                 }
                 else

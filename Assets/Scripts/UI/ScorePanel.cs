@@ -13,6 +13,9 @@ public class ScorePanel : MonoBehaviour
     private void Start()
     {
         ProgressManager.Instance.OnScoreUpdate += UpdateScore;
+
+        // Run Score Update function once at start
+        ProgressManager.Instance.ScoreUpdate();
     }
 
     private void OnDestroy()

@@ -9,7 +9,6 @@ public class ProgressManager : MonoBehaviour
     {
         get
         {
-            Debug.Log("Progress Manager getter called with application quit status: " + applicationIsQuitting);
             if (applicationIsQuitting)
             {
                 return null;
@@ -17,17 +16,15 @@ public class ProgressManager : MonoBehaviour
 
             if(instance)
             {
-                Debug.Log(instance.GetInstanceID());
+
             }
 
             if(instance == null)
             {
-                Debug.Log("This object does not have an instance");
                 instance = FindObjectOfType<ProgressManager>();
 
                 if(instance == null)
                 {
-                    Debug.Log("Creating new Progress Manager");
                     GameObject pm = new GameObject();
                     pm.name = typeof(ProgressManager).Name;
                     instance = pm.AddComponent<ProgressManager>();
@@ -48,7 +45,6 @@ public class ProgressManager : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("Progress Manager awoken with ID: " + gameObject.GetInstanceID());
         if(instance == null)
         {
             instance = this;
@@ -56,7 +52,6 @@ public class ProgressManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Destroying Progress Manager object with ID: " + gameObject.GetInstanceID());
             Destroy(gameObject);
         }
         if(instance.GetInstanceID() == this.gameObject.GetComponent<ProgressManager>().GetInstanceID())
@@ -70,6 +65,7 @@ public class ProgressManager : MonoBehaviour
     private void Start()
     {
         GameManager.Instance.OnStopOrDeath += StopOrDeathUIAnimations;
+        GameManager.Instance.OnRestart += LevelUpdate;
     }
 
     // Update is called once per frame
@@ -80,7 +76,6 @@ public class ProgressManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        Debug.Log("Progress Manager destroyed with ID: " + gameObject.GetInstanceID());
         if(gameObject.GetComponent<ProgressManager>().GetInstanceID() == Instance.GetInstanceID())
         {
             applicationIsQuitting = true;
@@ -88,25 +83,36 @@ public class ProgressManager : MonoBehaviour
         if(GameManager.Instance != null)
         {
             GameManager.Instance.OnStopOrDeath -= StopOrDeathUIAnimations;
+            GameManager.Instance.OnRestart -= LevelUpdate;
         }
     }
 
     private void StopOrDeathUIAnimations(bool win)
     {
-        Debug.Log("We got into the progress manager death function");
-        OnDeathAnimationUpdate.Invoke(win);
+        OnDeathAnimationUpdate?.Invoke(win);
     }
 
     public void LevelUpdate()
     {
-        OnLevelUpdate.Invoke(level);
+        OnLevelUpdate?.Invoke(level);
+    }
+
+    public void LevelUpdate(int newLevel)
+    {
+        level = newLevel;
+        OnLevelUpdate?.Invoke(level);
+    }
+
+    public void ScoreUpdate()
+    {
+        OnScoreUpdate(score);
     }
 
     public void DiamondCollected(Vector3 position)
     {
         score++;
-        OnScoreUpdate(score);
-        OnAnimationUpdate(position);
+        OnScoreUpdate?.Invoke(score);
+        OnAnimationUpdate?.Invoke(position);
     }
 
 }

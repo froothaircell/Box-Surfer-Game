@@ -40,7 +40,6 @@ public class SpeedUIController : MonoBehaviour
         if(IsDigitsOnly(value))
         {
             float result = float.Parse(value) / (2 * referenceSpeed);
-            Debug.Log("The returned value is: " + float.Parse(value) + " and the result is: " + result);
             if (result <= 1f && result >= 0f)
             {
                 scrollbar.value = result;

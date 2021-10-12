@@ -63,7 +63,6 @@ public class FinalScreenController : MonoBehaviour
 
     private void TriggerAnimations(bool win)
     {
-        Debug.Log("Inside the final panel animations function");
         DOTween.To(
             () => background.color, 
             x => background.color = x,

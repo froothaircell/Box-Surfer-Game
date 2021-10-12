@@ -8,7 +8,6 @@ public class ElevatedPlatformSensor : MonoBehaviour
 {
     private void OnCollisionEnter(Collision collision)
     {
-        // Debug.Log("We got collision");
         if (collision.collider.CompareTag("Player"))
         {
             collision.collider.transform.parent = null;
