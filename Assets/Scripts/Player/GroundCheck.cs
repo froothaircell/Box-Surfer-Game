@@ -1,18 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-// Shoots a spherecast from the bottom of the player
-// object and determines if the player is grounded or
-// not with the use of distance thresholds
+/// <summary>
+/// Shoots a spherecast from the bottom of the player object and determines if
+/// the player is grounded or not with the use of distance thresholds
+/// </summary>
 public class GroundCheck : MonoBehaviour
 {
     [SerializeField]
     private float maxDistance, 
         distanceThreshold, 
         trailOffset, 
-        trailAndPivotSmoothing, 
-        minTrailThreshold = 35.5f, // For clamping the vertical position of the trail
+        trailAndPivotSmoothing,
+        // For clamping the vertical position of the trail
+        minTrailThreshold = 35.5f, 
         maxTrailThreshold = 100f;
     [SerializeField]
     private LayerMask layerMask;
@@ -132,10 +132,8 @@ public class GroundCheck : MonoBehaviour
         }
     }
 
-    // Check if the base cube is connecting with
-    // the ground. An analog OnCollisionExit is
-    // here for reversing the effects of the enter
-    // function
+    // Check if the base cube is connecting with the ground. An analog
+    // OnCollisionExit is here for reversing the effects of the enter function
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.collider.gameObject.layer == 8 || collision.collider.gameObject.layer == 9)
@@ -160,10 +158,8 @@ public class GroundCheck : MonoBehaviour
         }
     }
 
-    // Check if the player is grounded. If the base
-    // cube is in a collision but the boxcast has a
-    // longer distance then that is taken as a false
-    // result
+    // Check if the player is grounded. If the base cube is in a collision but
+    // the boxcast has a longer distance then that is taken as a false result
     private bool IsGrounded()
     {
         frontHitDetected = Physics.BoxCast(
@@ -256,7 +252,7 @@ public class GroundCheck : MonoBehaviour
         }
     }
 
-    // Set position of the trail renderer and camera pivot according to the ground distance
+    // Set position of the trail renderer according to the ground distance
     private void RepositionTrailAndPivot()
     {
         if(!baseOnGround)

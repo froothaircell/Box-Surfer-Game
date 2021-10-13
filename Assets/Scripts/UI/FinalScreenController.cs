@@ -3,20 +3,23 @@ using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
 
+/// <summary>
+/// Controls the animations of the post death or victory screen via events 
+/// </summary>
 public class FinalScreenController : MonoBehaviour
 {
     [SerializeField]
     private RectTransform
         stateDependentText,
-        finalScoreText,
-        diamondSprite;
+        finalScoreText;
     [SerializeField]
-    private GameObject finalScore,
+    private GameObject 
+        finalScore,
         nextLevelButton;
     [SerializeField]
     private Image background;
     [SerializeField]
-    private float 
+    private readonly float 
         backgroundFadeInDuration,
         finalTextSlideInDuration,
         scaleDuration;
@@ -24,8 +27,7 @@ public class FinalScreenController : MonoBehaviour
     private TextMeshProUGUI finalScoreTextController;
     private TextMeshProUGUI stateDependentTextController;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         stateDependentTextController = stateDependentText.GetComponent<TextMeshProUGUI>();
         finalScoreTextController = finalScoreText.GetComponent<TextMeshProUGUI>();
@@ -39,12 +41,6 @@ public class FinalScreenController : MonoBehaviour
         stateDependentText.localPosition = new Vector3(0f, 2100f, 0f);
         finalScore.transform.localScale = new Vector3(0f, 0f, 0f);
         nextLevelButton.transform.localScale = new Vector3(0f, 0f, 0f);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private void OnDestroy()

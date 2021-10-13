@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Fetches and updates the score on the panel via a listener to an event
+/// invoked by the progress manager
+/// </summary>
 public class ScorePanel : MonoBehaviour
 {
     private Text scoreText;

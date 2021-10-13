@@ -1,5 +1,11 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// changes the transform of the pivot for the camera according to the player's
+/// rotation and position. Please note that the camera consists of 2 pivots, one
+/// for the camera follow script and another as a child of the first for the
+/// arbitrary offsets
+/// </summary>
 public class CameraFollow : MonoBehaviour
 {
     [SerializeField]
@@ -13,11 +19,9 @@ public class CameraFollow : MonoBehaviour
         followSmoothingValue = 0.125f;
     [SerializeField]
     private bool
-        followPosition,
-        lookAtPosition;
+        followPosition;
 
 
-    // Start is called before the first frame update
     private void Start()
     {
         transform.position = camTarget.position;
@@ -44,8 +48,7 @@ public class CameraFollow : MonoBehaviour
                 transform.rotation,
                 camRotationTarget.rotation,
                 followSmoothingValue * Time.deltaTime);
-            transform.position = smoothedPosition;
-            transform.rotation = smoothedRotation;
+            transform.SetPositionAndRotation(smoothedPosition, smoothedRotation);
         }
     }
 }

@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// This script provides a options to rotate the pivot of the camera in the
+/// horizontal and vertical axis 
+/// </summary>
 public class CameraRotationHV : MonoBehaviour
 {
     [SerializeField]
     private float
-        rotationSpeed,
-        rotationSmoothingFactor = 0.125f;
+        rotationSpeed;
 
     private IEnumerator coroutine;
 
@@ -22,7 +25,6 @@ public class CameraRotationHV : MonoBehaviour
         cameraPivotPosition = transform.GetChild(0);
     }
 
-    // Start is called before the first frame update
     private void Start()
     {
         coroutine = WinRotation();
@@ -47,6 +49,14 @@ public class CameraRotationHV : MonoBehaviour
         RotateCameraPivot(angleX, cameraPivotPosition.localRotation.eulerAngles.y);
     }
 
+    private void RotateCameraPivot(float angleX, float angleY)
+    {
+        cameraPivotPosition.localRotation = Quaternion.Euler(
+            angleX,
+            angleY,
+            cameraPivotPosition.localRotation.eulerAngles.z);
+    }
+
     private void RotateOnWin(bool win)
     {
         if(win)
@@ -54,14 +64,6 @@ public class CameraRotationHV : MonoBehaviour
             StopCoroutine(coroutine);
             StartCoroutine(coroutine);
         }
-    }
-
-    private void RotateCameraPivot(float angleX, float angleY)
-    {
-        cameraPivotPosition.localRotation = Quaternion.Euler(
-            angleX,
-            angleY,
-            cameraPivotPosition.localRotation.eulerAngles.z);
     }
 
     private IEnumerator WinRotation()

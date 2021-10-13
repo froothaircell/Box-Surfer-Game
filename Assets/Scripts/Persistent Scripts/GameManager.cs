@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
+/// <summary>
+/// Functions as a state machine that changes the state of the game according to
+/// prompts from objects in the scene and activates subscribable events
+/// accordingly. Persists across scenes.
+/// </summary>
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
@@ -12,11 +17,6 @@ public class GameManager : MonoBehaviour
             if(applicationIsQuitting)
             {
                 return null;
-            }
-
-            if(instance)
-            {
-
             }
 
             if(instance == null)
@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Events
+    // Events to be subscribed to
     public event UnityAction OnRun;
     public event UnityAction OnWin;
     public event UnityAction OnRestart;
@@ -43,7 +43,9 @@ public class GameManager : MonoBehaviour
     public event UnityAction<bool> OnStopOrDeath;
 
     private int state = 0;
-    private int prevState; // only used for settings state. Can be used for any event that needs to remember the previous state
+    // only used for settings state. Can be used for any event that needs to
+    // remember the previous state
+    private int prevState; 
     private static bool applicationIsQuitting = false;
 
     private void Awake()
@@ -68,6 +70,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        // Logic to run within a state if required
         switch(state)
         {
             case 0: // Start of game

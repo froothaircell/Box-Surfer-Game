@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using DG.Tweening;
 
+/// <summary>
+/// Animates the score panel and UI whenever a purple diamond is collected
+/// </summary>
 public class ScorePanelAnimations : MonoBehaviour
 {
     [SerializeField]
@@ -19,16 +22,9 @@ public class ScorePanelAnimations : MonoBehaviour
         mainCam = Camera.main;
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         ProgressManager.Instance.OnAnimationUpdate += TriggerAnimations;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private void OnDestroy()

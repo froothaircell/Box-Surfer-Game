@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 
-// Removes a yellow box upon collision with the front
-// face or, if no yellow boxes exist, kills the player
-// via event 
+/// <summary>
+/// Removes a yellow box upon collision with the front face or, if no yellow box
+/// exists, kills the player via event
+/// </summary>
 public class RedBoxSensor : MonoBehaviour
 {
     private void OnCollisionEnter(Collision collision)

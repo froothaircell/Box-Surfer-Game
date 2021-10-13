@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 
-// Detects a left turn trigger and invokes a parent
-// function to turn the character by 90 degrees applies
-// the same function to the camera rotation
+/// <summary>
+/// Detects a left turn trigger and invokes a parent function to turn the
+/// character by 90 degrees applies the same function to the camera rotation
+/// </summary>
 public class DetectRotationTrigger : MonoBehaviour
 {
     private Movement parentMovement;
@@ -14,8 +15,7 @@ public class DetectRotationTrigger : MonoBehaviour
         set { isLeft = value; } 
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         parentMovement = GetComponentInParent<Movement>();
     }

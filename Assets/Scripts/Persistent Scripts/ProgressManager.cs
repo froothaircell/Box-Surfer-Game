@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
+/// <summary>
+/// Functions as a tracker for the score and current lavel of the game. Triggers
+/// certain events relating to the score and level according to the state change
+/// invoked by the game manager. Persists across scenes.
+/// </summary>
 public class ProgressManager : MonoBehaviour
 {
     private static ProgressManager instance;
@@ -34,6 +39,7 @@ public class ProgressManager : MonoBehaviour
         }
     }
 
+    // Events to be subscribed to
     public event UnityAction<int> OnScoreUpdate;
     public event UnityAction<int> OnLevelUpdate;
     public event UnityAction<Vector3> OnAnimationUpdate;
@@ -61,17 +67,10 @@ public class ProgressManager : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
     private void Start()
     {
         GameManager.Instance.OnStopOrDeath += StopOrDeathUIAnimations;
         GameManager.Instance.OnRestart += LevelUpdate;
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
-        
     }
 
     private void OnDestroy()

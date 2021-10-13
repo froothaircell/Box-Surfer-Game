@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// This contains all the requisite functions that are required by the camera
+/// offsets section of the settings
+/// </summary>
 public class CameraUIController : MonoBehaviour
 {
-    // References to the sliders
     [SerializeField]
     private Slider 
         camRotationHSlider, 
@@ -31,20 +34,21 @@ public class CameraUIController : MonoBehaviour
         distance;
 
     // Allowed ranges of each of the movements
-    private float camRotationHRange = 90f + 90f;
-    private float camRotationVRange = 90f + 90f;
-    private float lookRotationXRange = 90f + 90f;
-    private float lookRotationYRange = 90f + 90f;
-    private float lookRotationZRange = 90f + 90f;
-    private float zoomRange = 15f - 0.01f; // Don't make the range exceed 0 into negative values. It creates errors
+    private readonly float camRotationHRange = 90f + 90f;
+    private readonly float camRotationVRange = 90f + 90f;
+    private readonly float lookRotationXRange = 90f + 90f;
+    private readonly float lookRotationYRange = 90f + 90f;
+    private readonly float lookRotationZRange = 90f + 90f;
+    // Don't make the range exceed 0 into negative values. It creates errors
+    private readonly float zoomRange = 15f - 0.01f; 
 
 
     private void Start()
     {
-        // Set the value of the sliders according
-        // to the state of each of the camera positions
-        // NOTE: Ternary operators are necessary to
-        // cater to euler angle issues
+        // Set the value of the sliders according to the state of each of the
+        // camera positions
+        // NOTE: Ternary operators are necessary to cater to
+        // euler angle issues
         camH = camRotationHSlider.value = 
             ((cameraRotationHV.CameraPivotRotation.eulerAngles.y > 180 ? 
             cameraRotationHV.CameraPivotRotation.eulerAngles.y - 360f : 

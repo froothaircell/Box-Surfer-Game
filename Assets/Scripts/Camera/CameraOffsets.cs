@@ -1,19 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+/// <summary>
+/// This script provides options to arbitrarily offset the camera object itself
+/// by a linear distance or by an angle. Note that these rotations differ in
+/// that they directly modify the main camera's rotation and not that of a pivot
+/// </summary>
 public class CameraOffsets : MonoBehaviour
 {
     [SerializeField]
     private Transform basePosition;
-    [SerializeField]
-    private float
-        xCamOffset = 0f,
-        yCamOffset = 3f,
-        zCamOffset = -8f,
-        xCamAngleOffset = 0f,
-        yCamAngleOffset = 0f,
-        zCamAngleOffset = 0f;
 
     private Transform childCamera;
     private bool applicationStarted = false;
@@ -28,16 +23,9 @@ public class CameraOffsets : MonoBehaviour
         childCamera = transform.GetChild(0).GetChild(0);
     }
 
-    // Start is called before the first frame update
     private void Start()
     {
         applicationStarted = true;
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
-
     }
 
     private void OnDrawGizmos()

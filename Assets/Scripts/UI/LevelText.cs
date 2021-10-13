@@ -1,22 +1,19 @@
 ﻿using UnityEngine;
 using TMPro;
 
+/// <summary>
+/// Updates the level text UI element via a listener to an event invoked by the
+/// progress manager.
+/// </summary>
 public class LevelText : MonoBehaviour
 {
     private TextMeshProUGUI levelTextController;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         levelTextController = GetComponentInChildren<TextMeshProUGUI>();
         ProgressManager.Instance.OnLevelUpdate += UpdateLevel;
         ProgressManager.Instance.LevelUpdate();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private void OnDestroy()

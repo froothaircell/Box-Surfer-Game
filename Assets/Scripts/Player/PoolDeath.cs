@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
-using UnityEngine.Events;
 
+/// <summary>
+/// Check if the player collided with water then kill movement and animation.
+/// Also activate the collider underneath the pool first
+/// </summary>
 public class PoolDeath : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
-    {
-        // Check if water then kill movement and animation.
-        // Also activate the collider underneath the pool first
+    { 
         if(other.gameObject.layer == 4)
         {
             // Activate pool collider

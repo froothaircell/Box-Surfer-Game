@@ -2,6 +2,9 @@
 using UnityEngine.UI;
 using TMPro;
 
+/// <summary>
+/// Controller for the UI elements controlling the speed of the player
+/// </summary>
 public class SpeedUIController : MonoBehaviour
 {
     [SerializeField]
@@ -20,10 +23,9 @@ public class SpeedUIController : MonoBehaviour
 
     private void Start()
     {
-        // scrollbar = GetComponent<Scrollbar>();
         referenceSpeed = movementScript.SpeedFactor;
         speedInput.text = referenceSpeed.ToString();
-        scrollbar.value = movementScript.SpeedFactor/(2*referenceSpeed); // Set reference speed in the middle to cycle between 0 to 2 times the reference speed
+        scrollbar.value = movementScript.SpeedFactor/(2*referenceSpeed);
     }
 
     // The speed scroller can cycle between 0 to 2 times the reference speed

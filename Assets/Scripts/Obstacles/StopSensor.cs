@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Stops the player if it reaches the end of the track (past the win position)
+/// </summary>
 public class StopSensor : MonoBehaviour
 {
     private void OnCollisionEnter(Collision collision)

@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
+/// <summary>
+/// Opens settings panel and restricts movement while open
+/// </summary>
 public class SettingsButton : MonoBehaviour
 {
     [SerializeField]
@@ -10,16 +13,9 @@ public class SettingsButton : MonoBehaviour
 
     private bool showSettings = false;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         showSettings = false;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public void ToggleSettings()
@@ -27,14 +23,12 @@ public class SettingsButton : MonoBehaviour
         if(!showSettings)
         {
             settingsPanel.SetActive(true);
-            // settingsEvent.Invoke();
             GameManager.Instance.SettingsToggled();
             showSettings = true;
         }
         else
         {
             settingsPanel.SetActive(false);
-            // settingsEvent.Invoke();
             GameManager.Instance.SettingsToggled();
             showSettings = false;
         }

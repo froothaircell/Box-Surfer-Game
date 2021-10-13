@@ -1,5 +1,9 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Overarching controller for the UI that enables or disables UI elements
+/// according to events invoked by the game manager
+/// </summary>
 public class UIController : MonoBehaviour
 {
     [SerializeField]

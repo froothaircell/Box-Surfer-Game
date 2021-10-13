@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
-using UnityEngine.Events;
 
-// Removes a yellow box upon collision with the front
-// face or, if no yellow boxes exist, kills the player
-// via event
+/// <summary>
+/// Removes a yellow box upon collision with the front face or, if not yellow
+/// box exists, kills the player via event
+/// </summary>
 public class ElevatedPlatformSensor : MonoBehaviour
 {
     private void OnCollisionEnter(Collision collision)

@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// This function updates the base position 
-/// of the player
+/// This function updates the base position of the player by following a
+/// provided transform
 /// </summary>
 public class BaseUpdate : MonoBehaviour
 {
@@ -21,8 +21,7 @@ public class BaseUpdate : MonoBehaviour
             BasePosition.localPosition.z + zOffset);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         transform.localPosition = new Vector3(
             transform.localPosition.x,

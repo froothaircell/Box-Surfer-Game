@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-// Controls the movement of the player
+/// <summary>
+/// Controls the movement of the player
+/// </summary>
 public class Movement : MonoBehaviour
 {
     public Transform localPlayerPosition;
@@ -18,12 +20,12 @@ public class Movement : MonoBehaviour
         isLeft = true, 
         touchControls;
 
-    Vector3 InitPos; // For debugging pusposes
+    // To reset position for debugging pusposes
+    Vector3 InitPos; 
     private float travelDistance;
     private bool
         firstClick = false, // Depends on the game manager state
         isRotating = false,
-        hasWon = false,
         isDeadOrHasStopped = false,
         settingsOpened = false;
     private Vector3 initialMousePosition;
@@ -38,16 +40,13 @@ public class Movement : MonoBehaviour
     {
         firstClick = false;
         isRotating = false;
-        hasWon = false;
         isDeadOrHasStopped = false;
     }
 
-    // Start is called before the first frame update
     private void Start()
     {
         // Add listeners to events
         GameManager.Instance.OnRun += StartMoving;
-        GameManager.Instance.OnWin += Win;
         GameManager.Instance.OnSettingsOpened += PauseForSettings;
         GameManager.Instance.OnSettingsClosed += PlayOnSettingsClosed;
         GameManager.Instance.OnStopOrDeath += KillOrCelebrate;
@@ -65,11 +64,12 @@ public class Movement : MonoBehaviour
         // Use toggle in the inspector to use touch controls or mouse controls;
         if(touchControls)
         {
-            // Check if character isn't already dead and touch is supported
+            // Check if character isn't already dead and settings aren't opened
             if(!isDeadOrHasStopped && !settingsOpened) 
             {
                 if(firstClick)
                 {
+                    // Speed for the turn is kept the same, hence we have an if condition here
                     if(isRotating)
                     {
                         // Move character forwards
@@ -86,6 +86,7 @@ public class Movement : MonoBehaviour
                     }
                 }
 
+                // Check for touch support
                 if (Input.touchSupported && Input.touchCount > 0)
                 {
                     Touch touch = Input.GetTouch(0);
@@ -98,7 +99,7 @@ public class Movement : MonoBehaviour
                         travelDistance =  - touch.deltaPosition.x / 100;
 
 
-                        // If the mouse moved from the initial recorded position
+                        // If the touch position moved from the initial recorded position
                         TurnCharacter(
                             ref travelDistance,
                             ref localPlayerPosition,
@@ -113,26 +114,26 @@ public class Movement : MonoBehaviour
             {
                 if (firstClick)
                 {
-                    // Reverse direction of movement
+                    // Reset position
                     if (Input.GetButtonDown("Jump"))
                     {
                         transform.position = InitPos;
                     }
 
-                    // If the mouse button was just pressed down
+                    // Record initial position of click
                     if (Input.GetButtonDown("Fire1"))
                     {
                         initialMousePosition = Input.mousePosition;
                     }
 
-                    // If the mouse button is being pressed persistently
+                    // Calculate distance of mouse cursor from original point in
+                    // the last frame to determine movement
                     if (Input.GetButton("Fire1"))
                     {
-                        // Calculate distance of mouse cursor from original
-                        // point in the last frame to determine movement
                         travelDistance = (initialMousePosition.x - Input.mousePosition.x) / 100;
                         initialMousePosition = Input.mousePosition;
 
+                        // Speed for the turn is kept the same, hence we have an if condition here
                         if (isRotating)
                         {
                             // Move character forwards
@@ -155,7 +156,7 @@ public class Movement : MonoBehaviour
                             distanceClamp);
                     }
 
-                    // If the mouse button stopped being pressed
+                    // Record the last click position of the mouse as the initial position
                     if (Input.GetButtonUp("Fire1"))
                     {
                         initialMousePosition = Input.mousePosition;
@@ -171,7 +172,6 @@ public class Movement : MonoBehaviour
         if(GameManager.Instance != null)
         {
             GameManager.Instance.OnRun -= StartMoving;
-            GameManager.Instance.OnWin -= Win;
             GameManager.Instance.OnSettingsOpened -= PauseForSettings;
             GameManager.Instance.OnSettingsClosed -= PlayOnSettingsClosed;
             GameManager.Instance.OnStopOrDeath -= KillOrCelebrate;
@@ -184,7 +184,7 @@ public class Movement : MonoBehaviour
         speedFactor = value;
     }
 
-    // Use the base cube's OnTriggerEnter to activate this function 
+    // Activated by base cube's OnTriggerEnter to check for the turn trigger 
     public void OnTriggerEnterChild(Collider other, bool isLeft)
     {
         if(other.CompareTag("Path Interactables"))
@@ -196,15 +196,10 @@ public class Movement : MonoBehaviour
         }
     }
 
+    // Activated by the game manager on state changes
     private void StartMoving()
     {
         firstClick = true;
-    }
-
-    // Set the win flag using the set unity event
-    private void Win()
-    {
-        hasWon = true;
     }
 
     // Kill the character using the set unity event
@@ -218,9 +213,8 @@ public class Movement : MonoBehaviour
     }
 
     // Kill movement in the case that settings are opened
-    // NOTE: These functions are kept seperate instead of
-    // flipping the boolean in case there might be more
-    // use cases for these
+    // NOTE: These functions are kept seperate instead of flipping the boolean
+    // in case there might be more use cases for these
     private void PauseForSettings() 
     {
         settingsOpened = true;
@@ -231,7 +225,8 @@ public class Movement : MonoBehaviour
         settingsOpened = false;
     }
 
-    // Turn the character by manipulating the local transform in the child object (Player Direction Modifier)
+    // Turn the character by manipulating the local transform in the child
+    // object (Player Direction Modifier)
     private void TurnCharacter(
         ref float travelDistance,
         ref Transform localPlayerPosition,

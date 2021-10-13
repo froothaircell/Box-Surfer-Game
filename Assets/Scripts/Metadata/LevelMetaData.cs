@@ -1,7 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+/// <summary>
+/// This monobehacior script simply stores an instance of the level info
+/// </summary>
 public class LevelMetaData : MonoBehaviour
 {
     [SerializeField]
@@ -13,17 +14,5 @@ public class LevelMetaData : MonoBehaviour
         {
             return levelInfo;
         }
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

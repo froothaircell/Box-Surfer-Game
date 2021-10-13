@@ -1,11 +1,15 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Modifies the distance of the camera from a parent zoom object by a certain
+/// value. The camera is always facing in the direction of the parent position
+/// unless offset accordingly
+/// </summary>
 public class CameraZoom : MonoBehaviour
 {
     [SerializeField]
     private float
         autoZoomFactor = 0.3f,
-        zoomLevel = 1f,
         zoomSmoothingFactor = 0.125f;
     [SerializeField]
     private BoxManagement boxManager;
@@ -26,7 +30,6 @@ public class CameraZoom : MonoBehaviour
     {
         childTransform = transform.GetChild(0);
         baseCameraTransform = transform.GetChild(0).GetChild(0);
-        zoomLevel = 0f;
         currentZoomValue = Vector3.Distance(transform.position, childTransform.position);
     }
 

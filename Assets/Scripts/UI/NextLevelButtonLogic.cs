@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Loads the next scene by fetching the level info
+/// </summary>
 public class NextLevelButtonLogic : MonoBehaviour
 {
     private LevelMetaData levelInfo;
@@ -16,6 +19,7 @@ public class NextLevelButtonLogic : MonoBehaviour
         
     }
 
+    // Cycle between levels 3 to 5 if we reach level 5
     public void LoadNextLevel()
     {
         if(levelInfo)

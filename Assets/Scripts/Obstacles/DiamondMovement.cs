@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Controls the basic movement of the diamond objects
+/// </summary>
 public class DiamondMovement : MonoBehaviour
 {
     [SerializeField]
@@ -11,16 +14,14 @@ public class DiamondMovement : MonoBehaviour
     [SerializeField]
     private float initialHeight = 36.5f;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         transform.position = new Vector3(transform.position.x, initialHeight, transform.position.z);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        transform.Translate(Vector3.up * translationAmplitude * Mathf.Sin(2 * Mathf.PI * Time.timeSinceLevelLoad * translationFrequency));
-        transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime * 100);
+        transform.Translate(Mathf.Sin(2 * Mathf.PI * Time.timeSinceLevelLoad * translationFrequency) * translationAmplitude * Vector3.up);
+        transform.Rotate(100 * rotationSpeed * Time.deltaTime * Vector3.up);
     }
 }

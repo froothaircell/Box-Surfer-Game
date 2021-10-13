@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
-// Checks for player and adds a yellow box accordingly via event
+/// <summary>
+/// Checks for player and adds a yellow box accordingly via event
+/// </summary>
 public class YellowBoxSensor : MonoBehaviour
 {
     [SerializeField]
