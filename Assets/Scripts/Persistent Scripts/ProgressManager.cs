@@ -30,8 +30,10 @@ public class ProgressManager : MonoBehaviour
 
                 if(instance == null)
                 {
-                    GameObject pm = new GameObject();
-                    pm.name = typeof(ProgressManager).Name;
+                    GameObject pm = new GameObject()
+                    {
+                        name = typeof(ProgressManager).Name
+                    };
                     instance = pm.AddComponent<ProgressManager>();
                 }
             }
@@ -113,5 +115,4 @@ public class ProgressManager : MonoBehaviour
         OnScoreUpdate?.Invoke(score);
         OnAnimationUpdate?.Invoke(position);
     }
-
 }

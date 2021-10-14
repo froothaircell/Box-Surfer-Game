@@ -1,6 +1,16 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
+enum State
+{
+    idle,
+    run,
+    win,
+    die,
+    pause
+}
+
+
 /// <summary>
 /// Functions as a state machine that changes the state of the game according to
 /// prompts from objects in the scene and activates subscribable events
@@ -25,8 +35,10 @@ public class GameManager : MonoBehaviour
 
                 if(instance == null)
                 {
-                    GameObject gm = new GameObject();
-                    gm.name = typeof(GameManager).Name;
+                    GameObject gm = new GameObject()
+                    {
+                        name = typeof(GameManager).Name
+                    };
                     instance = gm.AddComponent<GameManager>();
                 }
             }
@@ -42,10 +54,12 @@ public class GameManager : MonoBehaviour
     public event UnityAction OnSettingsClosed;
     public event UnityAction<bool> OnStopOrDeath;
 
-    private int state = 0;
+    // private int state = 0;
+    private State gameState = State.idle;
+    
     // only used for settings state. Can be used for any event that needs to
     // remember the previous state
-    private int prevState; 
+    private State prevState; 
     private static bool applicationIsQuitting = false;
 
     private void Awake()
@@ -64,28 +78,28 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        state = 0;
+        gameState = State.idle;
     }
 
     // Update is called once per frame
     private void Update()
     {
         // Logic to run within a state if required
-        switch(state)
+        switch(gameState)
         {
-            case 0: // Start of game
+            case State.idle: // Start of game
                 if(Input.GetButtonDown("Fire1") || Input.touchCount > 0)
                 {
                     Run();
                 }
                 break;
-            case 1: // Player running
+            case State.run: // Player running
                 break;
-            case 2: // Player won
+            case State.win: // Player won
                 break;
-            case 3: // Player died
+            case State.die: // Player died
                 break;
-            case 4: // Settings opened
+            case State.pause: // Settings opened
                 break;
             default:
                 break;
@@ -102,42 +116,42 @@ public class GameManager : MonoBehaviour
 
     public void Run()
     {
-        if(state == 0)
+        if(gameState == State.idle)
         {
-            state = 1;
+            gameState = State.run;
             OnRun?.Invoke();
         }
     }
 
     public void Win()
     {
-        if(state == 1)
+        if(gameState == State.run)
         {
-            state = 2;
+            gameState = State.win;
             OnWin?.Invoke();
         }
     }
 
     public void StoppageOrDeath()
     {
-        if(state == 1 || state == 2)
+        if(gameState == State.run || gameState == State.win)
         {
             bool win = false; 
 
-            if(state == 2)
+            if(gameState == State.win)
             {
                 win = true;
             }
-            state = 3;
+            gameState = State.die;
             OnStopOrDeath?.Invoke(win);
         }
     }
 
     public void Restart()
     {
-        if(state == 3)
+        if(gameState == State.die)
         {
-            state = 0;
+            gameState = State.idle;
             OnRestart?.Invoke();
             applicationIsQuitting = false;
         }
@@ -145,15 +159,15 @@ public class GameManager : MonoBehaviour
 
     public void SettingsToggled()
     {
-        if(state >= 0 && state < 4)
+        if(gameState >= State.idle && gameState < State.pause)
         {
-            prevState = state;
+            prevState = gameState;
             OnSettingsOpened?.Invoke();
-            state = 4;
+            gameState = State.pause;
         }
-        else if(state == 4)
+        else if(gameState == State.pause)
         {
-            state = prevState;
+            gameState = prevState;
             OnSettingsClosed?.Invoke();
         }
     }
