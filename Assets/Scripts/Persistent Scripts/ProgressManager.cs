@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 /// <summary>
-/// Functions as a tracker for the score and current lavel of the game. Triggers
-/// certain events relating to the score and level according to the state change
-/// invoked by the game manager. Persists across scenes.
+/// Functions as a tracker for the score and current level of the game and
+/// loading the next scene upon demand. Triggers certain events relating to the
+/// score and level according to the state change invoked by the game manager.
+/// Persists across scenes.
 /// </summary>
 public class ProgressManager : MonoBehaviour
 {
@@ -18,10 +20,14 @@ public class ProgressManager : MonoBehaviour
     private static int score = 0;
     private static int level = 1;
 
+    private void Awake()
+    {
+        level = LevelMetaData.LevelDataInstance.LevelInfo.level;
+    }
+
     public void ResetScore()
     {
         score = 0;
-        level = 1;
     }
 
     public void StopOrDeathUIAnimations(bool win)
@@ -37,7 +43,33 @@ public class ProgressManager : MonoBehaviour
     public void LevelUpdate(int newLevel)
     {
         level = newLevel;
-        OnLevelUpdate?.Invoke(level);
+        // Load next scene
+        int levelIndex = SceneManager.GetActiveScene().buildIndex;
+        string levelPath = "Scenes/Level_" + newLevel;
+        Debug.Log(levelPath);
+        if(SceneUtility.GetBuildIndexByScenePath(levelPath) > 0)
+        {
+            Debug.Log("Scene found");
+            if (SceneUtility.GetBuildIndexByScenePath(levelPath) < SceneManager.sceneCountInBuildSettings)
+            {
+                SceneManager.LoadScene(levelPath);
+                GameManager.GameManagerInstance.ResetState();
+                OnLevelUpdate?.Invoke(level);
+            }
+        }
+        else
+        {
+            Debug.Log("Scene not found, restarting");
+            // Load the same level instead
+            GameManager.GameManagerInstance.Restart();
+        }
+    }
+
+    public void RestartLevel()
+    {
+        // Restart level here
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        LevelUpdate();
     }
 
     public void ScoreUpdate()

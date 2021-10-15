@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 
 
 /// <summary>
@@ -11,6 +10,5 @@ public class Restart : MonoBehaviour
     {
         Debug.Log("Restarting Game");
         GameManager.GameManagerInstance.Restart();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

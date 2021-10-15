@@ -6,7 +6,7 @@ enum State
     idle,
     run,
     win,
-    die,
+    stopDie,
     pause
 }
 
@@ -123,7 +123,7 @@ public class GameManager : MonoBehaviour
                 break;
             case State.win: // Player won
                 break;
-            case State.die: // Player died
+            case State.stopDie: // Player died
                 break;
             case State.pause: // Settings opened
                 break;
@@ -209,7 +209,7 @@ public class GameManager : MonoBehaviour
             {
                 win = true;
             }
-            gameState = State.die;
+            gameState = State.stopDie;
             ProgressManagerInstance.StopOrDeathUIAnimations(win);
             PlayerManagerInstance.PlayerStoppedOrKilled(win);
             OnStopOrDeath?.Invoke(win);
@@ -218,11 +218,20 @@ public class GameManager : MonoBehaviour
 
     public void Restart()
     {
-        if(gameState == State.die)
+        if(gameState == State.stopDie)
         {
             gameState = State.idle;
-            ProgressManagerInstance.LevelUpdate();
+            ProgressManagerInstance.RestartLevel();
             OnRestart?.Invoke();
+            applicationIsQuitting = false;
+        }
+    }
+
+    public void ResetState()
+    {
+        if(gameState == State.stopDie)
+        {
+            gameState = State.idle;
             applicationIsQuitting = false;
         }
     }

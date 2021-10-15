@@ -8,8 +8,6 @@ public class SettingsButton : MonoBehaviour
 {
     [SerializeField]
     private GameObject settingsPanel;
-    [SerializeField]
-    private UnityEvent settingsEvent = new UnityEvent();
 
     private bool showSettings = false;
 

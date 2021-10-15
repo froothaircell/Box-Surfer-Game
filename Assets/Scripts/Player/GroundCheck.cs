@@ -12,6 +12,7 @@ public class GroundCheck : MonoBehaviour
         trailOffset, 
         trailAndPivotSmoothing,
         // For clamping the vertical position of the trail
+        // Note: need to improve upon this later
         minTrailThreshold = 35.5f, 
         maxTrailThreshold = 100f;
     [SerializeField]
@@ -50,7 +51,10 @@ public class GroundCheck : MonoBehaviour
     {
         frontHitDetected = false;
         baseOnGround = false;
+        minTrailThreshold = LevelMetaData.LevelDataInstance.LevelInfo.levelAltitude + 4f;
+        maxTrailThreshold = LevelMetaData.LevelDataInstance.LevelInfo.levelAltitude + 4f + 64.5f;
         trailRenderer = trailPosition.GetComponent<TrailRenderer>();
+        trailPosition.position = LevelMetaData.LevelDataInstance.LevelInfo.playerSpawnPosition;
     }
 
     private void Start()
