@@ -11,11 +11,12 @@ public class DiamondMovement : MonoBehaviour
     private float translationFrequency;
     [SerializeField]
     private float translationAmplitude;
-    [SerializeField]
+
     private float initialHeight = 36.5f;
 
     private void Start()
     {
+        initialHeight = LevelMetaData.LevelDataInstance.LevelInfo.levelAltitude + 5f;
         transform.position = new Vector3(transform.position.x, initialHeight, transform.position.z);
     }
 
