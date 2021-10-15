@@ -24,7 +24,7 @@ public class CameraFollow : MonoBehaviour
 
     private void Start()
     {
-        transform.position = camTarget.position;
+        transform.position = LevelMetaData.LevelDataInstance.LevelInfo.playerSpawnPosition;
     }
 
     private void FixedUpdate()

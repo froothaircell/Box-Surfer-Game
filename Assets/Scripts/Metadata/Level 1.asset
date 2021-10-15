@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Level 1
   m_EditorClassIdentifier: 
   level: 1
-  playerSpawnPosition: {x: 0, y: 40, z: 10}
+  playerSpawnPosition: {x: 0, y: 35.89, z: 10}
   levelAltitude: 31.5

@@ -46,12 +46,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   basePosition: {fileID: 0}
-  xCamOffset: 0
-  yCamOffset: 3
-  zCamOffset: -8
-  xCamAngleOffset: 0
-  yCamAngleOffset: 0
-  zCamAngleOffset: 0
 --- !u!114 &7355517575467985816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,7 +59,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoZoomFactor: 0.3
-  zoomLevel: 0
   zoomSmoothingFactor: 0.125
   boxManager: {fileID: 0}
 --- !u!1 &7355517575951605625
@@ -190,7 +183,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7355517576050646281}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.86, y: 42.613, z: 3.87}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -216,7 +209,6 @@ MonoBehaviour:
   yOffset: 3
   followSmoothingValue: 40
   followPosition: 1
-  lookAtPosition: 0
 --- !u!114 &7355517576050646280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,7 +222,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 0.125
-  rotationSmoothingFactor: 0.125
 --- !u!1 &7355517576491802950
 GameObject:
   m_ObjectHideFlags: 0

@@ -845,6 +845,7 @@ GameObject:
   - component: {fileID: 1669253408}
   - component: {fileID: 1669253407}
   - component: {fileID: 1669253406}
+  - component: {fileID: 5490817773163641509}
   m_Layer: 5
   m_Name: Next Level Button
   m_TagString: Untagged
@@ -951,7 +952,30 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1669253407}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5490817773163641509}
+        m_MethodName: LoadNextLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &5490817773163641509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1669253404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba43828f8a81acb449122bb80a9f7e36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &392960124373797677
 GameObject:
   m_ObjectHideFlags: 0
@@ -3731,7 +3755,7 @@ GameObject:
   - component: {fileID: 5590323793943559175}
   - component: {fileID: 5590323793943559171}
   m_Layer: 5
-  m_Name: Debug UI
+  m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9372,12 +9396,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stateDependentText: {fileID: 1174896850}
   finalScoreText: {fileID: 1353191578}
-  diamondSprite: {fileID: 1418946653}
   finalScore: {fileID: 122760188}
+  nextLevelButton: {fileID: 1669253404}
   background: {fileID: 5679325196726616932}
-  backgroundFadeInDuration: 1
-  finalTextSlideInDuration: 1
-  scaleDuration: 1
 --- !u!1 &8811321226165931980
 GameObject:
   m_ObjectHideFlags: 0

@@ -106,8 +106,8 @@ MonoBehaviour:
   roadWidth: 2
   thickness: 4
   flattenSurface: 0
-  roadMaterial: {fileID: 2100000, guid: b5df4735192845740bd11076dc9cdc99, type: 2}
-  undersideMaterial: {fileID: 2100000, guid: c1d8d882244c5344fa86a8fd23246f81, type: 2}
+  roadMaterial: {fileID: 2100000, guid: 8373ae75683dce14cbd7ba8153334c30, type: 2}
+  undersideMaterial: {fileID: 2100000, guid: 8373ae75683dce14cbd7ba8153334c30, type: 2}
   textureTiling: 1
   meshHolder: {fileID: 9147100151337185410}
 --- !u!1 &9147100150947134351
