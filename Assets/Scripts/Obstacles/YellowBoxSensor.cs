@@ -6,9 +6,6 @@ using UnityEngine.Events;
 /// </summary>
 public class YellowBoxSensor : MonoBehaviour
 {
-    [SerializeField]
-    private UnityEvent yellowEvent = new UnityEvent();
-
     private bool addBox = false;
 
     private void Start()
@@ -20,7 +17,7 @@ public class YellowBoxSensor : MonoBehaviour
     {
         if(addBox)
         {
-            yellowEvent.Invoke();
+            GameManager.PlayerManagerInstance.AddBox();
             Destroy(gameObject);
         }
     }

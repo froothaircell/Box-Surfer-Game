@@ -10,7 +10,7 @@ public class Restart : MonoBehaviour
     public void RestartGame()
     {
         Debug.Log("Restarting Game");
-        GameManager.Instance.Restart();
+        GameManager.GameManagerInstance.Restart();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

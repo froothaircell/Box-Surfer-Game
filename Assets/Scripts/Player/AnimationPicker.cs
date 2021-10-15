@@ -24,7 +24,7 @@ public class AnimationPicker : MonoBehaviour
 
     private void Start()
     {
-        GameManager.Instance.OnStopOrDeath += KillOrCelebrate;
+        GameManager.PlayerManagerInstance.OnPlayerStopOrDeath += KillOrCelebrate;
     }
 
     private void Update()
@@ -51,9 +51,9 @@ public class AnimationPicker : MonoBehaviour
 
     private void OnDestroy()
     {
-        if(GameManager.Instance != null)
+        if(GameManager.GameManagerInstance != null)
         {
-            GameManager.Instance.OnStopOrDeath -= KillOrCelebrate;
+            GameManager.PlayerManagerInstance.OnPlayerStopOrDeath -= KillOrCelebrate;
         }
     }
 

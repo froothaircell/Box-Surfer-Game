@@ -8,38 +8,6 @@ using UnityEngine.Events;
 /// </summary>
 public class ProgressManager : MonoBehaviour
 {
-    private static ProgressManager instance;
-
-    public static ProgressManager Instance
-    {
-        get
-        {
-            if (applicationIsQuitting)
-            {
-                return null;
-            }
-
-            if(instance)
-            {
-
-            }
-
-            if(instance == null)
-            {
-                instance = FindObjectOfType<ProgressManager>();
-
-                if(instance == null)
-                {
-                    GameObject pm = new GameObject()
-                    {
-                        name = typeof(ProgressManager).Name
-                    };
-                    instance = pm.AddComponent<ProgressManager>();
-                }
-            }
-            return instance;
-        }
-    }
 
     // Events to be subscribed to
     public event UnityAction<int> OnScoreUpdate;
@@ -47,48 +15,16 @@ public class ProgressManager : MonoBehaviour
     public event UnityAction<Vector3> OnAnimationUpdate;
     public event UnityAction<bool> OnDeathAnimationUpdate;
 
-    private static bool applicationIsQuitting = false;
     private static int score = 0;
     private static int level = 1;
 
-    private void Awake()
+    public void ResetScore()
     {
-        if(instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(this.gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-        if(instance.GetInstanceID() == this.gameObject.GetComponent<ProgressManager>().GetInstanceID())
-        {
-            score = 0;
-            level = 1;
-        }
+        score = 0;
+        level = 1;
     }
 
-    private void Start()
-    {
-        GameManager.Instance.OnStopOrDeath += StopOrDeathUIAnimations;
-        GameManager.Instance.OnRestart += LevelUpdate;
-    }
-
-    private void OnDestroy()
-    {
-        if(gameObject.GetComponent<ProgressManager>().GetInstanceID() == Instance.GetInstanceID())
-        {
-            applicationIsQuitting = true;
-        }
-        if(GameManager.Instance != null)
-        {
-            GameManager.Instance.OnStopOrDeath -= StopOrDeathUIAnimations;
-            GameManager.Instance.OnRestart -= LevelUpdate;
-        }
-    }
-
-    private void StopOrDeathUIAnimations(bool win)
+    public void StopOrDeathUIAnimations(bool win)
     {
         OnDeathAnimationUpdate?.Invoke(win);
     }
@@ -106,7 +42,7 @@ public class ProgressManager : MonoBehaviour
 
     public void ScoreUpdate()
     {
-        OnScoreUpdate(score);
+        OnScoreUpdate?.Invoke(score);
     }
 
     public void DiamondCollected(Vector3 position)

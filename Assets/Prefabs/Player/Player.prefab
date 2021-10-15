@@ -9876,11 +9876,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boxSize: 0
-  boxPrefab: {fileID: 2677508970103341508, guid: 417238912e468194da832aa190313f70,
-    type: 3}
-  character: {fileID: 7498637246788802111}
-  charCube: {fileID: 7366759482681576022}
-  groundChecker: {fileID: 288125054}
 --- !u!1 &2694753772560218823
 GameObject:
   m_ObjectHideFlags: 0
@@ -9914,7 +9909,7 @@ Transform:
   m_GameObject: {fileID: 2694753772560218823}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.18999863, z: 0}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
+  m_LocalScale: {x: 0.78, y: 0.78, z: 0.78}
   m_Children:
   - {fileID: 1417761275}
   - {fileID: 1595966264}

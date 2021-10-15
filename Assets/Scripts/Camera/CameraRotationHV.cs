@@ -28,14 +28,14 @@ public class CameraRotationHV : MonoBehaviour
     private void Start()
     {
         coroutine = WinRotation();
-        GameManager.Instance.OnStopOrDeath += RotateOnWin;
+        GameManager.GameManagerInstance.OnStopOrDeath += RotateOnWin;
     }
 
     private void OnDestroy()
     {
-        if(GameManager.Instance != null)
+        if(GameManager.GameManagerInstance != null)
         {
-            GameManager.Instance.OnStopOrDeath -= RotateOnWin;
+            GameManager.GameManagerInstance.OnStopOrDeath -= RotateOnWin;
         }
     }
 

@@ -46,10 +46,10 @@ public class Movement : MonoBehaviour
     private void Start()
     {
         // Add listeners to events
-        GameManager.Instance.OnRun += StartMoving;
-        GameManager.Instance.OnSettingsOpened += PauseForSettings;
-        GameManager.Instance.OnSettingsClosed += PlayOnSettingsClosed;
-        GameManager.Instance.OnStopOrDeath += KillOrCelebrate;
+        GameManager.GameManagerInstance.OnRun += StartMoving;
+        GameManager.GameManagerInstance.OnSettingsOpened += PauseForSettings;
+        GameManager.GameManagerInstance.OnSettingsClosed += PlayOnSettingsClosed;
+        GameManager.PlayerManagerInstance.OnPlayerStopOrDeath += KillOrCelebrate;
 
         InitPos = transform.position;
         Input.multiTouchEnabled = false;
@@ -169,12 +169,12 @@ public class Movement : MonoBehaviour
     private void OnDestroy()
     {
         // Remove listeners if game manager hasn't been destroyed
-        if(GameManager.Instance != null)
+        if(GameManager.GameManagerInstance != null)
         {
-            GameManager.Instance.OnRun -= StartMoving;
-            GameManager.Instance.OnSettingsOpened -= PauseForSettings;
-            GameManager.Instance.OnSettingsClosed -= PlayOnSettingsClosed;
-            GameManager.Instance.OnStopOrDeath -= KillOrCelebrate;
+            GameManager.GameManagerInstance.OnRun -= StartMoving;
+            GameManager.GameManagerInstance.OnSettingsOpened -= PauseForSettings;
+            GameManager.GameManagerInstance.OnSettingsClosed -= PlayOnSettingsClosed;
+            GameManager.PlayerManagerInstance.OnPlayerStopOrDeath -= KillOrCelebrate;
         }
     }
 

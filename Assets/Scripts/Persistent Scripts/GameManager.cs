@@ -18,9 +18,11 @@ enum State
 /// </summary>
 public class GameManager : MonoBehaviour
 {
-    private static GameManager instance;
+    private static GameManager gameManagerInstance;
+    private static ProgressManager progressManagerInstance;
+    private static PlayerManager playerManagerInstance;
 
-    public static GameManager Instance
+    public static GameManager GameManagerInstance
     {
         get
         {
@@ -29,20 +31,50 @@ public class GameManager : MonoBehaviour
                 return null;
             }
 
-            if(instance == null)
+            // Any initializations for child managers donot need this script as
+            // they are directly initialized in the game manager and would be
+            // automatically destroyed if the game manager finds a copy of
+            // itself (meaning a copy of all the child objects as well)
+            if(gameManagerInstance == null)
             {
-                instance = FindObjectOfType<GameManager>();
+                gameManagerInstance = FindObjectOfType<GameManager>();
 
-                if(instance == null)
+                if(gameManagerInstance == null)
                 {
                     GameObject gm = new GameObject()
                     {
                         name = typeof(GameManager).Name
                     };
-                    instance = gm.AddComponent<GameManager>();
+                    gameManagerInstance = gm.AddComponent<GameManager>();
                 }
             }
-            return instance;
+            return gameManagerInstance;
+        }
+    }
+
+    public static ProgressManager ProgressManagerInstance
+    {
+        get
+        {
+            if (applicationIsQuitting)
+            {
+                return null;
+            }
+
+            return progressManagerInstance;
+        }
+    }
+
+    public static PlayerManager PlayerManagerInstance
+    {
+        get
+        {
+            if(applicationIsQuitting)
+            {
+                return null;
+            }
+
+            return playerManagerInstance;
         }
     }
 
@@ -56,23 +88,17 @@ public class GameManager : MonoBehaviour
 
     // private int state = 0;
     private State gameState = State.idle;
-    
     // only used for settings state. Can be used for any event that needs to
     // remember the previous state
     private State prevState; 
+    
     private static bool applicationIsQuitting = false;
 
     private void Awake()
     {
-        if(instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(this.gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        InitGameManager();
+        InitProgressManager();
+        InitPlayerManager();
     }
 
     // Start is called before the first frame update
@@ -108,9 +134,50 @@ public class GameManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        if(gameObject.GetComponent<GameManager>().GetInstanceID() == Instance.GetInstanceID())
+        if(gameObject.GetComponent<GameManager>().GetInstanceID() == GameManagerInstance.GetInstanceID())
         {
             applicationIsQuitting = true;
+        }
+    }
+
+    private void InitGameManager()
+    {
+        if (gameManagerInstance == null)
+        {
+            gameManagerInstance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void InitProgressManager()
+    {
+        progressManagerInstance = GetComponentInChildren<ProgressManager>();
+        // If condition ensures that current instance in awake is the first one initialized
+        if (progressManagerInstance.GetInstanceID() == this.gameObject.GetComponentInChildren<ProgressManager>().GetInstanceID())
+        {
+            progressManagerInstance.ResetScore();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void InitPlayerManager()
+    {
+        playerManagerInstance = GetComponentInChildren<PlayerManager>();
+        // If condition ensures that current instance in awake is the first one initialized
+        if (playerManagerInstance.GetInstanceID() == this.gameObject.GetComponentInChildren<PlayerManager>().GetInstanceID())
+        {
+            playerManagerInstance.ResetPlayer();
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
 
@@ -143,6 +210,8 @@ public class GameManager : MonoBehaviour
                 win = true;
             }
             gameState = State.die;
+            ProgressManagerInstance.StopOrDeathUIAnimations(win);
+            PlayerManagerInstance.PlayerStoppedOrKilled(win);
             OnStopOrDeath?.Invoke(win);
         }
     }
@@ -152,6 +221,7 @@ public class GameManager : MonoBehaviour
         if(gameState == State.die)
         {
             gameState = State.idle;
+            ProgressManagerInstance.LevelUpdate();
             OnRestart?.Invoke();
             applicationIsQuitting = false;
         }

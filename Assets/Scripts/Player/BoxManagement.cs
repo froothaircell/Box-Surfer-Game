@@ -13,10 +13,10 @@ public class BoxManagement : MonoBehaviour
     private Transform 
         character,
         charCube;
-    [SerializeField]
-    private GroundCheck groundChecker;
 
     private int newBoxSize;
+    private float boxLength;
+    private float baseHeight;
 
     public int BoxSize
     {
@@ -27,7 +27,10 @@ public class BoxManagement : MonoBehaviour
     private void Start()
     {
         boxSize = 0;
+        baseHeight = 36f;
         newBoxSize = boxSize;
+        boxLength = boxPrefab.transform.localScale.x;
+        GameManager.PlayerManagerInstance.OnBoxAddition += AddBoxes;
     }
 
     private void Update()
@@ -40,17 +43,17 @@ public class BoxManagement : MonoBehaviour
             {
                 // NOTE: This is using a fixed height from the ground. It may
                 // need to be changed once we introduce ramps
-                float boxHeight = 36f + boxSize * (0.8f);
+                float boxHeight = baseHeight + boxSize * (boxLength);
                 
                 // Set positions of character and base cube according to the box
                 // height
                 character.position = new Vector3(
-                    character.position.x, 
-                    boxHeight + 0.85f + 0.25f, 
+                    character.position.x,
+                    boxHeight + 0.85f + 0.25f,
                     character.position.z);
                 charCube.position = new Vector3(
-                    charCube.position.x, 
-                    boxHeight + 0.42f + 0.25f, 
+                    charCube.position.x,
+                    boxHeight + 0.42f + 0.25f,
                     charCube.position.z);
 
                 Instantiate(
@@ -68,6 +71,14 @@ public class BoxManagement : MonoBehaviour
         }
         boxSize = transform.childCount;
         newBoxSize = boxSize;
+    }
+
+    private void OnDestroy()
+    {
+        if(GameManager.GameManagerInstance != null)
+        {
+            GameManager.PlayerManagerInstance.OnBoxAddition -= AddBoxes;
+        }
     }
 
     // Run by a yellow box whenever it collides with the player

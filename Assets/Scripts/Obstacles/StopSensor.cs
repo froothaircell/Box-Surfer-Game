@@ -11,7 +11,7 @@ public class StopSensor : MonoBehaviour
             || collision.collider.CompareTag("Player Base")
             || collision.collider.CompareTag("Character"))
         {
-            GameManager.Instance.StoppageOrDeath();
+            GameManager.GameManagerInstance.StoppageOrDeath();
             Destroy(gameObject);
         }
         Destroy(gameObject);

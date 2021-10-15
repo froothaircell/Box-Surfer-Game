@@ -26,14 +26,14 @@ public class UIController : MonoBehaviour
     private void Start()
     {
         // Add listeners to events
-        GameManager.Instance.OnStopOrDeath += UpdateUIByState;
+        GameManager.GameManagerInstance.OnStopOrDeath += UpdateUIByState;
     }
 
     private void OnDestroy()
     {
-        if(GameManager.Instance != null)
+        if(GameManager.GameManagerInstance != null)
         {
-            GameManager.Instance.OnStopOrDeath -= UpdateUIByState;
+            GameManager.GameManagerInstance.OnStopOrDeath -= UpdateUIByState;
         }
     }
 

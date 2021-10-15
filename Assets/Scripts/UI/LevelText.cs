@@ -12,15 +12,15 @@ public class LevelText : MonoBehaviour
     private void Start()
     {
         levelTextController = GetComponentInChildren<TextMeshProUGUI>();
-        ProgressManager.Instance.OnLevelUpdate += UpdateLevel;
-        ProgressManager.Instance.LevelUpdate();
+        GameManager.ProgressManagerInstance.OnLevelUpdate += UpdateLevel;
+        GameManager.ProgressManagerInstance.LevelUpdate();
     }
 
     private void OnDestroy()
     {
-        if(ProgressManager.Instance != null)
+        if(GameManager.ProgressManagerInstance != null)
         {
-            ProgressManager.Instance.OnLevelUpdate -= UpdateLevel;
+            GameManager.ProgressManagerInstance.OnLevelUpdate -= UpdateLevel;
         }
     }
 

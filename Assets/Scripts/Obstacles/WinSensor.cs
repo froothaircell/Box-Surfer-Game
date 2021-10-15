@@ -46,7 +46,7 @@ public class WinSensor : MonoBehaviour
             || hit.collider.CompareTag("Player Base")
             || hit.collider.CompareTag("Character")))
         {
-            GameManager.Instance.Win();
+            GameManager.GameManagerInstance.Win();
             Destroy(gameObject);
         }
     }

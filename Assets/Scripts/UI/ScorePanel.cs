@@ -16,17 +16,17 @@ public class ScorePanel : MonoBehaviour
 
     private void Start()
     {
-        ProgressManager.Instance.OnScoreUpdate += UpdateScore;
+        GameManager.ProgressManagerInstance.OnScoreUpdate += UpdateScore;
 
         // Run Score Update function once at start
-        ProgressManager.Instance.ScoreUpdate();
+        GameManager.ProgressManagerInstance.ScoreUpdate();
     }
 
     private void OnDestroy()
     {
-        if(ProgressManager.Instance != null)
+        if(GameManager.ProgressManagerInstance != null)
         {
-            ProgressManager.Instance.OnScoreUpdate -= UpdateScore;
+            GameManager.ProgressManagerInstance.OnScoreUpdate -= UpdateScore;
         }
     }
 

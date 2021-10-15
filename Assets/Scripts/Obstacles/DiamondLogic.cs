@@ -19,7 +19,7 @@ public class DiamondLogic : MonoBehaviour
             if(!isDestroyed)
             {
                 isDestroyed = true;
-                ProgressManager.Instance.DiamondCollected(transform.position);
+                GameManager.ProgressManagerInstance.DiamondCollected(transform.position);
                 Destroy(transform.parent.gameObject);
             }
         }
