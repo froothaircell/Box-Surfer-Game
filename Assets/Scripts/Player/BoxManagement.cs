@@ -56,6 +56,7 @@ public class BoxManagement : MonoBehaviour
                     boxHeight + 0.42f + 0.25f,
                     charCube.position.z);
 
+                // Optimize by using pooling
                 Instantiate(
                     boxPrefab,
                     new Vector3(

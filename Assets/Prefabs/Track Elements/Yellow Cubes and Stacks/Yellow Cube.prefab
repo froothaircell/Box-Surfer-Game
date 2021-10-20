@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7899912653280249003}
   - component: {fileID: 7899912653280249014}
   - component: {fileID: 7899912653280249002}
-  - component: {fileID: 6401690390018099525}
   - component: {fileID: 3660383801896933068}
   m_Layer: 0
   m_Name: Yellow Cube
@@ -64,18 +63,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 122
   m_CollisionDetection: 3
---- !u!114 &6401690390018099525
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7899912653280249015}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b8ee73165111f6489ce5ced4b864ff1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3660383801896933068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,20 +75,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f3643bc667d79b41895ece000d3f7a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  yellowEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: AddBoxes
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &8803998294883059882
 GameObject:
   m_ObjectHideFlags: 0

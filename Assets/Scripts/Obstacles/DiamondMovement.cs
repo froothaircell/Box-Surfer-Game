@@ -6,17 +6,25 @@
 public class DiamondMovement : MonoBehaviour
 {
     [SerializeField]
-    private float rotationSpeed;
+    private float 
+        rotationSpeed,
+        translationFrequency,
+        translationAmplitude;
     [SerializeField]
-    private float translationFrequency;
-    [SerializeField]
-    private float translationAmplitude;
+    private bool onFinalStretch = false;
 
     private float initialHeight = 36.5f;
 
     private void Start()
     {
-        initialHeight = LevelMetaData.LevelDataInstance.LevelInfo.levelAltitude + 5f;
+        if(onFinalStretch)
+        {
+            initialHeight = LevelMetaData.LevelDataInstance.LevelInfo.levelAltitude + 15.4f;
+        }
+        else
+        {
+            initialHeight = LevelMetaData.LevelDataInstance.LevelInfo.levelAltitude + 5f;
+        }
         transform.position = new Vector3(transform.position.x, initialHeight, transform.position.z);
     }
 

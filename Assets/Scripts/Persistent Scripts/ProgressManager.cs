@@ -42,6 +42,7 @@ public class ProgressManager : MonoBehaviour
 
     public void LevelUpdate(int newLevel)
     {
+        int prevLevel = level; // This helps avoid the ui showing the next level when restarting
         level = newLevel;
         // Load next scene
         int levelIndex = SceneManager.GetActiveScene().buildIndex;
@@ -59,6 +60,7 @@ public class ProgressManager : MonoBehaviour
         }
         else
         {
+            level = prevLevel;
             Debug.Log("Scene not found, restarting");
             // Load the same level instead
             GameManager.GameManagerInstance.Restart();
