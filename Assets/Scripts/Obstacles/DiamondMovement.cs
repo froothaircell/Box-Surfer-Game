@@ -9,7 +9,8 @@ public class DiamondMovement : MonoBehaviour
     private float 
         rotationSpeed,
         translationFrequency,
-        translationAmplitude;
+        translationAmplitude,
+        yPositionOffset;
     [SerializeField]
     private bool onFinalStretch = false;
 
@@ -19,11 +20,11 @@ public class DiamondMovement : MonoBehaviour
     {
         if(onFinalStretch)
         {
-            initialHeight = LevelMetaData.LevelDataInstance.LevelInfo.levelAltitude + 15.4f;
+            initialHeight = LevelMetaData.LevelDataInstance.LevelInfo.levelAltitude + 10.4f + yPositionOffset;
         }
         else
         {
-            initialHeight = LevelMetaData.LevelDataInstance.LevelInfo.levelAltitude + 5f;
+            initialHeight = LevelMetaData.LevelDataInstance.LevelInfo.levelAltitude + yPositionOffset;
         }
         transform.position = new Vector3(transform.position.x, initialHeight, transform.position.z);
     }
