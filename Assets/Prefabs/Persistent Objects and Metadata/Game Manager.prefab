@@ -131,3 +131,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6766cbf8edaab1244ae57b4455f0c774, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  progressManagerInstance: {fileID: 1758957468}
+  playerManagerInstance: {fileID: 1853392847}

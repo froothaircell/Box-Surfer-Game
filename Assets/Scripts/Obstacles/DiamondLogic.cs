@@ -10,16 +10,17 @@ public class DiamondLogic : MonoBehaviour
         isDestroyed = false;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if(collision.collider.CompareTag("Player") 
-            || collision.collider.CompareTag("Player Base") 
-            || collision.collider.CompareTag("Character"))
+        if (other.CompareTag("Player")
+            || other.CompareTag("Player Base")
+            || other.CompareTag("Character"))
         {
-            if(!isDestroyed)
+            if (!isDestroyed)
             {
+                Debug.Log("Diamonds detected the collision");
                 isDestroyed = true;
-                GameManager.ProgressManagerInstance.DiamondCollected(transform.position);
+                GameManager.GameManagerInstance.ProgressManagerInstance.DiamondCollected(transform.position);
                 Destroy(transform.parent.gameObject);
             }
         }

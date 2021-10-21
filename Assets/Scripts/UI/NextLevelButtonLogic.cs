@@ -27,12 +27,12 @@ public class NextLevelButtonLogic : MonoBehaviour
             if(currentLevel >= 1 && currentLevel < 5)
             {
                 Debug.Log("Loading next level. Level number: " + (currentLevel + 1));
-                GameManager.ProgressManagerInstance.LevelUpdate(currentLevel + 1);
+                GameManager.GameManagerInstance.ProgressManagerInstance.LevelUpdate(currentLevel + 1);
             }
             else
             {
                 // if we get to level 5 load back level 3
-                GameManager.ProgressManagerInstance.LevelUpdate(3);
+                GameManager.GameManagerInstance.ProgressManagerInstance.LevelUpdate(3);
             }
         }
     }

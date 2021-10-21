@@ -17,7 +17,7 @@ public class YellowBoxSensor : MonoBehaviour
     {
         if(addBox)
         {
-            GameManager.PlayerManagerInstance.AddBox();
+            GameManager.GameManagerInstance.PlayerManagerInstance.AddBox();
             Destroy(gameObject);
         }
     }

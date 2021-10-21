@@ -1,24 +1,12 @@
-﻿using UnityEngine;
-using UnityEngine.Events;
+﻿using UnityEngine.Events;
+using Templates;
 
-public class PlayerManager : MonoBehaviour
+public class PlayerManager : ManagerTemplate
 {
     // Events to be subscirbed to
     public event UnityAction OnBoxAddition;
     public event UnityAction OnPlayerReset;
     public event UnityAction<bool> OnPlayerStopOrDeath;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void AddBox()
     {
@@ -27,11 +15,18 @@ public class PlayerManager : MonoBehaviour
 
     public void ResetPlayer()
     {
-        OnPlayerReset?.Invoke();
+        if(CurrentState == State.Death || CurrentState == State.Sucess)
+            MoveNext(Command.Restart);
+        if(CurrentState == State.Idle || CurrentState == State.Death || CurrentState == State.Sucess)
+            OnPlayerReset?.Invoke();
     }
 
     public void PlayerStoppedOrKilled(bool win)
     {
+        if (win)
+            MoveNext(Command.Win);
+        else
+            MoveNext(Command.Die);
         OnPlayerStopOrDeath?.Invoke(win);
     }
 }

@@ -31,8 +31,8 @@ public class FinalScreenController : MonoBehaviour
     {
         stateDependentTextController = stateDependentText.GetComponent<TextMeshProUGUI>();
         finalScoreTextController = finalScoreText.GetComponent<TextMeshProUGUI>();
-        GameManager.ProgressManagerInstance.OnScoreUpdate += UpdateScore;
-        GameManager.ProgressManagerInstance.OnDeathAnimationUpdate += TriggerAnimations;
+        GameManager.GameManagerInstance.ProgressManagerInstance.OnScoreUpdate += UpdateScore;
+        GameManager.GameManagerInstance.ProgressManagerInstance.OnDeathAnimationUpdate += TriggerAnimations;
         
         // Initial UI configuration
         finalScore.SetActive(false);
@@ -45,10 +45,10 @@ public class FinalScreenController : MonoBehaviour
 
     private void OnDestroy()
     {
-        if(GameManager.ProgressManagerInstance != null)
+        if(GameManager.GameManagerInstance?.ProgressManagerInstance != null)
         {
-            GameManager.ProgressManagerInstance.OnScoreUpdate -= UpdateScore;
-            GameManager.ProgressManagerInstance.OnDeathAnimationUpdate -= TriggerAnimations;
+            GameManager.GameManagerInstance.ProgressManagerInstance.OnScoreUpdate -= UpdateScore;
+            GameManager.GameManagerInstance.ProgressManagerInstance.OnDeathAnimationUpdate -= TriggerAnimations;
         }
     }
 

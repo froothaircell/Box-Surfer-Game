@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using Templates;
 
 /// <summary>
 /// Functions as a tracker for the score and current level of the game and
@@ -8,13 +9,12 @@ using UnityEngine.SceneManagement;
 /// score and level according to the state change invoked by the game manager.
 /// Persists across scenes.
 /// </summary>
-public class ProgressManager : MonoBehaviour
+public class ProgressManager : ManagerTemplate
 {
-
     // Events to be subscribed to
     public event UnityAction<int> OnScoreUpdate;
     public event UnityAction<int> OnLevelUpdate;
-    public event UnityAction<Vector3> OnAnimationUpdate;
+    public event UnityAction<Vector3> OnDiamondAnimationUpdate;
     public event UnityAction<bool> OnDeathAnimationUpdate;
 
     private static int score = 0;
@@ -32,6 +32,10 @@ public class ProgressManager : MonoBehaviour
 
     public void StopOrDeathUIAnimations(bool win)
     {
+        if (win)
+            MoveNext(Command.Win);
+        else
+            MoveNext(Command.Die);
         OnDeathAnimationUpdate?.Invoke(win);
     }
 
@@ -55,6 +59,8 @@ public class ProgressManager : MonoBehaviour
             {
                 SceneManager.LoadScene(levelPath);
                 GameManager.GameManagerInstance.ResetState();
+                GameManager.GameManagerInstance.PlayerManagerInstance.ResetPlayer();
+                MoveNext(Command.Restart);
                 OnLevelUpdate?.Invoke(level);
             }
         }
@@ -69,9 +75,14 @@ public class ProgressManager : MonoBehaviour
 
     public void RestartLevel()
     {
-        // Restart level here
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        LevelUpdate();
+        if (CurrentState == State.Death || CurrentState == State.Sucess)
+            MoveNext(Command.Restart);
+        if (CurrentState == State.Idle || CurrentState == State.Death || CurrentState == State.Sucess)
+        {
+            // Restart level here
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            LevelUpdate();
+        }
     }
 
     public void ScoreUpdate()
@@ -83,6 +94,6 @@ public class ProgressManager : MonoBehaviour
     {
         score++;
         OnScoreUpdate?.Invoke(score);
-        OnAnimationUpdate?.Invoke(position);
+        OnDiamondAnimationUpdate?.Invoke(position);
     }
 }

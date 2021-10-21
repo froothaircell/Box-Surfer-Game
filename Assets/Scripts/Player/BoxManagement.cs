@@ -30,7 +30,7 @@ public class BoxManagement : MonoBehaviour
         baseHeight = LevelMetaData.LevelDataInstance.LevelInfo.levelAltitude + 4.5f;
         newBoxSize = boxSize;
         boxLength = boxPrefab.transform.localScale.x;
-        GameManager.PlayerManagerInstance.OnBoxAddition += AddBoxes;
+        GameManager.GameManagerInstance.PlayerManagerInstance.OnBoxAddition += AddBoxes;
     }
 
     private void Update()
@@ -78,7 +78,7 @@ public class BoxManagement : MonoBehaviour
     {
         if(GameManager.GameManagerInstance != null)
         {
-            GameManager.PlayerManagerInstance.OnBoxAddition -= AddBoxes;
+            GameManager.GameManagerInstance.PlayerManagerInstance.OnBoxAddition -= AddBoxes;
         }
     }
 

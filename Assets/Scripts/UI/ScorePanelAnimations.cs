@@ -24,14 +24,14 @@ public class ScorePanelAnimations : MonoBehaviour
 
     private void Start()
     {
-        GameManager.ProgressManagerInstance.OnAnimationUpdate += TriggerAnimations;
+        GameManager.GameManagerInstance.ProgressManagerInstance.OnDiamondAnimationUpdate += TriggerAnimations;
     }
 
     private void OnDestroy()
     {
-        if(GameManager.ProgressManagerInstance != null)
+        if(GameManager.GameManagerInstance?.ProgressManagerInstance != null)
         {
-            GameManager.ProgressManagerInstance.OnAnimationUpdate -= TriggerAnimations;
+            GameManager.GameManagerInstance.ProgressManagerInstance.OnDiamondAnimationUpdate -= TriggerAnimations;
         }    
     }
 

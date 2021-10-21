@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
+using Templates;
 
-enum State
+enum tempState
 {
     idle,
     run,
@@ -16,12 +17,38 @@ enum State
 /// prompts from objects in the scene and activates subscribable events
 /// accordingly. Persists across scenes.
 /// </summary>
-public class GameManager : MonoBehaviour
+public class GameManager : ManagerTemplate
 {
     private static GameManager gameManagerInstance;
-    private static ProgressManager progressManagerInstance;
-    private static PlayerManager playerManagerInstance;
 
+    [SerializeField]
+    private ProgressManager progressManagerInstance;
+    [SerializeField]
+    private PlayerManager playerManagerInstance;
+
+    public ProgressManager ProgressManagerInstance
+    {
+        get
+        {
+            return progressManagerInstance;
+        }
+        private set
+        {
+            progressManagerInstance = value;
+        }
+    }
+    public PlayerManager PlayerManagerInstance 
+    {
+        get
+        {
+            return playerManagerInstance;
+        } 
+        private set
+        {
+            playerManagerInstance = value;
+        }
+    }
+    
     public static GameManager GameManagerInstance
     {
         get
@@ -52,32 +79,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public static ProgressManager ProgressManagerInstance
-    {
-        get
-        {
-            if (applicationIsQuitting)
-            {
-                return null;
-            }
-
-            return progressManagerInstance;
-        }
-    }
-
-    public static PlayerManager PlayerManagerInstance
-    {
-        get
-        {
-            if(applicationIsQuitting)
-            {
-                return null;
-            }
-
-            return playerManagerInstance;
-        }
-    }
-
     // Events to be subscribed to
     public event UnityAction OnRun;
     public event UnityAction OnWin;
@@ -87,10 +88,10 @@ public class GameManager : MonoBehaviour
     public event UnityAction<bool> OnStopOrDeath;
 
     // private int state = 0;
-    private State gameState = State.idle;
+    private tempState gameState = tempState.idle;
     // only used for settings state. Can be used for any event that needs to
     // remember the previous state
-    private State prevState; 
+    private tempState prevState; 
     
     private static bool applicationIsQuitting = false;
 
@@ -104,7 +105,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        gameState = State.idle;
+        gameState = tempState.idle;
     }
 
     // Update is called once per frame
@@ -113,19 +114,19 @@ public class GameManager : MonoBehaviour
         // Logic to run within a state if required
         switch(gameState)
         {
-            case State.idle: // Start of game
+            case tempState.idle: // Start of game
                 if(Input.GetButtonDown("Fire1") || Input.touchCount > 0)
                 {
                     Run();
                 }
                 break;
-            case State.run: // Player running
+            case tempState.run: // Player running
                 break;
-            case State.win: // Player won
+            case tempState.win: // Player won
                 break;
-            case State.stopDie: // Player died
+            case tempState.stopDie: // Player died
                 break;
-            case State.pause: // Settings opened
+            case tempState.pause: // Settings opened
                 break;
             default:
                 break;
@@ -155,11 +156,11 @@ public class GameManager : MonoBehaviour
 
     private void InitProgressManager()
     {
-        progressManagerInstance = GetComponentInChildren<ProgressManager>();
+        ProgressManagerInstance = GetComponentInChildren<ProgressManager>();
         // If condition ensures that current instance in awake is the first one initialized
-        if (progressManagerInstance.GetInstanceID() == this.gameObject.GetComponentInChildren<ProgressManager>().GetInstanceID())
+        if (ProgressManagerInstance.GetInstanceID() == this.gameObject.GetComponentInChildren<ProgressManager>().GetInstanceID())
         {
-            progressManagerInstance.ResetScore();
+            ProgressManagerInstance.ResetScore();
         }
         else
         {
@@ -169,11 +170,11 @@ public class GameManager : MonoBehaviour
 
     private void InitPlayerManager()
     {
-        playerManagerInstance = GetComponentInChildren<PlayerManager>();
+        PlayerManagerInstance = GetComponentInChildren<PlayerManager>();
         // If condition ensures that current instance in awake is the first one initialized
-        if (playerManagerInstance.GetInstanceID() == this.gameObject.GetComponentInChildren<PlayerManager>().GetInstanceID())
+        if (PlayerManagerInstance.GetInstanceID() == this.gameObject.GetComponentInChildren<PlayerManager>().GetInstanceID())
         {
-            playerManagerInstance.ResetPlayer();
+            PlayerManagerInstance.ResetPlayer();
         }
         else
         {
@@ -183,33 +184,42 @@ public class GameManager : MonoBehaviour
 
     public void Run()
     {
-        if(gameState == State.idle)
+        MoveNext(Command.Run);
+        PlayerManagerInstance.MoveNext(Command.Run);
+        ProgressManagerInstance.MoveNext(Command.Run);
+        if(gameState == tempState.idle)
         {
-            gameState = State.run;
+            gameState = tempState.run;
             OnRun?.Invoke();
         }
     }
 
     public void Win()
     {
-        if(gameState == State.run)
+        MoveNext(Command.Win);
+        if(gameState == tempState.run)
         {
-            gameState = State.win;
+            gameState = tempState.win;
             OnWin?.Invoke();
         }
     }
 
     public void StoppageOrDeath()
     {
-        if(gameState == State.run || gameState == State.win)
+        if(gameState == tempState.run || gameState == tempState.win)
         {
             bool win = false; 
 
-            if(gameState == State.win)
+            if(gameState == tempState.win)
             {
                 win = true;
             }
-            gameState = State.stopDie;
+            if(!win)
+            {
+                Debug.Log("Death command called (bruh)");
+                MoveNext(Command.Die);
+            }
+            gameState = tempState.stopDie;
             ProgressManagerInstance.StopOrDeathUIAnimations(win);
             PlayerManagerInstance.PlayerStoppedOrKilled(win);
             OnStopOrDeath?.Invoke(win);
@@ -218,10 +228,12 @@ public class GameManager : MonoBehaviour
 
     public void Restart()
     {
-        if(gameState == State.stopDie)
+        MoveNext(Command.Restart);
+        if(gameState == tempState.stopDie)
         {
-            gameState = State.idle;
+            gameState = tempState.idle;
             ProgressManagerInstance.RestartLevel();
+            PlayerManagerInstance.ResetPlayer();
             OnRestart?.Invoke();
             applicationIsQuitting = false;
         }
@@ -229,23 +241,26 @@ public class GameManager : MonoBehaviour
 
     public void ResetState()
     {
-        if(gameState == State.stopDie)
+        MoveNext(Command.Restart);
+        if(gameState == tempState.stopDie)
         {
-            gameState = State.idle;
+            gameState = tempState.idle;
             applicationIsQuitting = false;
         }
     }
 
     public void SettingsToggled()
     {
-        if(gameState >= State.idle && gameState < State.pause)
+        if(gameState >= tempState.idle && gameState < tempState.pause)
         {
+            MoveNext(Command.Pause);
             prevState = gameState;
             OnSettingsOpened?.Invoke();
-            gameState = State.pause;
+            gameState = tempState.pause;
         }
-        else if(gameState == State.pause)
+        else if(gameState == tempState.pause)
         {
+            MoveNext(Command.Unpause);
             gameState = prevState;
             OnSettingsClosed?.Invoke();
         }

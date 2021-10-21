@@ -49,7 +49,7 @@ public class Movement : MonoBehaviour
         GameManager.GameManagerInstance.OnRun += StartMoving;
         GameManager.GameManagerInstance.OnSettingsOpened += PauseForSettings;
         GameManager.GameManagerInstance.OnSettingsClosed += PlayOnSettingsClosed;
-        GameManager.PlayerManagerInstance.OnPlayerStopOrDeath += KillOrCelebrate;
+        GameManager.GameManagerInstance.PlayerManagerInstance.OnPlayerStopOrDeath += KillOrCelebrate;
 
         InitPos = transform.position;
         Input.multiTouchEnabled = false;
@@ -174,7 +174,7 @@ public class Movement : MonoBehaviour
             GameManager.GameManagerInstance.OnRun -= StartMoving;
             GameManager.GameManagerInstance.OnSettingsOpened -= PauseForSettings;
             GameManager.GameManagerInstance.OnSettingsClosed -= PlayOnSettingsClosed;
-            GameManager.PlayerManagerInstance.OnPlayerStopOrDeath -= KillOrCelebrate;
+            GameManager.GameManagerInstance.PlayerManagerInstance.OnPlayerStopOrDeath -= KillOrCelebrate;
         }
     }
 
