@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Events;
 
 /// <summary>
 /// Checks for player and adds a yellow box accordingly via event
@@ -18,7 +17,8 @@ public class YellowBoxSensor : MonoBehaviour
         if(addBox)
         {
             GameManager.GameManagerInstance.PlayerManagerInstance.AddBox();
-            Destroy(gameObject);
+            GameManager.GameManagerInstance.PoolManagerInstance.CollectYellowBox(transform);
+            addBox = false;
         }
     }
 

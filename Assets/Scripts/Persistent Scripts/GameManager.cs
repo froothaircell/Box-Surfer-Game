@@ -25,29 +25,8 @@ public class GameManager : ManagerTemplate
     private ProgressManager progressManagerInstance;
     [SerializeField]
     private PlayerManager playerManagerInstance;
-
-    public ProgressManager ProgressManagerInstance
-    {
-        get
-        {
-            return progressManagerInstance;
-        }
-        private set
-        {
-            progressManagerInstance = value;
-        }
-    }
-    public PlayerManager PlayerManagerInstance 
-    {
-        get
-        {
-            return playerManagerInstance;
-        } 
-        private set
-        {
-            playerManagerInstance = value;
-        }
-    }
+    [SerializeField]
+    private PoolManager poolManagerInstance;
     
     public static GameManager GameManagerInstance
     {
@@ -79,6 +58,41 @@ public class GameManager : ManagerTemplate
         }
     }
 
+    public ProgressManager ProgressManagerInstance
+    {
+        get
+        {
+            return progressManagerInstance;
+        }
+        private set
+        {
+            progressManagerInstance = value;
+        }
+    }
+    public PlayerManager PlayerManagerInstance 
+    {
+        get
+        {
+            return playerManagerInstance;
+        } 
+        private set
+        {
+            playerManagerInstance = value;
+        }
+    }
+
+    public PoolManager PoolManagerInstance
+    {
+        get
+        {
+            return poolManagerInstance;
+        }
+        private set
+        {
+            poolManagerInstance = value;
+        }
+    }
+    
     // Events to be subscribed to
     public event UnityAction OnRun;
     public event UnityAction OnWin;
