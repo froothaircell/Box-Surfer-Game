@@ -18,10 +18,9 @@ public class DiamondLogic : MonoBehaviour
         {
             if (!isDestroyed)
             {
-                Debug.Log("Diamonds detected the collision");
                 isDestroyed = true;
                 GameManager.GameManagerInstance.ProgressManagerInstance.DiamondCollected(transform.position);
-                Destroy(transform.parent.gameObject);
+                GameManager.GameManagerInstance.PoolManagerInstance.CollectDiamonds(transform);
             }
         }
     }

@@ -10194,6 +10194,7 @@ MonoBehaviour:
   turnSpeed: 16
   distanceClamp: 1.55
   rotationSpeed: 180
+  rb: {fileID: 5500906254224117882}
   isLeft: 1
   touchControls: 0
 --- !u!114 &2014239666

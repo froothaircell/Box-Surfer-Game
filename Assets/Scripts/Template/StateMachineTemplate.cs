@@ -73,14 +73,14 @@ namespace Templates
 
         public State GetNext(Command command)
         {
-            Debug.Log(CurrentState);
+            // Debug.Log(CurrentState);
             StateTransition transition = new StateTransition(CurrentState, command);
             State nextState;
             if (!transitions.TryGetValue(transition, out nextState))
             {
                 throw new Exception("Invalid Transition: " + CurrentState + " -> " + command);
             }
-            Debug.Log(nextState);
+            // Debug.Log(nextState);
             return nextState;
         }
 

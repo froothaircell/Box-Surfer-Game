@@ -230,7 +230,7 @@ public class GameManager : ManagerTemplate
             }
             if(!win)
             {
-                Debug.Log("Death command called (bruh)");
+                // Debug.Log("Death command called (bruh)");
                 MoveNext(Command.Die);
             }
             gameState = tempState.stopDie;
@@ -240,12 +240,14 @@ public class GameManager : ManagerTemplate
         }
     }
 
+    // NOTE: Order of reset matters here
     public void Restart()
     {
         MoveNext(Command.Restart);
         if(gameState == tempState.stopDie)
         {
             gameState = tempState.idle;
+            PoolManagerInstance.ResetPool();
             ProgressManagerInstance.RestartLevel();
             PlayerManagerInstance.ResetPlayer();
             OnRestart?.Invoke();

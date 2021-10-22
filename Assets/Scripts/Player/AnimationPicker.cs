@@ -12,6 +12,7 @@ public class AnimationPicker : MonoBehaviour
     [SerializeField]
     private float airSpeedThreshold;
 
+    private bool death = false;
     private Animator animator;
     private bool isDeadOrHasStopped = false;
 
@@ -19,7 +20,7 @@ public class AnimationPicker : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         isDeadOrHasStopped = false;
-
+        death = false;
     }
 
     private void Start()
@@ -40,6 +41,7 @@ public class AnimationPicker : MonoBehaviour
                 {
                     animator.SetBool("HasLanded", false);
                     animator.SetTrigger("Falling");
+                    Debug.Log("Running fall animation");
                 }
                 else
                 {
@@ -62,7 +64,11 @@ public class AnimationPicker : MonoBehaviour
         isDeadOrHasStopped = true;
         if(!win)
         {
+            // rb.velocity = new Vector3(0f, 0f, 0f);
+            animator.SetFloat("AirSpeed", 0f);
+            // animator.SetBool("HasLanded", true);
             animator.SetTrigger("Death");
+            Debug.Log("Death trigger set");
         }
         else
         {

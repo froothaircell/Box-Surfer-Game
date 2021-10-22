@@ -6,11 +6,19 @@
 /// </summary>
 public class YellowBoxDeath : MonoBehaviour
 {
+    private bool firstRun;
+
+    private void Start()
+    {
+        firstRun = false;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == 4)
+        if (other.gameObject.layer == 4 && !firstRun)
         {
-            Destroy(gameObject);
+            firstRun = true;
+            GameManager.GameManagerInstance.PoolManagerInstance.CollectPlayerBox2(transform);
         }
     }
 }

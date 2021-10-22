@@ -11,7 +11,8 @@ public class PoolManager : MonoBehaviour
     private Transform 
         playerCubePool,
         destroyedPlayerCubePool,
-        destroyedYellowCubePool;
+        destroyedYellowCubePool,
+        destroyedDiamondPool;
     [SerializeField]
     private GameObject playerCubePrefab;
 
@@ -36,10 +37,22 @@ public class PoolManager : MonoBehaviour
         }
     }
 
-    public void CollectPlayerBox(Transform playerBoxReference)
+    // two different functions are made for collect player box for the two
+    // different methods of collection depending on what the box collides with
+    // (red box or pool)
+    public void CollectPlayerBox1(Transform playerBoxReference)
     {
         playerBoxReference.GetComponent<Rigidbody>().isKinematic = true;
         playerBoxReference.parent = destroyedPlayerCubePool;
+    }
+
+    public void CollectPlayerBox2(Transform playerBoxReference)
+    {
+        playerBoxReference.GetComponent<BoxCollider>().enabled = false;
+        playerBoxReference.GetComponent<Rigidbody>().isKinematic = true;
+        playerBoxReference.GetComponentInChildren<MeshRenderer>().enabled = false;
+        playerBoxReference.parent = destroyedPlayerCubePool;
+        playerBoxReference.localPosition = new Vector3(0f, 0f, 0f);
     }
 
     public void CollectYellowBox(Transform yellowBoxReference)
@@ -51,6 +64,27 @@ public class PoolManager : MonoBehaviour
         yellowBoxReference.localPosition = new Vector3(0f, 0f, 0f);
     }
 
+    public void CollectDiamonds(Transform diamondReference)
+    {
+        diamondReference.GetComponent<CapsuleCollider>().enabled = false;
+        diamondReference.GetComponentInParent<MeshRenderer>().enabled = false;
+        diamondReference.GetComponentInParent<DiamondMovement>().enabled = false;
+        diamondReference.parent = destroyedDiamondPool;
+        diamondReference.localPosition = new Vector3(0f, 0f, 0f);
+    }
+
+    // NOTE: Could use a bit of optimization
+    public void ResetPool()
+    {
+        foreach(Transform child in transform)
+        {
+            foreach(Transform subChild in child)
+            {
+                GameObject.Destroy(subChild.gameObject);
+            }
+        }
+    }
+    
     IEnumerator RefillPool()
     {
         while(true)

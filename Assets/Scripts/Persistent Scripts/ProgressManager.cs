@@ -60,6 +60,7 @@ public class ProgressManager : ManagerTemplate
                 SceneManager.LoadScene(levelPath);
                 GameManager.GameManagerInstance.ResetState();
                 GameManager.GameManagerInstance.PlayerManagerInstance.ResetPlayer();
+                GameManager.GameManagerInstance.PoolManagerInstance.ResetPool();
                 MoveNext(Command.Restart);
                 OnLevelUpdate?.Invoke(level);
             }

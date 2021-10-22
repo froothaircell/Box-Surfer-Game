@@ -7,7 +7,7 @@ namespace Templates
     {
         public override void AllocateValidTransitions()
         {
-            Debug.Log("Using the overrided function");
+            // Debug.Log("Using the overrided function");
             transitions = new Dictionary<StateTransition, State>
             {
                 { new StateTransition(State.Idle, Command.Run), State.Active},

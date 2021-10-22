@@ -16,6 +16,8 @@ public class Movement : MonoBehaviour
         distanceClamp = 4f, 
         rotationSpeed = 3f;
     [SerializeField]
+    private Rigidbody rb;
+    [SerializeField]
     private bool 
         isLeft = true, 
         touchControls;
@@ -209,6 +211,7 @@ public class Movement : MonoBehaviour
         if(!win)
         {
             Destroy(GetComponentInChildren<ConfigurableJoint>());
+            rb.isKinematic = true;
         }
     }
 
