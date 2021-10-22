@@ -125,6 +125,7 @@ public class GameManager : ManagerTemplate
     // Update is called once per frame
     private void Update()
     {
+        Debug.Log(ProgressManager.Score);
         // Logic to run within a state if required
         switch(gameState)
         {
@@ -172,7 +173,7 @@ public class GameManager : ManagerTemplate
     {
         ProgressManagerInstance = GetComponentInChildren<ProgressManager>();
         // If condition ensures that current instance in awake is the first one initialized
-        if (ProgressManagerInstance.GetInstanceID() == this.gameObject.GetComponentInChildren<ProgressManager>().GetInstanceID())
+        if (gameObject.GetComponent<GameManager>().GetInstanceID() == GameManagerInstance.GetInstanceID())
         {
             ProgressManagerInstance.ResetScore();
         }
@@ -186,7 +187,7 @@ public class GameManager : ManagerTemplate
     {
         PlayerManagerInstance = GetComponentInChildren<PlayerManager>();
         // If condition ensures that current instance in awake is the first one initialized
-        if (PlayerManagerInstance.GetInstanceID() == this.gameObject.GetComponentInChildren<PlayerManager>().GetInstanceID())
+        if (gameObject.GetComponent<GameManager>().GetInstanceID() == GameManagerInstance.GetInstanceID())
         {
             PlayerManagerInstance.ResetPlayer();
         }

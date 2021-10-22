@@ -18,7 +18,13 @@ public class ProgressManager : ManagerTemplate
     public event UnityAction<bool> OnDeathAnimationUpdate;
 
     private static int score = 0;
+    private static int scoreAtLevelStart = 0;
     private static int level = 1;
+
+    public static int Score
+    {
+        get { return score; }
+    }
 
     private void Awake()
     {
@@ -27,7 +33,7 @@ public class ProgressManager : ManagerTemplate
 
     public void ResetScore()
     {
-        score = 0;
+        scoreAtLevelStart = score = 0;
     }
 
     public void StopOrDeathUIAnimations(bool win)
@@ -57,6 +63,7 @@ public class ProgressManager : ManagerTemplate
             Debug.Log("Scene found");
             if (SceneUtility.GetBuildIndexByScenePath(levelPath) < SceneManager.sceneCountInBuildSettings)
             {
+                scoreAtLevelStart = score;
                 SceneManager.LoadScene(levelPath);
                 GameManager.GameManagerInstance.ResetState();
                 GameManager.GameManagerInstance.PlayerManagerInstance.ResetPlayer();
@@ -81,6 +88,7 @@ public class ProgressManager : ManagerTemplate
         if (CurrentState == State.Idle || CurrentState == State.Death || CurrentState == State.Sucess)
         {
             // Restart level here
+            score = scoreAtLevelStart;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             LevelUpdate();
         }
