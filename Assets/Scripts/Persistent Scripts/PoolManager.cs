@@ -39,7 +39,6 @@ public class PoolManager : MonoBehaviour
     public void CollectPlayerBox(Transform playerBoxReference)
     {
         playerBoxReference.GetComponent<Rigidbody>().isKinematic = true;
-        playerBoxReference.GetComponent<BoxCollider>().enabled = false;
         playerBoxReference.parent = destroyedPlayerCubePool;
     }
 

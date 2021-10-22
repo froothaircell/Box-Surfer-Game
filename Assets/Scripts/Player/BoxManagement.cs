@@ -72,6 +72,8 @@ public class BoxManagement : MonoBehaviour
         }
         boxSize = transform.childCount;
         newBoxSize = boxSize;*/
+
+        boxSize = transform.childCount;
     }
 
     private void OnDestroy()
@@ -116,16 +118,5 @@ public class BoxManagement : MonoBehaviour
         boxPosition.GetComponent<BoxCollider>().enabled = true;
         boxPosition.GetComponent<Rigidbody>().isKinematic = false;
         boxPosition.GetComponentInChildren<MeshRenderer>().enabled = true;
-
-        boxSize++;
-    }
-
-    // This function is for debugging purposes
-    public void RemoveBoxes()
-    {
-        if(transform.childCount > 0)
-        {
-            Destroy(transform.GetChild(0).gameObject);
-        }
     }
 }
