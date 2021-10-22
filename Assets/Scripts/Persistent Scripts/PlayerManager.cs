@@ -1,4 +1,5 @@
-﻿using UnityEngine.Events;
+﻿using UnityEngine;
+using UnityEngine.Events;
 using Templates;
 
 public class PlayerManager : ManagerTemplate
@@ -10,7 +11,8 @@ public class PlayerManager : ManagerTemplate
 
     public void AddBox()
     {
-        OnBoxAddition?.Invoke();
+        GameManager.GameManagerInstance.PoolManagerInstance.SpawnPlayerBox();
+        // OnBoxAddition?.Invoke();
     }
 
     public void ResetPlayer()

@@ -21,7 +21,7 @@ public class BoxManagement : MonoBehaviour
     public int BoxSize
     {
         get { return boxSize; }
-        set { boxSize = value; }
+        private set { boxSize = value; }
     }
 
     private void Start()
@@ -30,12 +30,12 @@ public class BoxManagement : MonoBehaviour
         baseHeight = LevelMetaData.LevelDataInstance.LevelInfo.levelAltitude + 4.5f;
         newBoxSize = boxSize;
         boxLength = boxPrefab.transform.localScale.x;
-        GameManager.GameManagerInstance.PlayerManagerInstance.OnBoxAddition += AddBoxes;
+        GameManager.GameManagerInstance.PoolManagerInstance.OnPlayerCubeSpawn += AddBoxes;
     }
 
     private void Update()
     {
-        if(newBoxSize > boxSize)
+        /*if(newBoxSize > boxSize)
         {
             int iter = 0;
             // As a precaution this loop can only run a maximum of 10 times
@@ -71,21 +71,53 @@ public class BoxManagement : MonoBehaviour
             }
         }
         boxSize = transform.childCount;
-        newBoxSize = boxSize;
+        newBoxSize = boxSize;*/
     }
 
     private void OnDestroy()
     {
         if(GameManager.GameManagerInstance != null)
         {
-            GameManager.GameManagerInstance.PlayerManagerInstance.OnBoxAddition -= AddBoxes;
+            GameManager.GameManagerInstance.PoolManagerInstance.OnPlayerCubeSpawn -= AddBoxes;
         }
     }
 
     // Run by a yellow box whenever it collides with the player
-    public void AddBoxes()
+    public void AddBoxes(Transform boxPosition)
     {
-        newBoxSize++;
+        // newBoxSize++;
+
+        // Make the new box a child object
+        boxPosition.parent = transform;
+
+        // NOTE: This is using a fixed height from the ground. It may
+        // need to be changed once we introduce ramps
+        float boxHeight = baseHeight + boxSize * (boxLength);
+
+        // Set positions of character and base cube according to the box
+        // height
+        character.position = new Vector3(
+            character.position.x,
+            boxHeight + 0.85f + 0.25f,
+            character.position.z);
+        charCube.position = new Vector3(
+            charCube.position.x,
+            boxHeight + 0.42f + 0.25f,
+            charCube.position.z);
+
+        // first fix position locally and then set the correct height
+        boxPosition.localPosition = new Vector3(0f, 0f, 0f);
+        boxPosition.position = new Vector3(
+            transform.position.x,
+            boxHeight - 0.15f,
+            transform.position.z);
+
+        // enable the disabled components and make it non kinematic
+        boxPosition.GetComponent<BoxCollider>().enabled = true;
+        boxPosition.GetComponent<Rigidbody>().isKinematic = false;
+        boxPosition.GetComponentInChildren<MeshRenderer>().enabled = true;
+
+        boxSize++;
     }
 
     // This function is for debugging purposes
