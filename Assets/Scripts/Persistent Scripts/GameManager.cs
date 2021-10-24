@@ -27,7 +27,21 @@ public class GameManager : ManagerTemplate
     private PlayerManager playerManagerInstance;
     [SerializeField]
     private PoolManager poolManagerInstance;
+    [Header("Deadzone Offsets")]
+    [SerializeField]
+    private float top;
+    [SerializeField]
+    private float
+        bottom,
+        left,
+        right;
     
+    private float
+        deadzoneTop = Screen.height,
+        deadzoneBottom = 0f,
+        deadzoneLeft = 0f,
+        deadzoneRight = Screen.width;
+
     public static GameManager GameManagerInstance
     {
         get
@@ -125,14 +139,26 @@ public class GameManager : ManagerTemplate
     // Update is called once per frame
     private void Update()
     {
-        Debug.Log(ProgressManager.Score);
+        // Debug.Log(ProgressManager.Score);
         // Logic to run within a state if required
         switch(gameState)
         {
             case tempState.idle: // Start of game
-                if(Input.GetButtonDown("Fire1") || Input.touchCount > 0)
+                if (Input.GetButtonDown("Fire1") 
+                    || Input.touchCount > 0)
                 {
+#if !UNITY_EDITOR
+                    Vector2 touchPosition = Input.GetTouch(0).position;
+                    if(touchPosition.x > deadzoneLeft + left
+                    && touchPosition.x < deadzoneRight - right
+                    && touchPosition.y > deadzoneBottom + bottom
+                    && touchPosition.y < deadzoneTop - top)
+                    {
+                        Run();
+                    }
+#else
                     Run();
+#endif
                 }
                 break;
             case tempState.run: // Player running

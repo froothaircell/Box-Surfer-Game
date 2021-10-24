@@ -18,9 +18,8 @@ public class Movement : MonoBehaviour
     [SerializeField]
     private Rigidbody rb;
     [SerializeField]
-    private bool 
-        isLeft = true, 
-        touchControls;
+    private bool
+        isLeft = true;
 
     // To reset position for debugging pusposes
     Vector3 InitPos; 
@@ -64,15 +63,76 @@ public class Movement : MonoBehaviour
     private void FixedUpdate()
     {
         // Use toggle in the inspector to use touch controls or mouse controls;
-        if(touchControls)
+#if !UNITY_EDITOR
+        // Check if character isn't already dead and settings aren't opened
+        if(!isDeadOrHasStopped && !settingsOpened) 
         {
-            // Check if character isn't already dead and settings aren't opened
-            if(!isDeadOrHasStopped && !settingsOpened) 
+            if(firstClick)
             {
-                if(firstClick)
+                // Speed for the turn is kept the same, hence we have an if condition here
+                if(isRotating)
                 {
+                    // Move character forwards
+                    transform.Translate(
+                        turnSpeed * Time.deltaTime * transform.forward,
+                        Space.World);
+                }
+                else
+                {
+                    // Move character forwards
+                    transform.Translate(
+                        speedFactor * Time.deltaTime * transform.forward,
+                        Space.World);
+                }
+            }
+
+            // Check for touch support
+            if (Input.touchSupported && Input.touchCount > 0)
+            {
+                Touch touch = Input.GetTouch(0);
+
+
+                // If the screen is being pressed persistently or swiped
+                if(touch.phase == TouchPhase.Moved || Input.GetTouch(0).phase == TouchPhase.Stationary)
+                {
+                    // Check the travel distance of the touch between frames
+                    travelDistance =  - touch.deltaPosition.x / 100;
+
+
+                    // If the touch position moved from the initial recorded position
+                    TurnCharacter(
+                        ref travelDistance,
+                        ref localPlayerPosition,
+                        distanceClamp);
+                }
+            }
+        }
+#else
+        if(!isDeadOrHasStopped && !settingsOpened)
+        {
+            if (firstClick)
+            {
+                // Reset position
+                if (Input.GetButtonDown("Jump"))
+                {
+                    transform.position = InitPos;
+                }
+
+                // Record initial position of click
+                if (Input.GetButtonDown("Fire1"))
+                {
+                    initialMousePosition = Input.mousePosition;
+                }
+
+                // Calculate distance of mouse cursor from original point in
+                // the last frame to determine movement
+                if (Input.GetButton("Fire1"))
+                {
+                    travelDistance = (initialMousePosition.x - Input.mousePosition.x) / 100;
+                    initialMousePosition = Input.mousePosition;
+
                     // Speed for the turn is kept the same, hence we have an if condition here
-                    if(isRotating)
+                    if (isRotating)
                     {
                         // Move character forwards
                         transform.Translate(
@@ -86,86 +146,22 @@ public class Movement : MonoBehaviour
                             speedFactor * Time.deltaTime * transform.forward,
                             Space.World);
                     }
+
+                    // If the mouse moved from the initial recorded position
+                    TurnCharacter(
+                        ref travelDistance,
+                        ref localPlayerPosition,
+                        distanceClamp);
                 }
 
-                // Check for touch support
-                if (Input.touchSupported && Input.touchCount > 0)
+                // Record the last click position of the mouse as the initial position
+                if (Input.GetButtonUp("Fire1"))
                 {
-                    Touch touch = Input.GetTouch(0);
-
-
-                    // If the screen is being pressed persistently or swiped
-                    if(touch.phase == TouchPhase.Moved || Input.GetTouch(0).phase == TouchPhase.Stationary)
-                    {
-                        // Check the travel distance of the touch between frames
-                        travelDistance =  - touch.deltaPosition.x / 100;
-
-
-                        // If the touch position moved from the initial recorded position
-                        TurnCharacter(
-                            ref travelDistance,
-                            ref localPlayerPosition,
-                            distanceClamp);
-                    }
+                    initialMousePosition = Input.mousePosition;
                 }
             }
         }
-        else
-        {
-            if(!isDeadOrHasStopped && !settingsOpened)
-            {
-                if (firstClick)
-                {
-                    // Reset position
-                    if (Input.GetButtonDown("Jump"))
-                    {
-                        transform.position = InitPos;
-                    }
-
-                    // Record initial position of click
-                    if (Input.GetButtonDown("Fire1"))
-                    {
-                        initialMousePosition = Input.mousePosition;
-                    }
-
-                    // Calculate distance of mouse cursor from original point in
-                    // the last frame to determine movement
-                    if (Input.GetButton("Fire1"))
-                    {
-                        travelDistance = (initialMousePosition.x - Input.mousePosition.x) / 100;
-                        initialMousePosition = Input.mousePosition;
-
-                        // Speed for the turn is kept the same, hence we have an if condition here
-                        if (isRotating)
-                        {
-                            // Move character forwards
-                            transform.Translate(
-                                turnSpeed * Time.deltaTime * transform.forward,
-                                Space.World);
-                        }
-                        else
-                        {
-                            // Move character forwards
-                            transform.Translate(
-                                speedFactor * Time.deltaTime * transform.forward,
-                                Space.World);
-                        }
-
-                        // If the mouse moved from the initial recorded position
-                        TurnCharacter(
-                            ref travelDistance,
-                            ref localPlayerPosition,
-                            distanceClamp);
-                    }
-
-                    // Record the last click position of the mouse as the initial position
-                    if (Input.GetButtonUp("Fire1"))
-                    {
-                        initialMousePosition = Input.mousePosition;
-                    }
-                }
-            }
-        }
+#endif
     }
 
     private void OnDestroy()

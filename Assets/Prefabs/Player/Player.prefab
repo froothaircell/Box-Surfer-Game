@@ -10196,7 +10196,7 @@ MonoBehaviour:
   rotationSpeed: 180
   rb: {fileID: 5500906254224117882}
   isLeft: 1
-  touchControls: 0
+  touchControls: 1
 --- !u!114 &2014239666
 MonoBehaviour:
   m_ObjectHideFlags: 0

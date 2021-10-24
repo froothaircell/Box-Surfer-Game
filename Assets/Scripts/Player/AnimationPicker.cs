@@ -41,7 +41,6 @@ public class AnimationPicker : MonoBehaviour
                 {
                     animator.SetBool("HasLanded", false);
                     animator.SetTrigger("Falling");
-                    Debug.Log("Running fall animation");
                 }
                 else
                 {

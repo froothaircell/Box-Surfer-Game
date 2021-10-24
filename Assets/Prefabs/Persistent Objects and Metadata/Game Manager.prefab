@@ -308,3 +308,7 @@ MonoBehaviour:
   progressManagerInstance: {fileID: 1758957468}
   playerManagerInstance: {fileID: 1853392847}
   poolManagerInstance: {fileID: 428263525}
+  top: 0
+  bottom: 200
+  left: 0
+  right: 0
