@@ -43,6 +43,9 @@ public class GameManager : IStateMachine
         deadzoneLeft = 0f,
         deadzoneRight = Screen.width;
 
+    public GameManager() : base()
+    { }
+
     public static GameManager GameManagerInstance
     {
         get

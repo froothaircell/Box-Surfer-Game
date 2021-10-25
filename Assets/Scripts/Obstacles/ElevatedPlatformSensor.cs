@@ -10,7 +10,7 @@ public class ElevatedPlatformSensor : MonoBehaviour
     {
         if (collision.collider.CompareTag("Player"))
         {
-            collision.collider.transform.parent = null;
+            GameManager.GameManagerInstance.PoolManagerInstance.CollectPlayerBox1(collision.collider.transform);
         }
         else if (collision.collider.CompareTag("Player Base")
             || collision.collider.CompareTag("Character"))

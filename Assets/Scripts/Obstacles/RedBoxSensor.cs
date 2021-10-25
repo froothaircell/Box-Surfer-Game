@@ -11,8 +11,6 @@ public class RedBoxSensor : MonoBehaviour
         if(collision.collider.CompareTag("Player"))
         {
             GameManager.GameManagerInstance.PoolManagerInstance.CollectPlayerBox1(collision.collider.transform);
-            // collision.collider.attachedRigidbody.isKinematic = true;
-            // collision.collider.transform.parent = null;
         }
         else if(collision.collider.CompareTag("Player Base") 
             || collision.collider.CompareTag("Character"))
