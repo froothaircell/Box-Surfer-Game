@@ -3,12 +3,19 @@ using UnityEngine.Events;
 using System.Collections.Generic;
 using StateMachine;
 
-public class PlayerManager : IStateMachine
+public class PlayerManager : MonoBehaviour
 {
-    // Events to be subscirbed to
+    // Events to be subscribed to
     public event UnityAction OnBoxAddition;
     public event UnityAction OnPlayerReset;
     public event UnityAction<bool> OnPlayerStopOrDeath;
+
+    public IStateMachine PlmStateMachine { get; private set; }
+
+    private void Awake()
+    {
+        PlmStateMachine = new IStateMachine();
+    }
 
     public void AddBox()
     {
@@ -18,18 +25,18 @@ public class PlayerManager : IStateMachine
 
     public void ResetPlayer()
     {
-        if(CurrentState == states["Death"] || CurrentState == states["Success"])
-            MoveNext(commands["Restart"]);
-        if(CurrentState == states["Idle"] || CurrentState == states["Death"] || CurrentState == states["Success"])
+        if(PlmStateMachine.CurrentState == PlmStateMachine.states["Death"] || PlmStateMachine.CurrentState == PlmStateMachine.states["Success"])
+            PlmStateMachine.MoveNext(PlmStateMachine.commands["Restart"]);
+        if(PlmStateMachine.CurrentState == PlmStateMachine.states["Idle"] || PlmStateMachine.CurrentState == PlmStateMachine.states["Death"] || PlmStateMachine.CurrentState == PlmStateMachine.states["Success"])
             OnPlayerReset?.Invoke();
     }
 
     public void PlayerStoppedOrKilled(bool win)
     {
         if (win)
-            MoveNext(commands["Win"]);
+            PlmStateMachine.MoveNext(PlmStateMachine.commands["Win"]);
         else
-            MoveNext(commands["Die"]);
+            PlmStateMachine.MoveNext(PlmStateMachine.commands["Die"]);
         OnPlayerStopOrDeath?.Invoke(win);
     }
 }

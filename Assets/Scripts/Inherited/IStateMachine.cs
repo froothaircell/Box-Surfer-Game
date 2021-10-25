@@ -24,7 +24,7 @@ namespace StateMachine
     }*/
 
     [System.Serializable]
-    public abstract class IStateMachine : IStateCommand
+    public class IStateMachine : IStateCommand
     {
         // Definition of the state transition object
         public class StateTransition
@@ -111,7 +111,8 @@ namespace StateMachine
             };
             Debug.Log("Heading out of the transition allocator function");
         }
-
+        
+        // Get the next state if it is a valid transition
         public IState GetNext(ICommand command)
         {
             // Debug.Log(CurrentState);
@@ -121,6 +122,8 @@ namespace StateMachine
             {
                 throw new Exception("Invalid Transition: " + CurrentState.State + " -> " + command.Command);
             }
+            CurrentState.OnExit();
+            nextState.OnEnter();
             // Debug.Log(nextState);
             return nextState;
         }

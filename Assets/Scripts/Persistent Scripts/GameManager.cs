@@ -18,7 +18,7 @@ enum tempState
 /// prompts from objects in the scene and activates subscribable events
 /// accordingly. Persists across scenes.
 /// </summary>
-public class GameManager : IStateMachine
+public class GameManager : MonoBehaviour
 {
     private static GameManager gameManagerInstance;
 
@@ -43,9 +43,7 @@ public class GameManager : IStateMachine
         deadzoneLeft = 0f,
         deadzoneRight = Screen.width;
 
-    public GameManager() : base()
-    { }
-
+    
     public static GameManager GameManagerInstance
     {
         get
@@ -120,7 +118,9 @@ public class GameManager : IStateMachine
     private tempState gameState = tempState.idle;
     // only used for settings state. Can be used for any event that needs to
     // remember the previous state
-    private tempState prevState; 
+    private tempState prevState;
+
+    public IStateMachine GmStateMachine { get; private set; }
     
     private static bool applicationIsQuitting = false;
 
@@ -189,6 +189,7 @@ public class GameManager : IStateMachine
         if (gameManagerInstance == null)
         {
             gameManagerInstance = this;
+            GmStateMachine = new IStateMachine();
             DontDestroyOnLoad(this.gameObject);
         }
         else
@@ -227,9 +228,9 @@ public class GameManager : IStateMachine
 
     public void Run()
     {
-        MoveNext(commands["Run"]);
-        PlayerManagerInstance.MoveNext(PlayerManagerInstance.commands["Run"]);
-        ProgressManagerInstance.MoveNext(ProgressManagerInstance.commands["Run"]);
+        GmStateMachine.MoveNext(GmStateMachine.commands["Run"]);
+        PlayerManagerInstance.PlmStateMachine.MoveNext(PlayerManagerInstance.PlmStateMachine.commands["Run"]);
+        ProgressManagerInstance.PrmStateMachine.MoveNext(ProgressManagerInstance.PrmStateMachine.commands["Run"]);
         if(gameState == tempState.idle)
         {
             gameState = tempState.run;
@@ -239,7 +240,7 @@ public class GameManager : IStateMachine
 
     public void Win()
     {
-        MoveNext(commands["Win"]);
+        GmStateMachine.MoveNext(GmStateMachine.commands["Win"]);
         if(gameState == tempState.run)
         {
             gameState = tempState.win;
@@ -260,7 +261,7 @@ public class GameManager : IStateMachine
             if(!win)
             {
                 // Debug.Log("Death command called (bruh)");
-                MoveNext(commands["Die"]);
+                GmStateMachine.MoveNext(GmStateMachine.commands["Die"]);
             }
             gameState = tempState.stopDie;
             ProgressManagerInstance.StopOrDeathUIAnimations(win);
@@ -272,7 +273,7 @@ public class GameManager : IStateMachine
     // NOTE: Order of reset matters here
     public void Restart()
     {
-        MoveNext(commands["Restart"]);
+        GmStateMachine.MoveNext(GmStateMachine.commands["Restart"]);
         if(gameState == tempState.stopDie)
         {
             gameState = tempState.idle;
@@ -286,7 +287,7 @@ public class GameManager : IStateMachine
 
     public void ResetState()
     {
-        MoveNext(commands["Restart"]);
+        GmStateMachine.MoveNext(GmStateMachine.commands["Restart"]);
         if(gameState == tempState.stopDie)
         {
             gameState = tempState.idle;
@@ -298,14 +299,14 @@ public class GameManager : IStateMachine
     {
         if(gameState >= tempState.idle && gameState < tempState.pause)
         {
-            MoveNext(commands["Pause"]);
+            GmStateMachine.MoveNext(GmStateMachine.commands["Pause"]);
             prevState = gameState;
             OnSettingsOpened?.Invoke();
             gameState = tempState.pause;
         }
         else if(gameState == tempState.pause)
         {
-            MoveNext(commands["Unpause"]);
+            GmStateMachine.MoveNext(GmStateMachine.commands["Unpause"]);
             gameState = prevState;
             OnSettingsClosed?.Invoke();
         }

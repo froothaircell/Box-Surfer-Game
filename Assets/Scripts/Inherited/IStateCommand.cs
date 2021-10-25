@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace StateMachine
 {
-    public abstract class IStateCommand : MonoBehaviour
+    public abstract class IStateCommand
     {
         // Class for the state, with functions
         public class IState

@@ -10,7 +10,7 @@ using StateMachine;
 /// score and level according to the state change invoked by the game manager.
 /// Persists across scenes.
 /// </summary>
-public class ProgressManager : IStateMachine
+public class ProgressManager : MonoBehaviour
 {
     // Events to be subscribed to
     public event UnityAction<int> OnScoreUpdate;
@@ -22,6 +22,8 @@ public class ProgressManager : IStateMachine
     private static int scoreAtLevelStart = 0;
     private static int level = 1;
 
+    public IStateMachine PrmStateMachine { get; private set; }
+
     public static int Score
     {
         get { return score; }
@@ -30,6 +32,7 @@ public class ProgressManager : IStateMachine
     private void Awake()
     {
         level = LevelMetaData.LevelDataInstance.LevelInfo.level;
+        PrmStateMachine = new IStateMachine();
     }
 
     public void ResetScore()
@@ -40,9 +43,9 @@ public class ProgressManager : IStateMachine
     public void StopOrDeathUIAnimations(bool win)
     {
         if (win)
-            MoveNext(commands["Win"]);
+            PrmStateMachine.MoveNext(PrmStateMachine.commands["Win"]);
         else
-            MoveNext(commands["Die"]);
+            PrmStateMachine.MoveNext(PrmStateMachine.commands["Die"]);
         OnDeathAnimationUpdate?.Invoke(win);
     }
 
@@ -69,7 +72,7 @@ public class ProgressManager : IStateMachine
                 GameManager.GameManagerInstance.ResetState();
                 GameManager.GameManagerInstance.PlayerManagerInstance.ResetPlayer();
                 GameManager.GameManagerInstance.PoolManagerInstance.ResetPool();
-                MoveNext(commands["Restart"]);
+                PrmStateMachine.MoveNext(PrmStateMachine.commands["Restart"]);
                 OnLevelUpdate?.Invoke(level);
             }
         }
@@ -84,9 +87,9 @@ public class ProgressManager : IStateMachine
 
     public void RestartLevel()
     {
-        if (CurrentState == states["Death"] || CurrentState == states["Success"])
-            MoveNext(commands["Restart"]);
-        if (CurrentState == states["Idle"] || CurrentState == states["Death"] || CurrentState == states["Success"])
+        if (PrmStateMachine.CurrentState == PrmStateMachine.states["Death"] || PrmStateMachine.CurrentState == PrmStateMachine.states["Success"])
+            PrmStateMachine.MoveNext(PrmStateMachine.commands["Restart"]);
+        if (PrmStateMachine.CurrentState == PrmStateMachine.states["Idle"] || PrmStateMachine.CurrentState == PrmStateMachine.states["Death"] || PrmStateMachine.CurrentState == PrmStateMachine.states["Success"])
         {
             // Restart level here
             score = scoreAtLevelStart;
