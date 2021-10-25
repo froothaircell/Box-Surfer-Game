@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
-using Templates;
+using StateMachine;
+using System.Collections.Generic;
 
 enum tempState
 {
@@ -17,7 +18,7 @@ enum tempState
 /// prompts from objects in the scene and activates subscribable events
 /// accordingly. Persists across scenes.
 /// </summary>
-public class GameManager : ManagerTemplate
+public class GameManager : IStateMachine
 {
     private static GameManager gameManagerInstance;
 
@@ -71,7 +72,6 @@ public class GameManager : ManagerTemplate
             return gameManagerInstance;
         }
     }
-
     public ProgressManager ProgressManagerInstance
     {
         get
@@ -94,7 +94,6 @@ public class GameManager : ManagerTemplate
             playerManagerInstance = value;
         }
     }
-
     public PoolManager PoolManagerInstance
     {
         get
@@ -115,7 +114,6 @@ public class GameManager : ManagerTemplate
     public event UnityAction OnSettingsClosed;
     public event UnityAction<bool> OnStopOrDeath;
 
-    // private int state = 0;
     private tempState gameState = tempState.idle;
     // only used for settings state. Can be used for any event that needs to
     // remember the previous state
@@ -182,6 +180,7 @@ public class GameManager : ManagerTemplate
         }
     }
 
+
     private void InitGameManager()
     {
         if (gameManagerInstance == null)
@@ -225,9 +224,9 @@ public class GameManager : ManagerTemplate
 
     public void Run()
     {
-        MoveNext(Command.Run);
-        PlayerManagerInstance.MoveNext(Command.Run);
-        ProgressManagerInstance.MoveNext(Command.Run);
+        MoveNext(commands["Run"]);
+        PlayerManagerInstance.MoveNext(PlayerManagerInstance.commands["Run"]);
+        ProgressManagerInstance.MoveNext(ProgressManagerInstance.commands["Run"]);
         if(gameState == tempState.idle)
         {
             gameState = tempState.run;
@@ -237,7 +236,7 @@ public class GameManager : ManagerTemplate
 
     public void Win()
     {
-        MoveNext(Command.Win);
+        MoveNext(commands["Win"]);
         if(gameState == tempState.run)
         {
             gameState = tempState.win;
@@ -258,7 +257,7 @@ public class GameManager : ManagerTemplate
             if(!win)
             {
                 // Debug.Log("Death command called (bruh)");
-                MoveNext(Command.Die);
+                MoveNext(commands["Die"]);
             }
             gameState = tempState.stopDie;
             ProgressManagerInstance.StopOrDeathUIAnimations(win);
@@ -270,7 +269,7 @@ public class GameManager : ManagerTemplate
     // NOTE: Order of reset matters here
     public void Restart()
     {
-        MoveNext(Command.Restart);
+        MoveNext(commands["Restart"]);
         if(gameState == tempState.stopDie)
         {
             gameState = tempState.idle;
@@ -284,7 +283,7 @@ public class GameManager : ManagerTemplate
 
     public void ResetState()
     {
-        MoveNext(Command.Restart);
+        MoveNext(commands["Restart"]);
         if(gameState == tempState.stopDie)
         {
             gameState = tempState.idle;
@@ -296,14 +295,14 @@ public class GameManager : ManagerTemplate
     {
         if(gameState >= tempState.idle && gameState < tempState.pause)
         {
-            MoveNext(Command.Pause);
+            MoveNext(commands["Pause"]);
             prevState = gameState;
             OnSettingsOpened?.Invoke();
             gameState = tempState.pause;
         }
         else if(gameState == tempState.pause)
         {
-            MoveNext(Command.Unpause);
+            MoveNext(commands["Unpause"]);
             gameState = prevState;
             OnSettingsClosed?.Invoke();
         }

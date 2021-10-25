@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
-using Templates;
+using System.Collections.Generic;
+using StateMachine;
 
 /// <summary>
 /// Functions as a tracker for the score and current level of the game and
@@ -9,7 +10,7 @@ using Templates;
 /// score and level according to the state change invoked by the game manager.
 /// Persists across scenes.
 /// </summary>
-public class ProgressManager : ManagerTemplate
+public class ProgressManager : IStateMachine
 {
     // Events to be subscribed to
     public event UnityAction<int> OnScoreUpdate;
@@ -39,9 +40,9 @@ public class ProgressManager : ManagerTemplate
     public void StopOrDeathUIAnimations(bool win)
     {
         if (win)
-            MoveNext(Command.Win);
+            MoveNext(commands["Win"]);
         else
-            MoveNext(Command.Die);
+            MoveNext(commands["Die"]);
         OnDeathAnimationUpdate?.Invoke(win);
     }
 
@@ -68,7 +69,7 @@ public class ProgressManager : ManagerTemplate
                 GameManager.GameManagerInstance.ResetState();
                 GameManager.GameManagerInstance.PlayerManagerInstance.ResetPlayer();
                 GameManager.GameManagerInstance.PoolManagerInstance.ResetPool();
-                MoveNext(Command.Restart);
+                MoveNext(commands["Restart"]);
                 OnLevelUpdate?.Invoke(level);
             }
         }
@@ -83,9 +84,9 @@ public class ProgressManager : ManagerTemplate
 
     public void RestartLevel()
     {
-        if (CurrentState == State.Death || CurrentState == State.Sucess)
-            MoveNext(Command.Restart);
-        if (CurrentState == State.Idle || CurrentState == State.Death || CurrentState == State.Sucess)
+        if (CurrentState == states["Death"] || CurrentState == states["Success"])
+            MoveNext(commands["Restart"]);
+        if (CurrentState == states["Idle"] || CurrentState == states["Death"] || CurrentState == states["Success"])
         {
             // Restart level here
             score = scoreAtLevelStart;

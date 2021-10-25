@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
-using Templates;
+using System.Collections.Generic;
+using StateMachine;
 
-public class PlayerManager : ManagerTemplate
+public class PlayerManager : IStateMachine
 {
     // Events to be subscirbed to
     public event UnityAction OnBoxAddition;
@@ -17,18 +18,18 @@ public class PlayerManager : ManagerTemplate
 
     public void ResetPlayer()
     {
-        if(CurrentState == State.Death || CurrentState == State.Sucess)
-            MoveNext(Command.Restart);
-        if(CurrentState == State.Idle || CurrentState == State.Death || CurrentState == State.Sucess)
+        if(CurrentState == states["Death"] || CurrentState == states["Success"])
+            MoveNext(commands["Restart"]);
+        if(CurrentState == states["Idle"] || CurrentState == states["Death"] || CurrentState == states["Success"])
             OnPlayerReset?.Invoke();
     }
 
     public void PlayerStoppedOrKilled(bool win)
     {
         if (win)
-            MoveNext(Command.Win);
+            MoveNext(commands["Win"]);
         else
-            MoveNext(Command.Die);
+            MoveNext(commands["Die"]);
         OnPlayerStopOrDeath?.Invoke(win);
     }
 }
